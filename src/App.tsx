@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
-import Header from "./components/Header/HeaderLogoChatNotify";
 
 const queryClient = new QueryClient();
 
@@ -17,11 +16,7 @@ function App() {
     getPosts();
   });
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Header />
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}></QueryClientProvider>;
 }
 
 export default App;

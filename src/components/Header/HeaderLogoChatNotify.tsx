@@ -16,12 +16,6 @@ function HeaderLogoChatNotify() {
 }
 
 const styles = {
-  logo: {
-    fontSize: "24px", // 아이콘 크기 조정
-    cursor: "pointer",
-    padding: "0px 15px",
-    backgroundColor: "#e0e0e0",
-  },
   header: {
     display: "flex",
     alignItems: "center",
@@ -29,6 +23,13 @@ const styles = {
     padding: "10px",
     backgroundColor: "#f5f5f5",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    height: "44px",
+  },
+  logo: {
+    fontSize: "20px", // 아이콘 크기 조정
+    cursor: "pointer",
+    padding: "0px 15px",
+    backgroundColor: "#e0e0e0",
   },
   icon: {
     fontSize: "24px",

@@ -18,6 +18,7 @@ const styles = {
     padding: "10px",
     backgroundColor: "#f5f5f5",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    height: "44px",
   },
   icon: {
     fontSize: "24px",
