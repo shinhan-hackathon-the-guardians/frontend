@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
-import Header from "./components/Header/headerBackSetting";
+import Header from "./components/Header/HeaderLogoChatNotify";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +20,6 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Header />
-      <div className="text-3xl font-bold">App</div>
     </QueryClientProvider>
   );
 }

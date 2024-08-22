@@ -1,11 +1,15 @@
 import { IoChevronBackOutline } from "react-icons/io5";
-import { CiSettings } from "react-icons/ci";
+import { TbMessageChatbot } from "react-icons/tb";
+import { FaRegBell } from "react-icons/fa6";
 
-function HeaderBackSetting() {
+function HeaderBackChatNotify() {
   return (
     <header style={styles.header}>
       <IoChevronBackOutline style={styles.icon} />
-      <CiSettings style={styles.icon} />
+      <div style={styles.iconContainer}>
+        <TbMessageChatbot style={styles.icon} />
+        <FaRegBell style={{ ...styles.icon, marginLeft: "8px" }} />
+      </div>
     </header>
   );
 }
@@ -23,10 +27,10 @@ const styles = {
     fontSize: "24px",
     cursor: "pointer",
   },
-  title: {
-    marginLeft: "10px",
-    fontSize: "18px",
+  iconContainer: {
+    display: "flex",
+    alignItems: "center", // 아이콘 수직 정렬
   },
 };
 
-export default HeaderBackSetting;
+export default HeaderBackChatNotify;
