@@ -16,7 +16,11 @@ function App() {
     getPosts();
   });
 
-  return <QueryClientProvider client={queryClient}></QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className="text-3xl font-bold">App</div>
+    </QueryClientProvider>
+  );
 }
 
 export default App;
