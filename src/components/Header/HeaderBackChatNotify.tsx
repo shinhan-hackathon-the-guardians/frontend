@@ -4,34 +4,14 @@ import { FaRegBell } from "react-icons/fa6";
 
 function HeaderBackChatNotify() {
   return (
-    <header style={styles.header}>
-      <IoChevronBackOutline style={styles.icon} />
-      <div style={styles.iconContainer}>
-        <TbMessageChatbot style={styles.icon} />
-        <FaRegBell style={{ ...styles.icon, marginLeft: "8px" }} />
+    <header className="flex items-center justify-between p-2 bg-[#F5F6FA] shadow-md h-[44px]">
+      <IoChevronBackOutline className="text-[24px] cursor-pointer" />
+      <div className="flex items-center">
+        <TbMessageChatbot className="text-[24px] cursor-pointer" />
+        <FaRegBell className="text-[24px] cursor-pointer ml-2" />
       </div>
     </header>
   );
 }
-
-const styles = {
-  header: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "10px",
-    backgroundColor: "#f5f5f5",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-    height: "44px",
-  },
-  icon: {
-    fontSize: "24px",
-    cursor: "pointer",
-  },
-  iconContainer: {
-    display: "flex",
-    alignItems: "center", // 아이콘 수직 정렬
-  },
-};
 
 export default HeaderBackChatNotify;

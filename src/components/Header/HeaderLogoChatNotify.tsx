@@ -3,42 +3,16 @@ import { FaRegBell } from "react-icons/fa6";
 
 function HeaderLogoChatNotify() {
   return (
-    <header style={styles.header}>
-      <div style={styles.logo}>
+    <header className="flex items-center justify-between p-2 bg-[#F5F6FA] shadow-md h-[44px]">
+      <div className="flex items-center p-0 px-4 bg-[#e0e0e0] cursor-pointer text-[20px]">
         <h1>Logo</h1>
       </div>
-      <div style={styles.iconContainer}>
-        <TbMessageChatbot style={styles.icon} />
-        <FaRegBell style={{ ...styles.icon, marginLeft: "8px" }} />
+      <div className="flex items-center">
+        <TbMessageChatbot className="text-[24px] cursor-pointer" />
+        <FaRegBell className="text-[24px] cursor-pointer ml-2" />
       </div>
     </header>
   );
 }
-
-const styles = {
-  header: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "10px",
-    backgroundColor: "#f5f5f5",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-    height: "44px",
-  },
-  logo: {
-    fontSize: "20px", // 아이콘 크기 조정
-    cursor: "pointer",
-    padding: "0px 15px",
-    backgroundColor: "#e0e0e0",
-  },
-  icon: {
-    fontSize: "24px",
-    cursor: "pointer",
-  },
-  iconContainer: {
-    display: "flex",
-    alignItems: "center", // 아이콘 수직 정렬
-  },
-};
 
 export default HeaderLogoChatNotify;
