@@ -1,5 +1,4 @@
 import React from "react";
-import Input from "@mui/material/Input";
 
 interface InputFieldProps {
   label: string;
@@ -11,12 +10,10 @@ const InputField: React.FC<InputFieldProps> = ({ label, placeholder, type = "tex
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <Input
+      <input
         type={type}
         placeholder={placeholder}
-        fullWidth
-        disableUnderline
-        className="border rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+        className="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-2"
       />
     </div>
   );
