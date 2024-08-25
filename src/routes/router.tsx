@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
 import AddGroupMemberPage from "@/pages/AddGroupMemberPage";
+import MainPage from "@/pages/MainPage";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
       {
         path: "addGroupMember",
         element: <AddGroupMemberPage />,
+      },
+      {
+        index: true,
+        element: <MainPage />,
       },
     ],
   },
