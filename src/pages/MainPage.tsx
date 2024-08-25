@@ -1,7 +1,9 @@
 import guardian from "@/assets/images/guardian.png";
 import graduate from "@/assets/images/graduate.png";
-import group from "@/assets/images/group.png"; // Assuming this image is for 그룹원 목록
-import profile from "@/assets/images/profile.png"; // Assuming this image is for 프로필 편집
+import group from "@/assets/images/group.png";
+import profile from "@/assets/images/profile.png";
+import { FaRegBell } from "react-icons/fa6";
+import { TbMessageChatbot } from "react-icons/tb";
 
 function MainPage() {
   return (
@@ -21,20 +23,41 @@ function MainPage() {
 
         {/* 이름과 레벨 정보 컨테이너 */}
         <div className="flex justify-center items-end h-full">
-          <div className="bg-white w-full h-[120px] pt-6 px-4 rounded-[10px] text-center text-black flex justify-between items-center">
+          <div className="bg-white w-full h-[120px] p-4 rounded-t-[10px] text-center text-black flex justify-between items-center">
             {/* 이름을 별도의 flex 컨테이너에 넣어 items-start 적용 */}
-            <div className="flex flex-col justify-start h-full">
-              <h1 className="text-3xl font-bold">
+            <div className="flex flex-col justify-center h-full">
+              <h1 className="text-2xl font-bold text-left">
                 김신한<span className="text-xl">고객님</span>
               </h1>
+              <p className="text-[10pt] text-gray-700 mt-1">
+                현재 그룹원이 _ 명입니다.
+              </p>
             </div>
-            <span className="text-2xl">Owner</span>
+
+            {/* 우측 이미지와 Owner 텍스트 */}
+            <div className="flex flex-col items-center">
+              <img
+                src="src/assets/images/default.png"
+                alt="프로필 이미지"
+                className="w-[44px] h-[44px] rounded-full mb-2"
+              />
+              <span className="text-[10pt] text-gray-900">Owner</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* 메뉴들 */}
-      <div className="p-6">
+      <div className="px-6">
+        <div className="mb-6 p-6 flex justify-between items-center bg-[#EBF0FD] py-4 rounded-[20px]">
+          <div className="flex-1 flex justify-center">
+            <button className="bg-blue-500 text-white py-2 px-6 rounded-[20px]">
+              그룹원 초대하기
+            </button>
+          </div>
+          <FaRegBell className="text-[24px] cursor-pointer" />
+          <TbMessageChatbot className="text-[24px] cursor-pointer ml-2" />
+        </div>
         <div className="grid grid-cols-2 gap-x-6 gap-y-4 justify-items-center">
           {/* 가디언 평가 */}
           <div className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3">
