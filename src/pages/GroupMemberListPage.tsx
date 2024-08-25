@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from "react";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
+import GroupInfo from "@/components/GroupMemberList/GroupInfo";
 import GroupMemberList from "@/components/GroupMemberList/GroupMemberList";
 import Button from "@/components/common/Button";
-// import { getGroupMemberList } from "@/services/groupMemberService";
 import { Member } from "@/types/Member";
-import { members as dummyMembers } from "@/utils/data";
+import { getGroupMemberList } from "@/services/groupMemberService";
 
 const GroupMemberListPage: React.FC = () => {
-  // useState의 타입을 명시적으로 설정
   const [members, setMembers] = useState<Member[]>([]);
+  const [familyName, setFamilyName] = useState<string>("");
+  const [familyDescription, setFamilyDescription] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
-      setMembers(dummyMembers);
-      // try {
-      //   const data = await getGroupMemberList();
-      //   setMembers(data); // 데이터를 상태로 설정
-      // } catch (error) {
-      //   console.error("그룹원 목록을 불러오는 데 실패했습니다.", error);
-      // }
+      try {
+        const familyId = 1; // 가족 ID를 적절히 설정해주세요
+        const data = await getGroupMemberList(familyId);
+        setMembers(data.users);
+        setFamilyName(data.name);
+        setFamilyDescription(data.description);
+      } catch (error) {
+        console.error("그룹원 목록을 불러오는 데 실패했습니다.", error);
+      }
     };
 
-    fetchData(); // 데이터 가져오기 실행
+    fetchData();
   }, []);
 
   const handlePinToggle = (id: number) => {
@@ -40,6 +43,7 @@ const GroupMemberListPage: React.FC = () => {
     <>
       <HeaderBackChatNotify />
       <main className="flex-grow overflow-y-auto scrollbar-hide">
+        <GroupInfo name={familyName} description={familyDescription} memberCount={members.length} />
         <GroupMemberList members={members} onPinToggle={handlePinToggle} />
       </main>
       <footer className="p-4">
