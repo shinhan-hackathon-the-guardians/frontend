@@ -13,7 +13,7 @@ const router = createBrowserRouter([
         element: <AddGroupMemberPage />,
       },
       {
-        path: "main",
+        index: true,
         element: <MainPage />,
       },
     ],
