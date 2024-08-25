@@ -1,12 +1,6 @@
 import React from "react";
 import GroupMemberItem from "./GroupMemberItem";
-
-interface Member {
-  id: number;
-  name: string;
-  phone: string;
-  isPinned: boolean;
-}
+import { Member } from "@/types/Member";
 
 interface Props {
   members: Member[];
@@ -20,7 +14,7 @@ const GroupMemberList: React.FC<Props> = ({ members, onPinToggle }) => {
   });
 
   return (
-    <div className="divide-y divide-gray-200">
+    <div className="divide-y divide-gray-200 scrollbar-hide">
       {sortedMembers.map((member) => (
         <GroupMemberItem
           key={member.id}
