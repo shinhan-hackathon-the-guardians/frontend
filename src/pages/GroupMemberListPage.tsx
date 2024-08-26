@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
+import HeaderBackSetting from "@/components/Header/HeaderBackSetting";
 import GroupInfo from "@/components/GroupMemberList/GroupInfo";
 import GroupMemberList from "@/components/GroupMemberList/GroupMemberList";
-import Button from "@/components/common/Button";
 import { Member } from "@/types/Member";
 import { getGroupMemberList } from "@/services/groupMemberService";
 
@@ -41,14 +40,11 @@ const GroupMemberListPage: React.FC = () => {
 
   return (
     <>
-      <HeaderBackChatNotify />
-      <main className="flex-grow overflow-y-auto scrollbar-hide">
+      <HeaderBackSetting />
+      <main className="flex-grow">
         <GroupInfo name={familyName} description={familyDescription} memberCount={members.length} />
-        <GroupMemberList members={members} onPinToggle={handlePinToggle} />
+        <GroupMemberList members={members} onPinToggle={handlePinToggle} handleAddMember={handleAddMember} />
       </main>
-      <footer className="p-4">
-        <Button text="그룹원 추가하기" onClick={handleAddMember} />
-      </footer>
     </>
   );
 };

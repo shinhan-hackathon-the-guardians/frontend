@@ -7,14 +7,20 @@ interface GroupInfoProps {
   memberCount: number;
 }
 
-const GroupInfo: React.FC<GroupInfoProps> = ({ name, description, memberCount }) => {
+const GroupInfo: React.FC<GroupInfoProps> = ({
+  name,
+  description,
+  memberCount,
+}) => {
   return (
-    <div className="bg-white p-4">
+    <div className="pt-4 px-4 pb-1">
       <h2 className="text-lg font-semibold">{name}</h2>
-      <p className="text-sm text-gray-600">{description}</p>
-      <p className="text-sm text-gray-500 mt-2">
-        {memberCount}/{TOTAL_COUNT}
-      </p>
+      <div className="flex justify-between">
+        <p className="text-sm text-gray-600">{description}</p>
+        <p className="text-sm text-gray-500">
+          {memberCount}/{TOTAL_COUNT}
+        </p>
+      </div>
     </div>
   );
 };

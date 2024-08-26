@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 interface Props {
   isPinned: boolean;
@@ -20,7 +21,7 @@ const GroupMemberOptions: React.FC<Props> = ({ isPinned, onPinToggle }) => {
   return (
     <div className="relative">
       <button onClick={handleToggle} className="p-2 text-gray-400">
-        |
+        <BiDotsVerticalRounded />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
