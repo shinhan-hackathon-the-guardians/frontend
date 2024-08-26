@@ -3,6 +3,7 @@ import App from "@/App";
 import AddGroupMemberPage from "@/pages/AddGroupMemberPage";
 import MainPage from "@/pages/MainPage";
 import PaymentRequestPage from "@/pages/PaymentRequestPage";
+import VerificationCodePage from "@/pages/VerificationCodePage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "paymentRequest",
         element: <PaymentRequestPage />,
+      },
+      {
+        path: "verification",
+        element: <VerificationCodePage />,
       },
     ],
   },
