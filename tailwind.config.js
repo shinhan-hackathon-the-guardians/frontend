@@ -12,7 +12,13 @@ export default {
         LightGrey: "#D9D9D9",
         grey: "#888888",
       },
+      height: {
+        128: "32rem",
+        144: "36rem",
+        160: "40rem",
+        192: "48rem",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

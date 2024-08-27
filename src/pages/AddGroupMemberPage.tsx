@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
 import SelectField from "@/components/common/SelectField";
+import Button from "@/components/common/Button";
 import { RELATIONSHIP_OPTIONS, Relationship } from "@/constant/relationship";
 
 const AddGroupMemberPage: React.FC = () => {
@@ -9,6 +10,10 @@ const AddGroupMemberPage: React.FC = () => {
 
   const handleRelationshipChange = (value: Relationship) => {
     setRelationship(value);
+  };
+
+  const handleAddMember = () => {
+    // 멤버 추가 로직
   };
 
   return (
@@ -25,9 +30,7 @@ const AddGroupMemberPage: React.FC = () => {
             onChange={handleRelationshipChange}
           />
         </div>
-        <button className="w-full py-3 bg-Button text-white rounded hover:bg-blue-600 mt-4">
-          그룹원 추가하기
-        </button>
+        <Button text="그룹원 추가하기" onClick={handleAddMember} />
       </div>
     </div>
   );
