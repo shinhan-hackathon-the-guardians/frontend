@@ -20,7 +20,7 @@ const GroupMemberList: React.FC<Props> = ({
   });
 
   return (
-    <div className=" h-144 overflow-y-auto scrollbar-hide">
+    <div className=" flex-1 overflow-y-auto scrollbar-hide">
       {sortedMembers.map((member) => (
         <div className="m-2">
           <GroupMemberItem

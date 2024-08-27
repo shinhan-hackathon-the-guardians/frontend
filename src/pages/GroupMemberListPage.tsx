@@ -39,13 +39,21 @@ const GroupMemberListPage: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <HeaderBackSetting />
-      <main className="flex-grow">
-        <GroupInfo name={familyName} description={familyDescription} memberCount={members.length} />
-        <GroupMemberList members={members} onPinToggle={handlePinToggle} handleAddMember={handleAddMember} />
+      <main className="flex-1 flex flex-col overflow-y-auto">
+        <GroupInfo
+          name={familyName}
+          description={familyDescription}
+          memberCount={members.length}
+        />
+        <GroupMemberList
+          members={members}
+          onPinToggle={handlePinToggle}
+          handleAddMember={handleAddMember}
+        />
       </main>
-    </>
+    </div>
   );
 };
 
