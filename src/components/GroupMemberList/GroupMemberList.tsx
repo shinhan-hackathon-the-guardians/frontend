@@ -22,9 +22,8 @@ const GroupMemberList: React.FC<Props> = ({
   return (
     <div className=" flex-1 overflow-y-auto scrollbar-hide">
       {sortedMembers.map((member) => (
-        <div className="m-2">
+        <div className="m-2" key={member.id}>
           <GroupMemberItem
-            key={member.id}
             member={member}
             onPinToggle={() => onPinToggle(member.id)}
           />
