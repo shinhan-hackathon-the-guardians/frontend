@@ -96,13 +96,23 @@ function SignUpPage() {
         <div>
           <label>아이디</label>
           <br />
-          <input
-            type="text"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            required
-          />
+          <div className="flex space-x-2">
+            <input
+              type="text"
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+              className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
+              required
+            />
+            <button
+              type="button"
+              // onClick={handleUsernameCheck}
+              className="w-40 h-10 rounded-[20px] border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
+            >
+              중복 체크
+            </button>
+          </div>
         </div>
         <div>
           <label>비밀번호</label>
@@ -112,6 +122,7 @@ function SignUpPage() {
             name="password"
             value={form.password}
             onChange={handleChange}
+            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
             required
           />
         </div>
@@ -123,6 +134,7 @@ function SignUpPage() {
             name="passwordCheck"
             value={form.passwordCheck}
             onChange={handleChange}
+            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
             required
           />
         </div>
@@ -134,62 +146,69 @@ function SignUpPage() {
             name="name"
             value={form.name}
             onChange={handleChange}
+            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
             required
           />
         </div>
-        <div>
-          <label>성별</label>
-          <br />
-          <select
-            name="gender"
-            value={form.gender}
-            onChange={handleChange}
-            required
-          >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <label>생일</label>
-          <br />
-          <input
-            type="date"
-            name="birthDate"
-            value={form.birthDate}
-            onChange={handleDateChange}
-            required
-          />
+        <div className="flex space-x-4">
+          <div className="flex-1">
+            <label>성별</label>
+            <br />
+            <select
+              name="gender"
+              value={form.gender}
+              onChange={handleChange}
+              className="w-full h-10 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
+              required
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label>생일</label>
+            <br />
+            <input
+              type="date"
+              name="birthDate"
+              value={form.birthDate}
+              onChange={handleDateChange}
+              className="w-full h-10 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
+              required
+            />
+          </div>
         </div>
         <div>
           <label>연락처</label>
           <br />
-          <input
-            type="text"
-            value={phonePart1}
-            onChange={handlePhonePart1Change}
-            className="w-12 border rounded p-2 text-center"
-            required
-          />
-          {" - "}
-          <input
-            type="text"
-            id="phonePart2"
-            value={phonePart2}
-            onChange={handlePhonePart2Change}
-            className="w-16 border rounded p-2 text-center"
-            required
-          />
-          {" - "}
-          <input
-            type="text"
-            id="phonePart3"
-            value={phonePart3}
-            onChange={handlePhonePart3Change}
-            className="w-16 border rounded p-2 text-center"
-            required
-          />
+          <div className="flex space-x-2">
+            <input
+              type="text"
+              value={phonePart1}
+              onChange={handlePhonePart1Change}
+              className="flex-1 border rounded p-2 text-center"
+              required
+            />
+            {" - "}
+            <input
+              type="text"
+              id="phonePart2"
+              value={phonePart2}
+              onChange={handlePhonePart2Change}
+              className="flex-1 border rounded p-2 text-center"
+              required
+            />
+            {" - "}
+            <input
+              type="text"
+              id="phonePart3"
+              value={phonePart3}
+              onChange={handlePhonePart3Change}
+              className="flex-1 border rounded p-2 text-center"
+              required
+            />
+          </div>
         </div>
         {/* <div>
           <label>은행</label>
@@ -209,18 +228,32 @@ function SignUpPage() {
         <div>
           <label>계좌번호</label>
           <br />
-          <input
-            type="text"
-            name="accountNumber"
-            value={form.accountNumber}
-            onChange={handleChange}
-            required
-          />
-          <button type="button" onClick={handleAccountAuth}>
-            인증하기
+          <div className="flex space-x-2">
+            <input
+              type="text"
+              name="accountNumber"
+              value={form.accountNumber}
+              onChange={handleChange}
+              className="w-full h-10 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
+              required
+            />
+            <button
+              type="button"
+              onClick={handleAccountAuth}
+              className="w-40 h-10 rounded-[20px] border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
+            >
+              인증하기
+            </button>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="mt-4 w-full h-10 rounded-[10px] border-2 border-blue-500 font-bold text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
+          >
+            Sign Up
           </button>
         </div>
-        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
