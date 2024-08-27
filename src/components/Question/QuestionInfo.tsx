@@ -11,8 +11,8 @@ const QuestionInfo: React.FC<QuestionInfoProps> = ({
   currentIndex,
   totalQuestions,
 }) => (
-  <div className="p-4 overflow-y-auto">
-    <p className="text-sm text-gray-500 mb-2">
+  <div className="p-4 mt-9 overflow-y-auto">
+    <p className="text-sm text-gray-500 mb-1">
       {currentIndex + 1} / {totalQuestions}
     </p>
     <h2 className="text-xl font-bold mb-2">문제</h2>

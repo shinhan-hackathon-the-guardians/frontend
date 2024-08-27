@@ -29,6 +29,8 @@ const QuestionBankPage: React.FC = () => {
     fetchQuestions();
   }, []);
 
+  const handleGoToExam = () => {};
+
   const handleNextQuestion = () => {
     setSelectedAnswer(null);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % questions.length);
@@ -43,6 +45,7 @@ const QuestionBankPage: React.FC = () => {
   if (loading) return <p className="text-center">로딩 중...</p>;
 
   const currentQuestion = questions[currentIndex];
+  const isLastQuestion = currentIndex === questions.length - 1;
 
   return (
     <div className="flex flex-col h-screen">
@@ -76,10 +79,17 @@ const QuestionBankPage: React.FC = () => {
       <div className="p-4">
         <button
           onClick={handleNextQuestion}
-          disabled={selectedAnswer === null}
-          className="w-full bg-button text-white py-3 rounded-lg disabled:bg-blue-300 mx-auto max-w-md"
+          disabled={selectedAnswer === null || isLastQuestion}
+          className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-blue-300 mx-auto max-w-md"
         >
           다음
+        </button>
+        <button
+          onClick={handleGoToExam}
+          disabled={!isLastQuestion || selectedAnswer === null}
+          className="w-full bg-grey text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md"
+        >
+          시험 보러가기
         </button>
       </div>
     </div>
