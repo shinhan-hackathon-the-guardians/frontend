@@ -7,7 +7,7 @@ export default {
         Button: "#366DFE",
         Main: "#AADAFF",
         Text: "#191A1C",
-        Point: "#FAFFAF",
+        Point: "#FFFDF8",
         BackGround: "#F5F6FA",
         LightGrey: "#D9D9D9",
         grey: "#888888",
@@ -17,6 +17,9 @@ export default {
         144: "36rem",
         160: "40rem",
         192: "48rem",
+      },
+      fontFamily: {
+        sans: ["Goorm Sans", "sans-serif"],
       },
     },
   },

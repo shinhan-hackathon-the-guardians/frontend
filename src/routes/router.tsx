@@ -5,6 +5,7 @@ import MainPage from "@/pages/MainPage";
 import PaymentRequestPage from "@/pages/PaymentRequestPage";
 import VerificationCodePage from "@/pages/VerificationCodePage";
 import GroupMemberListPage from "@/pages/GroupMemberListPage";
+import QuestionBankPage from "@/pages/QuestionBankPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         path: "addGroupMember",
         element: <AddGroupMemberPage />,
+      },
+      {
+        path: "groupMemberList",
+        element: <GroupMemberListPage />,
       },
       {
         index: true,
@@ -28,8 +33,8 @@ const router = createBrowserRouter([
         element: <VerificationCodePage />,
       },
       {
-        path: "groupMemberList",
-        element: <GroupMemberListPage />,
+        path: "questionBank",
+        element: <QuestionBankPage />,
       },
     ],
   },
