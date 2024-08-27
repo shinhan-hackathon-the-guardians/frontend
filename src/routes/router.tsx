@@ -7,6 +7,7 @@ import VerificationCodePage from "@/pages/VerificationCodePage";
 import GroupMemberListPage from "@/pages/GroupMemberListPage";
 import QuestionBankPage from "@/pages/QuestionBankPage";
 import GuardianExamPage from "@/pages/GuardianExamPage";
+import SignUpPage from "@/pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "guardianExam",
         element: <GuardianExamPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUpPage />,
       },
     ],
   },
