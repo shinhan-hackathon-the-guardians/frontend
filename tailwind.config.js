@@ -18,6 +18,9 @@ export default {
         160: "40rem",
         192: "48rem",
       },
+      fontFamily: {
+        sans: ["Goorm Sans", "sans-serif"],
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

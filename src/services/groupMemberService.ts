@@ -1,6 +1,6 @@
-import { members as dummyMembers } from "@/utils/data";
 import axiosInstance from "./axiosInstance";
 import { FamilyResponse } from "@/types/Response";
+import { members as dummyMembers } from "@/utils/data";
 
 export const getGroupMemberList = async (familyId: number): Promise<FamilyResponse> => {
   return {
