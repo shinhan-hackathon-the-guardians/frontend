@@ -1,13 +1,6 @@
-import { Member } from "@/types/Member";
-import axios from "axios";
-import { members as dummyMembers } from "@/utils/data"; // 더미 데이터 가져오기
-
-interface FamilyResponse {
-  name: string;
-  description: string;
-  approval_request: number;
-  users: Member[];
-}
+import { members as dummyMembers } from "@/utils/data";
+import axiosInstance from "./axiosInstance";
+import { FamilyResponse } from "@/types/Response";
 
 export const getGroupMemberList = async (familyId: number): Promise<FamilyResponse> => {
   return {
@@ -18,7 +11,7 @@ export const getGroupMemberList = async (familyId: number): Promise<FamilyRespon
   };
 
   try {
-    const response = await axios.get<FamilyResponse>(`/family/${familyId}`);
+    const response = await axiosInstance.get<FamilyResponse>(`/family/${familyId}`);
 
     return response.data;
   } catch (error) {
