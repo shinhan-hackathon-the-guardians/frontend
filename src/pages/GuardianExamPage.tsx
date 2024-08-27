@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
 import { getQuestions } from "@/services/questionService";
 import { Question } from "@/types/Question";
 import { QUESTION_TIME } from "@/constant/common";
@@ -8,9 +7,9 @@ import AnswerButton from "@/components/Question/AnswerButton";
 import Explanation from "@/components/Question/Explanation";
 import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
 import ProgressBar from "@/components/Question/ProgressBar";
+import ResultModal from "@/components/Question/ResultModal";
 
 const GuardianExamPage: React.FC = () => {
-  const navigate = useNavigate();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<
@@ -19,6 +18,9 @@ const GuardianExamPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [timeLeft, setTimeLeft] = useState<number>(QUESTION_TIME);
   const [showResult, setShowResult] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -36,30 +38,33 @@ const GuardianExamPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [currentIndex]);
+
+  const startTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    setTimeLeft(QUESTION_TIME);
+    timerRef.current = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
-          clearInterval(timer);
-          handleTimeUp();
+          if (timerRef.current) {
+            clearInterval(timerRef.current);
+          }
+          setTimeout(() => {
+            setShowResult(true);
+          }, 200);
           return 0;
         }
         return prevTime - 1;
       });
     }, 1000);
-
-    return () => clearInterval(timer);
-  }, [currentIndex]);
-
-  const handleTimeUp = () => {
-    if (selectedAnswer === null) {
-      setSelectedAnswer("incorrect");
-    }
-    setShowResult(true);
-    setTimeout(handleNextQuestion, 3000); // 3초 후 다음 문제로 이동
-  };
-
-  const handleGoToExam = () => {
-    navigate("/guardianExam");
   };
 
   const handleNextQuestion = () => {
@@ -67,7 +72,6 @@ const GuardianExamPage: React.FC = () => {
     setShowResult(false);
     setCurrentIndex((prevIndex) => {
       if (prevIndex + 1 < questions.length) {
-        setTimeLeft(QUESTION_TIME);
         return prevIndex + 1;
       }
       return prevIndex;
@@ -75,11 +79,20 @@ const GuardianExamPage: React.FC = () => {
   };
 
   const handleAnswerClick = (answer: "correct" | "incorrect") => {
-    if (selectedAnswer === null) {
+    if (selectedAnswer === null && !showResult) {
       setSelectedAnswer(answer);
       setShowResult(true);
-      setTimeout(handleNextQuestion, 3000); // 3초 후 다음 문제로 이동
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      if (answer === questions[currentIndex].answer) {
+        setCorrectAnswers((prev) => prev + 1);
+      }
     }
+  };
+
+  const handleShowResults = () => {
+    setShowModal(true);
   };
 
   if (loading) return <p className="text-center">로딩 중...</p>;
@@ -126,13 +139,18 @@ const GuardianExamPage: React.FC = () => {
           다음
         </button>
         <button
-          onClick={handleGoToExam}
-          disabled={!isLastQuestion || !showResult}
+          onClick={handleShowResults}
+          disabled={!showResult || !isLastQuestion}
           className="w-full bg-grey text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md"
         >
-          시험 보러가기
+          결과 보기
         </button>
       </div>
+      <ResultModal
+        isOpen={showModal}
+        correctAnswers={correctAnswers}
+        totalQuestions={questions.length}
+      />
     </div>
   );
 };

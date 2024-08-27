@@ -1,4 +1,4 @@
-@import 'src/assets/fonts/goorm-fonts.css';
+@import './assets/fonts/goorm-fonts.css';
 
 @tailwind base;
 @tailwind components;
