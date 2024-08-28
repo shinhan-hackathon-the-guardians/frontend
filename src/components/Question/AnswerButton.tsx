@@ -17,24 +17,22 @@ const AnswerButton: React.FC<AnswerButtonProps> = ({
 }) => {
   const getButtonStyle = () => {
     if (!showResult) {
-      return "bg-white border-2 border-gray-300 text-gray-600";
+      return "border-2 border-gray-300";
     }
     if (isSelected) {
-      return isCorrect
-        ? "bg-white border-4 border-green text-gray-600"
-        : "bg-white border-4 border-red-500 text-gray-600";
+      return isCorrect ? "border-4 border-green" : "border-4 border-red-500";
     }
     if (isCorrect) {
-      return "bg-white border-4 border-green text-gray-600";
+      return "border-4 border-green";
     }
-    return "bg-white border-2 border-gray-300 text-gray-600";
+    return "border-2 border-gray-300";
   };
 
   return (
     <button
       onClick={onClick}
       disabled={showResult}
-      className={`w-24 h-24 rounded-full text-3xl ${getButtonStyle()}`}
+      className={`w-24 h-24 rounded-full text-3xl bg-white text-gray-600 ${getButtonStyle()}`}
     >
       {answer === "correct" ? "O" : "X"}
     </button>

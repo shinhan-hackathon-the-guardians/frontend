@@ -5,6 +5,7 @@ import QuestionInfo from "@/components/Question/QuestionInfo";
 import AnswerButton from "@/components/Question/AnswerButton";
 import Explanation from "@/components/Question/Explanation";
 import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
+import WarningModal from "@/components/Question/WarningModal";
 
 const QuestionBankPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -13,6 +14,11 @@ const QuestionBankPage: React.FC = () => {
     "correct" | "incorrect" | null
   >(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleGuardianExamClick = () => {
+    setIsModalOpen(true);
+  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -28,8 +34,6 @@ const QuestionBankPage: React.FC = () => {
 
     fetchQuestions();
   }, []);
-
-  const handleGoToExam = () => {};
 
   const handleNextQuestion = () => {
     setSelectedAnswer(null);
@@ -85,13 +89,17 @@ const QuestionBankPage: React.FC = () => {
           다음
         </button>
         <button
-          onClick={handleGoToExam}
+          onClick={handleGuardianExamClick}
           disabled={!isLastQuestion || selectedAnswer === null}
           className="w-full bg-grey text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md"
         >
           시험 보러가기
         </button>
       </div>
+      <WarningModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
