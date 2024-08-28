@@ -6,6 +6,7 @@ import PaymentRequestPage from "@/pages/PaymentRequestPage";
 import VerificationCodePage from "@/pages/VerificationCodePage";
 import GroupMemberListPage from "@/pages/GroupMemberListPage";
 import QuestionBankPage from "@/pages/QuestionBankPage";
+import GuardianExamPage from "@/pages/GuardianExamPage";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "questionBank",
         element: <QuestionBankPage />,
+      },
+      {
+        path: "guardianExam",
+        element: <GuardianExamPage />,
       },
     ],
   },

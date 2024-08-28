@@ -21,11 +21,11 @@ const AnswerButton: React.FC<AnswerButtonProps> = ({
     }
     if (isSelected) {
       return isCorrect
-        ? "bg-white border-4 border-green-500 text-gray-600"
+        ? "bg-white border-4 border-green text-gray-600"
         : "bg-white border-4 border-red-500 text-gray-600";
     }
     if (isCorrect) {
-      return "bg-white border-4 border-green-500 text-gray-600";
+      return "bg-white border-4 border-green text-gray-600";
     }
     return "bg-white border-2 border-gray-300 text-gray-600";
   };

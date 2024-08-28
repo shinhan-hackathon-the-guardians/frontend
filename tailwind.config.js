@@ -11,6 +11,7 @@ export default {
         BackGround: "#F5F6FA",
         LightGrey: "#D9D9D9",
         grey: "#888888",
+        green: "#06B04D",
       },
       height: {
         128: "32rem",
