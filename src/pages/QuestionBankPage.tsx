@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getQuestions } from "@/services/questionService";
 import { Question } from "@/types/Question";
+import { ButtonType } from "@/types/AnswerButton";
 import QuestionInfo from "@/components/Question/QuestionInfo";
 import AnswerButton from "@/components/Question/AnswerButton";
 import Explanation from "@/components/Question/Explanation";
 import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
 import WarningModal from "@/components/Question/WarningModal";
+import Loading from "@/components/common/Loading";
 
 const QuestionBankPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -15,10 +17,6 @@ const QuestionBankPage: React.FC = () => {
   >(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleGuardianExamClick = () => {
-    setIsModalOpen(true);
-  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -35,9 +33,20 @@ const QuestionBankPage: React.FC = () => {
     fetchQuestions();
   }, []);
 
+  const handleGuardianExamClick = () => {
+    setIsModalOpen(true);
+  };
+
   const handleNextQuestion = () => {
     setSelectedAnswer(null);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % questions.length);
+  };
+
+  const getButtonType = (buttonValue: "correct" | "incorrect"): ButtonType => {
+    if (!selectedAnswer) return "default";
+    if (currentQuestion.answer === buttonValue) return "correct";
+    if (selectedAnswer === buttonValue) return "incorrect";
+    return "default";
   };
 
   const handleAnswerClick = (answer: "correct" | "incorrect") => {
@@ -46,7 +55,7 @@ const QuestionBankPage: React.FC = () => {
     }
   };
 
-  if (loading) return <p className="text-center">로딩 중...</p>;
+  if (loading) return <Loading />;
 
   const currentQuestion = questions[currentIndex];
   const isLastQuestion = currentIndex === questions.length - 1;
@@ -62,18 +71,16 @@ const QuestionBankPage: React.FC = () => {
         />
         <div className="flex justify-center space-x-4 p-4">
           <AnswerButton
+            type={getButtonType("correct")}
             answer="correct"
-            isSelected={selectedAnswer === "correct"}
-            isCorrect={currentQuestion.answer === "correct"}
-            showResult={selectedAnswer !== null}
             onClick={() => handleAnswerClick("correct")}
+            disabled={selectedAnswer !== null}
           />
           <AnswerButton
+            type={getButtonType("incorrect")}
             answer="incorrect"
-            isSelected={selectedAnswer === "incorrect"}
-            isCorrect={currentQuestion.answer === "incorrect"}
-            showResult={selectedAnswer !== null}
             onClick={() => handleAnswerClick("incorrect")}
+            disabled={selectedAnswer !== null}
           />
         </div>
         {selectedAnswer && (
