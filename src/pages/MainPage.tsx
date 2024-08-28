@@ -61,7 +61,7 @@ function MainPage() {
 
         {/* 메뉴들 */}
         <div className="px-6">
-          <div className="mb-6 p-6 flex justify-between items-center bg-[#EBF0FD] py-4 rounded-[20px]">
+          <div className="mb-6 p-6 flex justify-between items-center bg-[#EBF0FD] py-4 rounded-b-[20px]">
             <div className="flex-1 flex justify-center">
               <button
                 className="bg-blue-500 text-white py-2 px-6 rounded-[20px]"

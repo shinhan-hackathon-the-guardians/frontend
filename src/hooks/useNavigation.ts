@@ -10,6 +10,8 @@ export const useNavigation = () => {
   const goToGroupMemberList = () => navigate("/groupMemberList");
   const goToPaymentRequest = () => navigate("/paymentRequest");
   const goToVerification = () => navigate("/verification");
+  const goToSignUp = () => navigate("/signup");
+  const goToBack = () => navigate(-1);
 
   return {
     goToHome,
@@ -19,5 +21,7 @@ export const useNavigation = () => {
     goToGroupMemberList,
     goToPaymentRequest,
     goToVerification,
+    goToSignUp,
+    goToBack,
   };
 };
