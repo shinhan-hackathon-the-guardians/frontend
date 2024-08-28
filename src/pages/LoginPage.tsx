@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom"; // 회원가입 페이지로 이동하기 위한 라우팅 라이브러리
+import { useNavigation } from "@/hooks/useNavigation";
 
 function LoginPage() {
   const [form, setForm] = useState({
@@ -8,7 +8,7 @@ function LoginPage() {
     password: "",
   });
 
-  const navigate = useNavigate();
+  const { goToHome, goToSignUp, goToBack } = useNavigation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,10 +22,7 @@ function LoginPage() {
     e.preventDefault();
     // 로그인 요청 로직 추가
     console.log("Login form submitted", form);
-  };
-
-  const handleSignUpRedirect = () => {
-    navigate("/signup"); // 회원가입 페이지로 이동
+    goToHome();
   };
 
   return (
@@ -33,7 +30,7 @@ function LoginPage() {
       <div className="relative flex justify-center items-center mb-24">
         <IoMdArrowRoundBack
           className="text-[24px] absolute left-0 cursor-pointer"
-          onClick={() => navigate(-1)} // 뒤로 가기 기능 추가
+          onClick={goToBack} // 뒤로 가기 기능 추가
         />
         <h1 className="text-3xl font-bold">로그인</h1>
       </div>
@@ -74,7 +71,7 @@ function LoginPage() {
       <div className="flex justify-center mt-4">
         <button
           type="button"
-          onClick={handleSignUpRedirect}
+          onClick={goToSignUp}
           className="w-full h-10 rounded-[10px] border-2 border-gray-500 font-bold text-gray-500 hover:bg-gray-500 hover:text-white transition duration-200 ease-in-out"
         >
           회원가입

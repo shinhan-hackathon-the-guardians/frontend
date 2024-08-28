@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "@/hooks/useNavigation";
 
 type Gender = "male" | "female" | "other";
 
@@ -87,14 +87,15 @@ function SignUpPage() {
     console.log("Form submitted", form);
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { goToBack } = useNavigation();
 
   return (
     <div className="flex-col items-center p-6 h-screen">
       <div className="relative flex justify-center items-center mb-6">
         <IoMdArrowRoundBack
           className="text-[24px] absolute left-0 cursor-pointer"
-          onClick={() => navigate(-1)}
+          onClick={goToBack}
         />
         <h1 className="text-3xl font-bold">회원가입</h1>
       </div>
