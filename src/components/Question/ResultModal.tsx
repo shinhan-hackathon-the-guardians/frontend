@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "@/components/common/Button";
+import { useNavigation } from "@/hooks/useNavigation";
 
 interface ResultModalProps {
   isOpen: boolean;
@@ -13,13 +13,9 @@ const ResultModal: React.FC<ResultModalProps> = ({
   correctAnswers,
   totalQuestions,
 }) => {
-  const navigate = useNavigate();
   const passThreshold = Math.ceil(totalQuestions * 0.7); // 70% 이상 맞추면 합격
   const isPassed = correctAnswers >= passThreshold;
-
-  const handleGoToMain = () => {
-    navigate("/"); // 메인 페이지 경로로 이동
-  };
+  const { goToHome } = useNavigation();
 
   if (!isOpen) return null;
 
@@ -41,7 +37,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
             )}
           </div>
         </div>
-        <Button text="메인으로" onClick={handleGoToMain} />
+        <Button text="메인으로" onClick={goToHome} />
       </div>
     </div>
   );

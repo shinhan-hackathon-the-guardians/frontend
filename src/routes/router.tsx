@@ -14,16 +14,16 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        index: true,
+        element: <MainPage />,
+      },
+      {
         path: "addGroupMember",
         element: <AddGroupMemberPage />,
       },
       {
         path: "groupMemberList",
         element: <GroupMemberListPage />,
-      },
-      {
-        index: true,
-        element: <MainPage />,
       },
       {
         path: "paymentRequest",

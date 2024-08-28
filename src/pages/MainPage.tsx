@@ -1,10 +1,21 @@
+import { useState } from "react";
+import { useNavigation } from "@/hooks/useNavigation";
+import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
+import WarningModal from "@/components/Question/WarningModal";
 import guardian from "@/assets/images/guardian.png";
 import graduate from "@/assets/images/graduate.png";
 import group from "@/assets/images/group.png";
 import chat from "@/assets/images/chat.png";
-import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
 
 function MainPage() {
+  const { goToQuestionBank, goToAddGroupMember, goToGroupMemberList } =
+    useNavigation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleGuardianExamClick = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
       <HeaderLogoChatNotify />
@@ -52,14 +63,20 @@ function MainPage() {
         <div className="px-6">
           <div className="mb-6 p-6 flex justify-between items-center bg-[#EBF0FD] py-4 rounded-[20px]">
             <div className="flex-1 flex justify-center">
-              <button className="bg-blue-500 text-white py-2 px-6 rounded-[20px]">
+              <button
+                className="bg-blue-500 text-white py-2 px-6 rounded-[20px]"
+                onClick={goToAddGroupMember}
+              >
                 그룹원 초대하기
               </button>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-4 justify-items-center">
             {/* 가디언 평가 */}
-            <div className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3">
+            <div
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              onClick={handleGuardianExamClick}
+            >
               <div className="flex">
                 <img
                   src={guardian}
@@ -76,7 +93,10 @@ function MainPage() {
             </div>
 
             {/* 문제 은행 */}
-            <div className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3">
+            <div
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              onClick={goToQuestionBank}
+            >
               <div className="flex">
                 <img
                   src={graduate}
@@ -93,7 +113,10 @@ function MainPage() {
             </div>
 
             {/* 그룹원 목록 */}
-            <div className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3">
+            <div
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              onClick={goToGroupMemberList}
+            >
               <div className="flex">
                 <img
                   src={group}
@@ -110,7 +133,7 @@ function MainPage() {
             </div>
 
             {/* 프로필 편집 */}
-            <div className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3">
+            <div className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer">
               <div className="flex">
                 <img src={chat} alt="챗봇" className="w-[55px] h-[55px]" />
               </div>
@@ -123,6 +146,10 @@ function MainPage() {
             </div>
           </div>
         </div>
+        <WarningModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </div>
     </div>
   );

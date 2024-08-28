@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getQuestions } from "@/services/questionService";
 import { Question } from "@/types/Question";
+import { ButtonType } from "@/types/AnswerButton";
 import { QUESTION_TIME } from "@/constant/common";
 import QuestionInfo from "@/components/Question/QuestionInfo";
 import AnswerButton from "@/components/Question/AnswerButton";
@@ -8,6 +9,7 @@ import Explanation from "@/components/Question/Explanation";
 import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
 import ProgressBar from "@/components/Question/ProgressBar";
 import ResultModal from "@/components/Question/ResultModal";
+import Loading from "@/components/common/Loading";
 
 const GuardianExamPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -38,13 +40,15 @@ const GuardianExamPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    startTimer();
+    if (questions.length > 0) {
+      startTimer();
+    }
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
     };
-  }, [currentIndex]);
+  }, [currentIndex, questions]);
 
   const startTimer = () => {
     if (timerRef.current) {
@@ -57,14 +61,19 @@ const GuardianExamPage: React.FC = () => {
           if (timerRef.current) {
             clearInterval(timerRef.current);
           }
-          setTimeout(() => {
-            setShowResult(true);
-          }, 200);
+          handleTimeUp();
           return 0;
         }
         return prevTime - 1;
       });
     }, 1000);
+  };
+
+  const handleTimeUp = () => {
+    if (questions[currentIndex]) {
+      setSelectedAnswer(questions[currentIndex].answer);
+      setShowResult(true);
+    }
   };
 
   const handleNextQuestion = () => {
@@ -78,14 +87,21 @@ const GuardianExamPage: React.FC = () => {
     });
   };
 
+  const getButtonType = (buttonValue: "correct" | "incorrect"): ButtonType => {
+    if (!showResult || !questions[currentIndex]) return "default";
+    if (questions[currentIndex].answer === buttonValue) return "correct";
+    if (selectedAnswer === buttonValue) return "incorrect";
+    return "default";
+  };
+
   const handleAnswerClick = (answer: "correct" | "incorrect") => {
-    if (selectedAnswer === null && !showResult) {
+    if (!showResult) {
       setSelectedAnswer(answer);
       setShowResult(true);
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
-      if (answer === questions[currentIndex].answer) {
+      if (answer === currentQuestion.answer) {
         setCorrectAnswers((prev) => prev + 1);
       }
     }
@@ -95,7 +111,7 @@ const GuardianExamPage: React.FC = () => {
     setShowModal(true);
   };
 
-  if (loading) return <p className="text-center">로딩 중...</p>;
+  if (loading) return <Loading />;
 
   const currentQuestion = questions[currentIndex];
   const isLastQuestion = currentIndex === questions.length - 1;
@@ -112,18 +128,16 @@ const GuardianExamPage: React.FC = () => {
         />
         <div className="flex justify-center space-x-4 p-4">
           <AnswerButton
+            type={getButtonType("correct")}
             answer="correct"
-            isSelected={selectedAnswer === "correct"}
-            isCorrect={currentQuestion.answer === "correct"}
-            showResult={showResult}
             onClick={() => handleAnswerClick("correct")}
+            disabled={showResult}
           />
           <AnswerButton
+            type={getButtonType("incorrect")}
             answer="incorrect"
-            isSelected={selectedAnswer === "incorrect"}
-            isCorrect={currentQuestion.answer === "incorrect"}
-            showResult={showResult}
             onClick={() => handleAnswerClick("incorrect")}
+            disabled={showResult}
           />
         </div>
         {showResult && (

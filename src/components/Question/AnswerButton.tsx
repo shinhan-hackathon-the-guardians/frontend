@@ -1,41 +1,31 @@
 import React from "react";
+import { cn } from "@/utils/cn";
+import { ButtonType } from "@/types/AnswerButton";
 
 interface AnswerButtonProps {
+  type: ButtonType;
   answer: "correct" | "incorrect";
-  isSelected: boolean;
-  isCorrect: boolean;
-  showResult: boolean;
   onClick: () => void;
+  disabled: boolean;
 }
 
 const AnswerButton: React.FC<AnswerButtonProps> = ({
+  type,
   answer,
-  isSelected,
-  isCorrect,
-  showResult,
   onClick,
+  disabled,
 }) => {
-  const getButtonStyle = () => {
-    if (!showResult) {
-      return "bg-white border-2 border-gray-300 text-gray-600";
+  const buttonStyle = cn(
+    "w-24 h-24 rounded-full text-3xl bg-white text-gray-600",
+    {
+      "border-2 border-gray-300": type === "default",
+      "border-4 border-green": type === "correct",
+      "border-4 border-red-500": type === "incorrect",
     }
-    if (isSelected) {
-      return isCorrect
-        ? "bg-white border-4 border-green text-gray-600"
-        : "bg-white border-4 border-red-500 text-gray-600";
-    }
-    if (isCorrect) {
-      return "bg-white border-4 border-green text-gray-600";
-    }
-    return "bg-white border-2 border-gray-300 text-gray-600";
-  };
+  );
 
   return (
-    <button
-      onClick={onClick}
-      disabled={showResult}
-      className={`w-24 h-24 rounded-full text-3xl ${getButtonStyle()}`}
-    >
+    <button onClick={onClick} disabled={disabled} className={buttonStyle}>
       {answer === "correct" ? "O" : "X"}
     </button>
   );
