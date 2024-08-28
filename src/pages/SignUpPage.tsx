@@ -182,49 +182,34 @@ function SignUpPage() {
         <div>
           <label>연락처</label>
           <br />
-          <div className="flex space-x-2">
+          <div className="flex items-center space-x-2">
             <input
               type="text"
               value={phonePart1}
               onChange={handlePhonePart1Change}
-              className="flex-1 border rounded p-2 text-center"
+              className="w-1/3 border rounded p-2 text-center"
               required
             />
-            {" - "}
+            <span>-</span>
             <input
               type="text"
               id="phonePart2"
               value={phonePart2}
               onChange={handlePhonePart2Change}
-              className="flex-1 border rounded p-2 text-center"
+              className="w-1/3 border rounded p-2 text-center"
               required
             />
-            {" - "}
+            <span>-</span>
             <input
               type="text"
               id="phonePart3"
               value={phonePart3}
               onChange={handlePhonePart3Change}
-              className="flex-1 border rounded p-2 text-center"
+              className="w-1/3 border rounded p-2 text-center"
               required
             />
           </div>
         </div>
-        {/* <div>
-          <label>은행</label>
-          <br />
-          <select
-            name="bank"
-            value={form.bank}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Bank</option>
-            <option value="bankA">Bank A</option>
-            <option value="bankB">Bank B</option>
-            <option value="bankC">Bank C</option>
-          </select>
-        </div> */}
         <div>
           <label>계좌번호</label>
           <br />
