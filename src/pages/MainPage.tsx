@@ -8,8 +8,12 @@ import group from "@/assets/images/group.png";
 import chat from "@/assets/images/chat.png";
 
 function MainPage() {
-  const { goToQuestionBank, goToAddGroupMember, goToGroupMemberList } =
-    useNavigation();
+  const {
+    goToQuestionBank,
+    goToAddGroupMember,
+    goToGroupMemberList,
+    goToChatBot,
+  } = useNavigation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleGuardianExamClick = () => {
@@ -133,7 +137,10 @@ function MainPage() {
             </div>
 
             {/* 프로필 편집 */}
-            <div className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer">
+            <div
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              onClick={goToChatBot}
+            >
               <div className="flex">
                 <img src={chat} alt="챗봇" className="w-[55px] h-[55px]" />
               </div>
