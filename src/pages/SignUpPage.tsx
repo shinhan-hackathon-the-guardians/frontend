@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
 import SelectField from "@/components/common/SelectField";
+import { userAuthService } from "@/services/userAuthService";
 
 type Gender = "남성" | "여성" | "기타";
 
@@ -37,9 +38,7 @@ const SignUpPage: React.FC = () => {
 
   const handlePhoneChange = (index: number, value: string) => {
     const newPhoneParts = [...phoneParts];
-    newPhoneParts[index] = value
-      .replace(/\D/g, "")
-      .slice(0, index === 0 ? 3 : 4);
+    newPhoneParts[index] = value.replace(/\D/g, "").slice(0, index === 0 ? 3 : 4);
     setPhoneParts(newPhoneParts);
     setForm((prev) => ({ ...prev, phoneNumber: newPhoneParts.join("-") }));
 
@@ -53,6 +52,7 @@ const SignUpPage: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log("회원가입 API 호출");
     e.preventDefault();
     if (form.password !== form.passwordCheck) {
       alert("비밀번호가 일치하지 않습니다.");
@@ -61,11 +61,27 @@ const SignUpPage: React.FC = () => {
     console.log("Form submitted", form);
   };
 
-  const handleAccountAuth = () => {
+  // 1원인증 코드
+  const handleAccountAuth = async () => {
     console.log("Account authentication requested for:", form.accountNumber);
-    // Here you would typically make an API call to verify the account
-    // For now, we'll just simulate a successful authentication
-    alert("계좌 인증이 완료되었습니다.");
+    const response = await userAuthService.sendAuthenticationAccount(form.accountNumber); // API: 인증코드 받기는 알림으로 옴? ㅋㅋ 구현 개에바라 일단 백엔드 수정해서 auth_code 받음
+    console.log(response);
+
+    const isCompleted = await userAuthService.authenticateAccount(
+      // API: 1원송금 인증 완료
+      form.accountNumber,
+      response.csrf_token,
+      response.auth_code
+    );
+
+    // 가입하기 disabled 였다가 바꾸는 로직??
+    console.log(isCompleted);
+    // 인증 확인 로직은 일단 대충짬
+    if (isCompleted.csrf_token.includes(response.csrf_token)) {
+      alert("계좌 인증이 완료되었습니다."); // disabled 상태 변경로직?
+    } else {
+      alert("계좌 인증에 실패했습니다.");
+    }
   };
 
   const handleUsernameCheck = () => {
