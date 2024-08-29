@@ -43,7 +43,8 @@ const QuestionBankPage: React.FC = () => {
   const getButtonType = (buttonValue: "correct" | "incorrect"): ButtonType => {
     if (!selectedAnswer) return "default";
     if (currentQuestion.answer === buttonValue && selectedAnswer === buttonValue) return "correct";
-    if (selectedAnswer === buttonValue) return "incorrect";
+    if (currentQuestion.answer !== buttonValue && selectedAnswer === buttonValue)
+      return "incorrect";
     return "default";
   };
 

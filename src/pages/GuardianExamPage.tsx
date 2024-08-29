@@ -89,7 +89,8 @@ const GuardianExamPage: React.FC = () => {
     if (!showResult || !questions[currentIndex]) return "default";
     if (selectedAnswer === questions[currentIndex].answer && selectedAnswer === buttonValue)
       return "correct";
-    if (selectedAnswer === buttonValue) return "incorrect";
+    if (selectedAnswer !== questions[currentIndex].answer && selectedAnswer === buttonValue)
+      return "incorrect";
     return "default";
   };
 
