@@ -11,6 +11,7 @@ import grandfatherImage from "@/assets/images/groupList/할아버지.svg";
 import grandmotherImage from "@/assets/images/groupList/할머니.svg";
 import siblingImage from "@/assets/images/groupList/형제.svg";
 import etcImage from "@/assets/images/groupList/기타.svg"; // 기타
+import { useNavigation } from "@/hooks/useNavigation";
 
 interface Props {
   member: Member;
@@ -29,9 +30,13 @@ const relationshipImageMap: Record<string, string> = {
 
 const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
   const imageSrc = relationshipImageMap[member.relationship] || etcImage;
+  const { goToMemberSettings } = useNavigation();
 
   return (
-    <div className="relative bg-white rounded-lg shadow-md p-4 flex items-center">
+    <div
+      className="relative bg-white rounded-lg shadow-md p-4 flex items-center"
+      onClick={goToMemberSettings}
+    >
       <div className="flex-shrink-0 mr-4">
         <img
           src={imageSrc}

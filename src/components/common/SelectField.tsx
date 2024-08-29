@@ -1,35 +1,93 @@
-import React from "react";
-import { Relationship } from "@/constant/relationship";
+import { useState, useRef, useEffect } from "react";
 
-interface SelectFieldProps {
+interface SelectFieldProps<T extends string> {
   label: string;
-  options: readonly Relationship[];
-  value: Relationship;
-  onChange: (value: Relationship) => void;
+  options: readonly T[];
+  value: T;
+  onChange: (value: T) => void;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ label, options, value, onChange }) => {
-  const selectId = `${label}-select`;
+function SelectField<T extends string>({
+  label,
+  options,
+  value,
+  onChange,
+}: SelectFieldProps<T>) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="mb-4">
-      <label htmlFor={selectId} className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-      </label>
-      <select
-        id={selectId}
-        value={value}
-        onChange={(e) => onChange(e.target.value as Relationship)}
-        className="w-full border-b-2 border-gray-300 focus:border-blue-500 outline-none py-2"
+    <div className="w-full mb-2 text-grey" ref={dropdownRef}>
+      <div>
+        <label
+          className="block text-md font-semibold mb-2"
+          id={`${label}-label`}
+        >
+          {label}
+        </label>
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+          aria-labelledby={`${label}-label`}
+          className="w-full border-b-2 border-grey cursor-pointer flex justify-between items-center focus:border-blue-500 p-2 text-lg outline-none transition-all duration-100 ease-in-out bg-white"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span>{value}</span>
+          <span
+            className={`transform transition-transform duration-300 ${
+              isOpen ? "rotate-180 text-Button" : "text-grey "
+            }`}
+          >
+            ▼
+          </span>
+        </button>
+      </div>
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "mt-2 max-h-360" : "max-h-0"
+        }`}
       >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+        <div
+          ref={optionsRef}
+          role="listbox"
+          className="bg-white border-solid border-2 border-Button rounded-lg shadow-lg"
+        >
+          {options.map((option) => (
+            <div
+              key={option}
+              role="option"
+              aria-selected={option === value}
+              className="px-2 py-3 hover:bg-blue-100 cursor-pointer transition-colors duration-150 ease-in-out"
+              onClick={() => {
+                onChange(option);
+                setIsOpen(false);
+              }}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default SelectField;

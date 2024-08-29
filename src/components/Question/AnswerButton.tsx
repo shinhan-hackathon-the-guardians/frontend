@@ -20,7 +20,7 @@ const AnswerButton: React.FC<AnswerButtonProps> = ({
     {
       "border-2 border-gray-300": type === "default",
       "border-4 border-green": type === "correct",
-      "border-4 border-red-500": type === "incorrect",
+      "border-4 border-red": type === "incorrect",
     }
   );
 

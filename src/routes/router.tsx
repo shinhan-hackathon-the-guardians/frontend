@@ -9,6 +9,7 @@ import QuestionBankPage from "@/pages/QuestionBankPage";
 import GuardianExamPage from "@/pages/GuardianExamPage";
 import SignUpPage from "@/pages/SignUpPage";
 import LoginPage from "@/pages/LoginPage";
+import MemberSettingsPage from "@/pages/MemberSettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "groupMemberList",
         element: <GroupMemberListPage />,
+      },
+      {
+        path: "memberSettings",
+        element: <MemberSettingsPage />,
       },
       {
         path: "paymentRequest",

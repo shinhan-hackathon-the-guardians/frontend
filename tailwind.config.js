@@ -12,6 +12,7 @@ export default {
         LightGrey: "#D9D9D9",
         grey: "#888888",
         green: "#06B04D",
+        red: "#FF0909",
       },
       height: {
         128: "32rem",

@@ -4,7 +4,8 @@ export const RELATIONSHIP_OPTIONS = [
   "아버지",
   "어머니",
   "형제",
-  "자녀",
+  "딸",
+  "아들",
   "기타",
 ] as const;
 
