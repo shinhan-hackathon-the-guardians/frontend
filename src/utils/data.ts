@@ -6,90 +6,90 @@ export const members: Member[] = [
     id: 1,
     name: "김신한",
     relationship: "아버지",
-    role: "manager", // Adjusted to match role types
-    phone_number: "010-1234-5678",
-    level: "오너", // Must be "오너" for manager or owner roles
+    role: "오너",
+    birthday: "1975.05.15",
+    level: true,
     isPinned: true,
   },
   {
     id: 2,
     name: "이서준",
     relationship: "할아버지",
-    role: "member", // Valid role
-    phone_number: "010-9876-5432",
-    level: "멤버", // Valid level
+    role: "멤버",
+    birthday: "1950.11.22",
+    level: false,
     isPinned: true,
   },
   {
     id: 3,
     name: "박민준",
     relationship: "형제",
-    role: "member", // Valid role
-    phone_number: "010-1111-2222",
-    level: "멤버", // Valid level
-    isPinned: true,
+    role: "멤버",
+    birthday: "1990.03.07",
+    level: false,
+    isPinned: false,
   },
   {
     id: 4,
     name: "최서현",
     relationship: "어머니",
-    role: "owner", // Adjusted to match role types
-    phone_number: "010-3333-4444",
-    level: "매니저", // Must be "매니저" for manager or owner roles
+    role: "매니저",
+    birthday: "1978.09.30",
+    level: true,
     isPinned: false,
   },
   {
     id: 5,
     name: "장하영",
     relationship: "할머니",
-    role: "member", // Valid role
-    phone_number: "010-5555-6666",
-    level: "멤버", // Valid level
-    isPinned: false,
+    role: "멤버",
+    birthday: "1953.02.14",
+    level: false,
+    isPinned: true,
   },
   {
     id: 6,
     name: "윤도현",
     relationship: "형제",
-    role: "member", // Valid role
-    phone_number: "010-7777-8888",
-    level: "멤버", // Valid level
+    role: "멤버",
+    birthday: "1988.12.01",
+    level: false,
     isPinned: false,
   },
   {
     id: 7,
     name: "김수연",
-    relationship: "자녀",
-    role: "manager", // Adjusted to match role types
-    phone_number: "010-9999-0000",
-    level: "매니저", // Must be "매니저" for manager or owner roles
-    isPinned: true,
+    relationship: "자매",
+    role: "매니저",
+    birthday: "1985.07.19",
+    level: true,
+    isPinned: false,
   },
   {
     id: 8,
     name: "이하은",
-    relationship: "자녀",
-    role: "member", // Valid role
-    phone_number: "010-1212-3434",
-    level: "멤버", // Valid level
-    isPinned: false,
+    relationship: "딸",
+    role: "멤버",
+    birthday: "2000.04.26",
+    level: false,
+    isPinned: true,
   },
   {
     id: 9,
     name: "정재훈",
-    relationship: "형제",
-    role: "member", // Valid role
-    phone_number: "010-5656-7878",
-    level: "멤버", // Valid level
+    relationship: "아들",
+    role: "멤버",
+    birthday: "1998.08.11",
+    level: false,
     isPinned: false,
   },
   {
     id: 10,
     name: "오지훈",
     relationship: "기타",
-    role: "owner", // Adjusted to match role types
-    phone_number: "010-9090-1010",
-    level: "매니저", // Must be "매니저" for manager or owner roles
+    role: "멤버",
+    birthday: "1970.10.03",
+    level: true,
     isPinned: false,
   },
 ];

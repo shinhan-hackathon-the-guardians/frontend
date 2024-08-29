@@ -65,7 +65,7 @@ const GroupSettingsPage = () => {
             </div>
           </div>
           <button
-            className="text-grey font-semibold text-lg mt-5 me-2 cursor-pointer hover:text-Button"
+            className="text-Button text-md mt-5 me-2 cursor-pointer hover:text-Button"
             onClick={handleSaveSettings}
           >
             저장

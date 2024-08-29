@@ -46,7 +46,7 @@ const AddGroupMemberPage: React.FC = () => {
             onChange={handleRelationshipChange}
           />
         </div>
-        <Button text="그룹원 요청하기" onClick={handleAddMember} />
+        <Button text="그룹원 초대하기" onClick={handleAddMember} />
       </main>
     </div>
   );

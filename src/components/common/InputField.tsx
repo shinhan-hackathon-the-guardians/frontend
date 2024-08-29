@@ -23,7 +23,7 @@ const InputField: React.FC<InputFieldProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border-b-2 border-grey focus:border-Button p-1 py-2 text-lg outline-none transition-all duration-100 ease-in-out p-2 text-lg"
+        className="w-full border-b border-grey focus:border-Button outline-none transition-all duration-100 ease-in-out text-md"
       />
     </div>
   );

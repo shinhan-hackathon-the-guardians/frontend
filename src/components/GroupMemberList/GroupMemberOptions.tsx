@@ -9,10 +9,10 @@ interface Props {
 const GroupMemberOptions: React.FC<Props> = ({ isPinned, onPinToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
+  const handleToggle = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsOpen((prev) => !prev);
   };
-
   const handlePinClick = () => {
     onPinToggle();
     setIsOpen(false);

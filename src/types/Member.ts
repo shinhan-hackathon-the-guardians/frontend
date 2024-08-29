@@ -1,9 +1,9 @@
 export type Member = {
   id: number;
   name: string;
-  phone_number: string;
-  level: "오너" | "매니저" | "멤버";
-  role: "none" | "member" | "manager" | "owner";
+  birthday: string;
+  level: boolean;
+  role: "멤버" | "매니저" | "오너";
   relationship: string;
   isPinned: boolean;
 };
