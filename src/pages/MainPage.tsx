@@ -9,12 +9,8 @@ import chat from "@/assets/images/chatbot.png";
 import badge from "@/assets/images/guardianBadge.png";
 
 function MainPage() {
-  const {
-    goToQuestionBank,
-    goToAddGroupMember,
-    goToGroupMemberList,
-    goToChatBot,
-  } = useNavigation();
+  const { goToQuestionBank, goToAddGroupMember, goToGroupMemberList, goToChatBot } =
+    useNavigation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleGuardianExamClick = () => {
@@ -46,9 +42,7 @@ function MainPage() {
                 <h1 className="text-2xl font-bold text-left">
                   김신한<span className="text-xl ml-1">고객님</span>
                 </h1>
-                <p className="text-left text-[10pt] text-gray-700 mt-1">
-                  신한이네 가족
-                </p>
+                <p className="text-left text-[10pt] text-gray-700 mt-1">신한이네 가족</p>
               </div>
 
               {/* 우측 이미지와 Owner 텍스트 */}
@@ -83,16 +77,12 @@ function MainPage() {
               onClick={handleGuardianExamClick}
             >
               <div className="flex">
-                <img
-                  src={guardian}
-                  alt="가디언 평가"
-                  className="w-[55px] h-[55px]"
-                />
+                <img src={guardian} alt="가디언 평가" className="w-[55px] h-[55px]" />
               </div>
               <div>
                 <span className="text-[12pt] font-bold">가디언 평가</span>
                 <p className="text-[#888888] text-[10pt] mt-1">
-                  가디언 평가에 <br /> 도전해보세요.
+                  가디언 등급에 <br /> 도전해보세요.
                 </p>
               </div>
             </div>
@@ -103,11 +93,7 @@ function MainPage() {
               onClick={goToQuestionBank}
             >
               <div className="flex">
-                <img
-                  src={graduate}
-                  alt="문제 은행"
-                  className="w-[55px] h-[55px]"
-                />
+                <img src={graduate} alt="문제 은행" className="w-[55px] h-[55px]" />
               </div>
               <div>
                 <span className="text-[12pt] font-bold">문제 은행</span>
@@ -123,16 +109,12 @@ function MainPage() {
               onClick={goToGroupMemberList}
             >
               <div className="flex">
-                <img
-                  src={group}
-                  alt="그룹원 목록"
-                  className="w-[55px] h-[55px]"
-                />
+                <img src={group} alt="그룹원 목록" className="w-[55px] h-[55px]" />
               </div>
               <div>
                 <span className="text-[12pt] font-bold">그룹원 목록</span>
                 <p className="text-[#888888] text-[10pt] mt-1">
-                  현재 그룹원의 <br /> 목록 조회해보세요.
+                  현재 그룹원의 <br /> 목록을 조회해보세요.
                 </p>
               </div>
             </div>
@@ -154,10 +136,7 @@ function MainPage() {
             </div>
           </div>
         </div>
-        <WarningModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
+        <WarningModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </div>
   );
