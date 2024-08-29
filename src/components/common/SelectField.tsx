@@ -7,22 +7,14 @@ interface SelectFieldProps<T extends string> {
   onChange: (value: T) => void;
 }
 
-function SelectField<T extends string>({
-  label,
-  options,
-  value,
-  onChange,
-}: SelectFieldProps<T>) {
+function SelectField<T extends string>({ label, options, value, onChange }: SelectFieldProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -36,10 +28,7 @@ function SelectField<T extends string>({
   return (
     <div className="w-full mb-2 text-grey" ref={dropdownRef}>
       <div>
-        <label
-          className="block text-md font-semibold mb-2"
-          id={`${label}-label`}
-        >
+        <label className="block text-md font-semibold mb-2" id={`${label}-label`}>
           {label}
         </label>
         <button
@@ -47,7 +36,7 @@ function SelectField<T extends string>({
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-labelledby={`${label}-label`}
-          className="w-full border-b border-grey cursor-pointer flex justify-between items-center focus:border-blue-500 text-md outline-none transition-all duration-100 ease-in-out bg-white pb-2"
+          className="w-full border-b border-grey cursor-pointer flex justify-between items-center focus:border-blue-500 focus:border-b-2 text-md outline-none transition-all duration-100 ease-in-out bg-white pb-2"
           onClick={() => setIsOpen(!isOpen)}
         >
           <span>{value}</span>
