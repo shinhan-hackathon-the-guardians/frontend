@@ -52,8 +52,8 @@ function SelectField<T extends string>({
         >
           <span>{value}</span>
           <span
-            className={`text-grey transform transition-transform duration-300 ${
-              isOpen ? "rotate-180 text-Button" : ""
+            className={`transform transition-transform duration-300 ${
+              isOpen ? "rotate-180 text-Button" : "text-grey "
             }`}
           >
             ▼
