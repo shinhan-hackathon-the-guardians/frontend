@@ -8,6 +8,7 @@ export const useNavigation = () => {
   const goToQuestionBank = () => navigate("/questionBank");
   const goToAddGroupMember = () => navigate("/addGroupMember");
   const goToGroupMemberList = () => navigate("/groupMemberList");
+  const goToMemberSettings = () => navigate("/memberSettings");
   const goToPaymentRequest = () => navigate("/paymentRequest");
   const goToVerification = () => navigate("/verification");
   const goToSignUp = () => navigate("/signup");
@@ -19,6 +20,7 @@ export const useNavigation = () => {
     goToQuestionBank,
     goToAddGroupMember,
     goToGroupMemberList,
+    goToMemberSettings,
     goToPaymentRequest,
     goToVerification,
     goToSignUp,
