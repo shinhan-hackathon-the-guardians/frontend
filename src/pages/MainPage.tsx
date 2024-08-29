@@ -6,6 +6,7 @@ import guardian from "@/assets/images/guardian.png";
 import graduate from "@/assets/images/graduate.png";
 import group from "@/assets/images/group.png";
 import chat from "@/assets/images/chatbot.png";
+import badge from "@/assets/images/guardianBadge.png";
 
 function MainPage() {
   const {
@@ -53,7 +54,7 @@ function MainPage() {
               {/* 우측 이미지와 Owner 텍스트 */}
               <div className="flex flex-col items-center">
                 <img
-                  src="src/assets/images/guardianBadge.png"
+                  src={badge}
                   alt="프로필 이미지"
                   className="w-[44px] h-[44px] rounded-full mb-2"
                 />
