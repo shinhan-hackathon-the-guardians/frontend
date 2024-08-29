@@ -13,6 +13,7 @@ import GuardianExamPage from "@/pages/GuardianExamPage";
 import QuestionBankPage from "@/pages/QuestionBankPage";
 import SignUpPage from "@/pages/SignUpPage";
 import LoginPage from "@/pages/LoginPage";
+import ChatBotPage from "@/pages/ChatBotPage";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+      },
+      {
+        path: "chatbot",
+        element: <ChatBotPage />,
       },
     ],
   },

@@ -15,6 +15,7 @@ export const useNavigation = () => {
   const goToVerification = () => navigate("/verification");
   const goToSignUp = () => navigate("/signup");
   const goToLogin = () => navigate("/login");
+  const goToChatBot = () => navigate("/chatbot");
   const goToBack = () => navigate(-1);
 
   return {
@@ -30,6 +31,7 @@ export const useNavigation = () => {
     goToVerification,
     goToSignUp,
     goToLogin,
+    goToChatBot,
     goToBack,
   };
 };
