@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Assuming you're using react-router
-import HeaderBackSetting from "@/components/Header/HeaderBackSetting";
 import UnreadSticker from "@/components/Notification/UnreadSticker";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal"; // Import the modal component
+import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 
 interface PaymentRequest {
   name: string;
@@ -12,7 +12,7 @@ interface PaymentRequest {
 
 const paymentRequests: PaymentRequest[] = [
   {
-    name: "김신한",
+    name: "김서준",
     accountInfo: "신한 123-456-78910",
     amount: 1000000,
   },
@@ -43,7 +43,7 @@ function PaymentRequestPage() {
 
   return (
     <div>
-      <HeaderBackSetting />
+      <HeaderBackChatNotify />
       <div className="min-h-screen bg-[#F5F6FA] flex flex-col items-center">
         <div className="w-full flex justify-start p-6">
           <h1 className="flex items-end text-xl font-bold">
