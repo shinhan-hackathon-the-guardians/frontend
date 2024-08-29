@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { getGroupMemberList } from "@/services/groupMemberService";
+import { Member } from "@/types/Member";
 import HeaderBackSetting from "@/components/Header/HeaderBackSetting";
 import GroupInfo from "@/components/GroupMemberList/GroupInfo";
 import GroupMemberList from "@/components/GroupMemberList/GroupMemberList";
-import { Member } from "@/types/Member";
-import { getGroupMemberList } from "@/services/groupMemberService";
 
 const GroupMemberListPage: React.FC = () => {
   const [members, setMembers] = useState<Member[]>([]);

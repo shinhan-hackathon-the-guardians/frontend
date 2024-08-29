@@ -47,7 +47,7 @@ function SelectField<T extends string>({
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-labelledby={`${label}-label`}
-          className="w-full border-b-2 border-grey cursor-pointer flex justify-between items-center focus:border-blue-500 p-2 text-lg outline-none transition-all duration-100 ease-in-out bg-white"
+          className="w-full border-b border-grey cursor-pointer flex justify-between items-center focus:border-blue-500 text-md outline-none transition-all duration-100 ease-in-out bg-white"
           onClick={() => setIsOpen(!isOpen)}
         >
           <span>{value}</span>
