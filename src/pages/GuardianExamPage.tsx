@@ -14,9 +14,7 @@ import Loading from "@/components/common/Loading";
 const GuardianExamPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<
-    "correct" | "incorrect" | null
-  >(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<"correct" | "incorrect" | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [timeLeft, setTimeLeft] = useState<number>(QUESTION_TIME);
   const [showResult, setShowResult] = useState<boolean>(false);
@@ -89,8 +87,10 @@ const GuardianExamPage: React.FC = () => {
 
   const getButtonType = (buttonValue: "correct" | "incorrect"): ButtonType => {
     if (!showResult || !questions[currentIndex]) return "default";
-    if (questions[currentIndex].answer === buttonValue) return "correct";
-    if (selectedAnswer === buttonValue) return "incorrect";
+    if (selectedAnswer === questions[currentIndex].answer && selectedAnswer === buttonValue)
+      return "correct";
+    if (selectedAnswer !== questions[currentIndex].answer && selectedAnswer === buttonValue)
+      return "incorrect";
     return "default";
   };
 
@@ -140,22 +140,20 @@ const GuardianExamPage: React.FC = () => {
             disabled={showResult}
           />
         </div>
-        {showResult && (
-          <Explanation explanation={currentQuestion.explanation} />
-        )}
+        {showResult && <Explanation explanation={currentQuestion.explanation} />}
       </main>
       <div className="p-4">
         <button
           onClick={handleNextQuestion}
           disabled={!showResult || isLastQuestion}
-          className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-blue-300 mx-auto max-w-md"
+          className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
           다음
         </button>
         <button
           onClick={handleShowResults}
           disabled={!showResult || !isLastQuestion}
-          className="w-full bg-grey text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md"
+          className="w-full bg-Button text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
           결과 보기
         </button>

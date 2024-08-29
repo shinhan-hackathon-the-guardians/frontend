@@ -12,9 +12,7 @@ import Loading from "@/components/common/Loading";
 const QuestionBankPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<
-    "correct" | "incorrect" | null
-  >(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<"correct" | "incorrect" | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -44,8 +42,9 @@ const QuestionBankPage: React.FC = () => {
 
   const getButtonType = (buttonValue: "correct" | "incorrect"): ButtonType => {
     if (!selectedAnswer) return "default";
-    if (currentQuestion.answer === buttonValue) return "correct";
-    if (selectedAnswer === buttonValue) return "incorrect";
+    if (currentQuestion.answer === buttonValue && selectedAnswer === buttonValue) return "correct";
+    if (currentQuestion.answer !== buttonValue && selectedAnswer === buttonValue)
+      return "incorrect";
     return "default";
   };
 
@@ -83,30 +82,25 @@ const QuestionBankPage: React.FC = () => {
             disabled={selectedAnswer !== null}
           />
         </div>
-        {selectedAnswer && (
-          <Explanation explanation={currentQuestion.explanation} />
-        )}
+        {selectedAnswer && <Explanation explanation={currentQuestion.explanation} />}
       </main>
       <div className="p-4">
         <button
           onClick={handleNextQuestion}
           disabled={selectedAnswer === null || isLastQuestion}
-          className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-blue-300 mx-auto max-w-md"
+          className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
           다음
         </button>
         <button
           onClick={handleGuardianExamClick}
           disabled={!isLastQuestion || selectedAnswer === null}
-          className="w-full bg-grey text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md"
+          className="w-full bg-Button text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
           시험 보러가기
         </button>
       </div>
-      <WarningModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <WarningModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

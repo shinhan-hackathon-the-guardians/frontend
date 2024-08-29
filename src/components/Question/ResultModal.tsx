@@ -8,11 +8,7 @@ interface ResultModalProps {
   totalQuestions: number;
 }
 
-const ResultModal: React.FC<ResultModalProps> = ({
-  isOpen,
-  correctAnswers,
-  totalQuestions,
-}) => {
+const ResultModal: React.FC<ResultModalProps> = ({ isOpen, correctAnswers, totalQuestions }) => {
   const passThreshold = Math.ceil(totalQuestions * 0.7); // 70% 이상 맞추면 합격
   const isPassed = correctAnswers >= passThreshold;
   const { goToHome } = useNavigation();
@@ -33,7 +29,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
             {isPassed ? (
               <h3 className="text-green text-[32px]">합격</h3>
             ) : (
-              <h3 className="text-red-500 text-[32px]">탈락</h3>
+              <h3 className="text-red text-[32px]">탈락</h3>
             )}
           </div>
         </div>
