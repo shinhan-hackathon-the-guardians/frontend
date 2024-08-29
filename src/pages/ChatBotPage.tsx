@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { FaArrowCircleUp } from "react-icons/fa";
 import chatbotProfile from "@/assets/images/chatbot.png";
-import userProfile from "@/assets/images/default.png";
-import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
+import HeaderBackNotify from "@/components/Header/HeaderBack";
 
 interface ChatMessage {
   sender: "user" | "bot";
@@ -11,8 +11,10 @@ interface ChatMessage {
 function ChatBotPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messageEndRef = useRef<HTMLDivElement>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   };
 
@@ -26,7 +28,6 @@ function ChatBotPage() {
 
     setMessages([...messages, userMessage]);
 
-    // 여기에 실제 챗봇 응답 로직이 들어가야 합니다.
     const botResponse: ChatMessage = {
       sender: "bot",
       text: `${input}`, // 예시 응답
@@ -34,11 +35,36 @@ function ChatBotPage() {
 
     setMessages([...messages, userMessage, botResponse]);
     setInput("");
+
+    // 메시지 전송 후 입력 칸 높이를 초기화
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
   };
+
+  const scrollToBottom = () => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${Math.min(
+        textareaRef.current.scrollHeight,
+        100
+      )}px`;
+    }
+  }, [input]);
 
   return (
     <div>
-      <HeaderBackChatNotify />
+      <HeaderBackNotify />
       <div className="flex flex-col h-screen p-4">
         <div className="flex-1 overflow-y-auto mb-4">
           {messages.map((message, index) => (
@@ -56,33 +82,38 @@ function ChatBotPage() {
                   message.sender === "user"
                     ? "bg-blue-500 text-white text-right"
                     : "bg-gray-200 text-black text-left"
-                } overflow-y-auto max-h-36 break-words`}
+                } break-words`}
               >
                 {message.text}
               </div>
-              {message.sender === "user" && (
-                <img
-                  src={userProfile}
-                  alt="User"
-                  className="w-12 h-12 rounded-full ml-4"
-                />
-              )}
+              {message.sender === "user"}
             </div>
           ))}
+          <div ref={messageEndRef} />
         </div>
-        <div className="flex">
-          <input
-            type="text"
-            value={input}
-            onChange={handleInputChange}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            className="flex-1 border border-gray-300 rounded-l-lg p-2 focus:outline-none"
-          />
+        <div className="sticky bottom-4 flex items-center">
+          <div className="flex-1 border border-gray-300 rounded-lg p-2 pr-10 bg-white">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              rows={1}
+              className="w-full focus:outline-none resize-none overflow-hidden border-none"
+              style={{ maxHeight: "100px" }} // 일정 높이까지 증가
+              placeholder="메시지를 입력하세요"
+            />
+          </div>
           <button
             onClick={handleSend}
-            className="bg-blue-500 text-white rounded-r-lg p-2"
+            className="absolute right-1 bottom-2  rounded-full p-1 flex items-end justify-center"
           >
-            전송
+            <FaArrowCircleUp size={24} />
           </button>
         </div>
       </div>
