@@ -72,7 +72,7 @@ function MainPage() {
                 className="bg-blue-500 text-white py-2 px-6 rounded-[20px]"
                 onClick={goToAddGroupMember}
               >
-                그룹 생성하기
+                구성원 초대하기
               </button>
             </div>
           </div>
