@@ -38,21 +38,17 @@ function MainPage() {
           <div className="flex justify-center items-end h-full">
             <div className="bg-white w-[325px] h-[120px] p-4 rounded-t-[10px] text-center text-black flex justify-between items-center">
               {/* 이름을 별도의 flex 컨테이너에 넣어 items-start 적용 */}
-              <div className="flex flex-col justify-center h-full">
+              <div className="flex flex-col h-full">
                 <h1 className="text-2xl font-bold text-left">
                   김신한<span className="text-xl ml-1">고객님</span>
                 </h1>
-                <p className="text-left text-[10pt] text-gray-700 mt-1">신한이네 가족</p>
+                <p className="text-left text-[10pt] text-gray-400 font-bold ">신한이네 가족</p>
               </div>
 
               {/* 우측 이미지와 Owner 텍스트 */}
-              <div className="flex flex-col items-center">
-                <img
-                  src={badge}
-                  alt="프로필 이미지"
-                  className="w-[44px] h-[44px] rounded-full mb-2"
-                />
-                <span className="text-[10pt] text-gray-900">Owner</span>
+              <div className="flex flex-col justify-center h-full">
+                <img src={badge} alt="프로필 이미지" className="w-[44px] h-[44px] rounded-full " />
+                <span className="text-[10pt] text-gray-400 font-bold">Owner</span>
               </div>
             </div>
           </div>
@@ -63,7 +59,7 @@ function MainPage() {
           <div className="mb-6 p-6 flex justify-between items-center bg-[#EBF0FD] py-4 rounded-b-[20px]">
             <div className="flex-1 flex justify-center">
               <button
-                className="bg-blue-500 text-white py-2 px-6 rounded-[20px]"
+                className="bg-blue-500 text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
                 onClick={goToAddGroupMember}
               >
                 구성원 초대하기
@@ -73,7 +69,7 @@ function MainPage() {
           <div className="grid grid-cols-2 gap-x-6 gap-y-4 justify-items-center">
             {/* 가디언 평가 */}
             <div
-              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer hover:bg-slate-100"
               onClick={handleGuardianExamClick}
             >
               <div className="flex">
@@ -89,7 +85,7 @@ function MainPage() {
 
             {/* 문제 은행 */}
             <div
-              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer hover:bg-slate-100"
               onClick={goToQuestionBank}
             >
               <div className="flex">
@@ -105,7 +101,7 @@ function MainPage() {
 
             {/* 그룹원 목록 */}
             <div
-              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer hover:bg-slate-100"
               onClick={goToGroupMemberList}
             >
               <div className="flex">
@@ -121,7 +117,7 @@ function MainPage() {
 
             {/* 프로필 편집 */}
             <div
-              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer"
+              className="bg-white w-[150px] h-[150px] shadow-md rounded-[20px] flex flex-col justify-between p-3 cursor-pointer hover:bg-slate-100"
               onClick={goToChatBot}
             >
               <div className="flex">
