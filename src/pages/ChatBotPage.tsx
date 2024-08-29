@@ -55,10 +55,7 @@ function ChatBotPage() {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${Math.min(
-        textareaRef.current.scrollHeight,
-        100
-      )}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 100)}px`;
     }
   }, [input]);
 
@@ -92,7 +89,7 @@ function ChatBotPage() {
           <div ref={messageEndRef} />
         </div>
         <div className="sticky bottom-4 flex items-center">
-          <div className="flex-1 border border-gray-300 rounded-lg p-2 pr-10 bg-white">
+          <div className="flex-1 flex flex-col justify-center border border-gray-300 rounded-lg p-2 pr-10 bg-white">
             <textarea
               ref={textareaRef}
               value={input}
@@ -104,17 +101,17 @@ function ChatBotPage() {
                 }
               }}
               rows={1}
-              className="w-full focus:outline-none resize-none overflow-hidden border-none"
+              className="w-full focus:outline-none resize-none overflow-hidden border-none "
               style={{ maxHeight: "100px" }} // 일정 높이까지 증가
               placeholder="메시지를 입력하세요"
             />
+            <button
+              onClick={handleSend}
+              className="absolute right-1 bottom-1 rounded-full p-1 flex items-end justify-center"
+            >
+              <FaArrowCircleUp className="text-Button" size={26} />
+            </button>
           </div>
-          <button
-            onClick={handleSend}
-            className="absolute right-1 bottom-2  rounded-full p-1 flex items-end justify-center"
-          >
-            <FaArrowCircleUp size={24} />
-          </button>
         </div>
       </div>
     </div>
