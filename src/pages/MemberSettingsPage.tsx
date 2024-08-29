@@ -69,7 +69,7 @@ const MemberSettingsPage = () => {
               onChange={handleRoleChange}
             />
             <button
-              className="text-grey font-semibold text-lg mt-5 me-2 cursor-pointer hover:text-Button"
+              className="text-Button text-md mt-5 me-2 cursor-pointer hover:text-Button"
               onClick={handleSaveRole}
             >
               저장
@@ -101,7 +101,7 @@ const MemberSettingsPage = () => {
               onChange={handleTermChange}
             />
             <button
-              className="text-grey font-semibold text-lg mt-5 me-2 cursor-pointer hover:text-Button"
+              className="text-Button text-md mt-5 me-2 cursor-pointer hover:text-Button"
               onClick={handleSaveLimit}
             >
               저장
