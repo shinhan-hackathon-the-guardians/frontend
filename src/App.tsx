@@ -13,7 +13,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="w-full max-w-[360px] mx-auto bg-BackGround">
+      <div className="w-full sm:max-w-[360px] mx-auto bg-BackGround">
         <Outlet />
       </div>
     </QueryClientProvider>

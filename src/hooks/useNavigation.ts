@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 export const useNavigation = () => {
   const navigate = useNavigate();
 
-  const goToHome = () => navigate("/");
+  const goToSplash = () => navigate("/");
+  const goToHome = () => navigate("/main");
   const goToGuardianExam = () => navigate("/guardianExam");
   const goToQuestionBank = () => navigate("/questionBank");
   const goToAddGroupMember = () => navigate("/addGroupMember");
@@ -13,9 +14,11 @@ export const useNavigation = () => {
   const goToPaymentRequest = () => navigate("/paymentRequest");
   const goToVerification = () => navigate("/verification");
   const goToSignUp = () => navigate("/signup");
+  const goToLogin = () => navigate("/login");
   const goToBack = () => navigate(-1);
 
   return {
+    goToSplash,
     goToHome,
     goToGuardianExam,
     goToQuestionBank,
@@ -26,6 +29,7 @@ export const useNavigation = () => {
     goToPaymentRequest,
     goToVerification,
     goToSignUp,
+    goToLogin,
     goToBack,
   };
 };

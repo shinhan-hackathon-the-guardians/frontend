@@ -1,5 +1,7 @@
+// src/router.tsx
 import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
+import SplashScreen from "@/pages/SplashScreen";
 import MainPage from "@/pages/MainPage";
 import PaymentRequestPage from "@/pages/PaymentRequestPage";
 import VerificationCodePage from "@/pages/VerificationCodePage";
@@ -19,6 +21,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <SplashScreen />,
+      },
+      {
+        path: "main",
         element: <MainPage />,
       },
       {
