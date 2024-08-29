@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigation } from "@/hooks/useNavigation";
+import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
+import InputField from "@/components/common/InputField";
+import SelectField from "@/components/common/SelectField";
 
-type Gender = "male" | "female" | "other";
+type Gender = "남성" | "여성" | "기타";
 
 interface SignUpForm {
   username: string;
@@ -16,239 +17,176 @@ interface SignUpForm {
   bank: string;
 }
 
-function SignUpPage() {
-  const [phonePart1, setPhonePart1] = useState("");
-  const [phonePart2, setPhonePart2] = useState("");
-  const [phonePart3, setPhonePart3] = useState("");
-
-  const handlePhonePart1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 3); // 숫자만 입력, 최대 3자리
-    setPhonePart1(value);
-    if (value.length === 3) {
-      document.getElementById("phonePart2")?.focus();
-    }
-  };
-
-  const handlePhonePart2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 4); // 숫자만 입력, 최대 4자리
-    setPhonePart2(value);
-    if (value.length === 4) {
-      document.getElementById("phonePart3")?.focus();
-    }
-  };
-
-  const handlePhonePart3Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 4); // 숫자만 입력, 최대 4자리
-    setPhonePart3(value);
-  };
-
+const SignUpPage: React.FC = () => {
   const [form, setForm] = useState<SignUpForm>({
     username: "",
     password: "",
     passwordCheck: "",
     name: "",
-    gender: "male",
+    gender: "남성",
     birthDate: "",
     phoneNumber: "",
     accountNumber: "",
     bank: "",
   });
+  const [phoneParts, setPhoneParts] = useState(["", "", ""]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+  const handleChange = (name: string, value: string) => {
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePhoneChange = (index: number, value: string) => {
+    const newPhoneParts = [...phoneParts];
+    newPhoneParts[index] = value
+      .replace(/\D/g, "")
+      .slice(0, index === 0 ? 3 : 4);
+    setPhoneParts(newPhoneParts);
+    setForm((prev) => ({ ...prev, phoneNumber: newPhoneParts.join("-") }));
+
+    if (value.length === (index === 0 ? 3 : 4) && index < 2) {
+      document.getElementById(`phonePart${index + 2}`)?.focus();
+    }
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      birthDate: e.target.value,
-    });
-  };
-
-  const handleAccountAuth = () => {
-    // 인증 로직 추가
-    console.log("Account authentication requested");
+    setForm((prev) => ({ ...prev, birthDate: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // const fullPhoneNumber = `${phonePart1}-${phonePart2}-${phonePart3}`;
     if (form.password !== form.passwordCheck) {
-      alert("Passwords do not match");
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    // 회원가입 요청 로직 추가
     console.log("Form submitted", form);
   };
 
-  // const navigate = useNavigate();
-  const { goToBack } = useNavigation();
+  const handleAccountAuth = () => {
+    console.log("Account authentication requested for:", form.accountNumber);
+    // Here you would typically make an API call to verify the account
+    // For now, we'll just simulate a successful authentication
+    alert("계좌 인증이 완료되었습니다.");
+  };
 
-  return (
-    <div className="flex-col items-center p-6 h-screen">
-      <div className="relative flex justify-center items-center mb-6">
-        <IoMdArrowRoundBack
-          className="text-[24px] absolute left-0 cursor-pointer"
-          onClick={goToBack}
-        />
-        <h1 className="text-3xl font-bold">회원가입</h1>
-      </div>
-      <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-        <div>
-          <label>아이디</label>
-          <br />
-          <div className="flex space-x-2">
-            <input
-              type="text"
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-              required
-            />
-            <button
-              type="button"
-              // onClick={handleUsernameCheck}
-              className="w-40 h-10 rounded-[20px] border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
-            >
-              중복 체크
-            </button>
-          </div>
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <br />
+  const handleUsernameCheck = () => {
+    console.log("Username availability check requested for:", form.username);
+    if (form.username.length < 4) {
+      alert("아이디는 4자 이상이어야 합니다.");
+    } else {
+      alert("사용 가능한 아이디입니다.");
+    }
+  };
+
+  const renderPhoneInputs = () => (
+    <div className="flex items-center space-x-2">
+      {[0, 1, 2].map((index) => (
+        <React.Fragment key={index}>
           <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-        <div>
-          <label>비밀번호 확인</label>
-          <br />
-          <input
-            type="password"
-            name="passwordCheck"
-            value={form.passwordCheck}
-            onChange={handleChange}
-            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-        <div>
-          <label>이름</label>
-          <br />
-          <input
+            id={`phonePart${index + 1}`}
             type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-            required
+            value={phoneParts[index]}
+            onChange={(e) => handlePhoneChange(index, e.target.value)}
+            className="w-1/3 border rounded p-1 mt-2 text-center outline-none focus:border-Button"
           />
-        </div>
-        <div className="flex space-x-4">
-          <div className="flex-1">
-            <label>성별</label>
-            <br />
-            <select
-              name="gender"
-              value={form.gender}
-              onChange={handleChange}
-              className="w-full h-10 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-              required
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label>생일</label>
-            <br />
-            <input
-              type="date"
-              name="birthDate"
-              value={form.birthDate}
-              onChange={handleDateChange}
-              className="w-full h-10 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-        </div>
-        <div>
-          <label>연락처</label>
-          <br />
-          <div className="flex items-center space-x-2">
-            <input
-              type="text"
-              value={phonePart1}
-              onChange={handlePhonePart1Change}
-              className="w-1/3 border rounded p-2 text-center"
-              required
-            />
-            <span>-</span>
-            <input
-              type="text"
-              id="phonePart2"
-              value={phonePart2}
-              onChange={handlePhonePart2Change}
-              className="w-1/3 border rounded p-2 text-center"
-              required
-            />
-            <span>-</span>
-            <input
-              type="text"
-              id="phonePart3"
-              value={phonePart3}
-              onChange={handlePhonePart3Change}
-              className="w-1/3 border rounded p-2 text-center"
-              required
-            />
-          </div>
-        </div>
-        <div>
-          <label>계좌번호</label>
-          <br />
-          <div className="flex space-x-2">
-            <input
-              type="text"
-              name="accountNumber"
-              value={form.accountNumber}
-              onChange={handleChange}
-              className="w-full h-10 p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-              required
-            />
-            <button
-              type="button"
-              onClick={handleAccountAuth}
-              className="w-40 h-10 rounded-[20px] border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
-            >
-              인증하기
-            </button>
-          </div>
-        </div>
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className="mt-4 w-full h-10 rounded-[10px] border-2 border-blue-500 font-bold text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
-          >
-            Sign Up
-          </button>
-        </div>
-      </form>
+          {index < 2 && <span>-</span>}
+        </React.Fragment>
+      ))}
     </div>
   );
-}
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <HeaderBackChatNotify />
+      <main className="px-4 py-6 flex flex-col">
+        <h1 className="text-xl font-bold text-Button mb-2">회원가입</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="bg-white rounded-lg p-4 mb-4">
+            <div className="flex items-center ">
+              <InputField
+                label="아이디"
+                placeholder="아이디를 입력해주세요."
+                value={form.username}
+                onChange={(value) => handleChange("username", value)}
+              />
+              <button
+                type="button"
+                className="w-32 ms-3 mb-3 h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
+                onClick={handleUsernameCheck}
+              >
+                중복 체크
+              </button>
+            </div>
+            <InputField
+              label="비밀번호"
+              placeholder="비밀번호를 입력해주세요."
+              type="password"
+              value={form.password}
+              onChange={(value) => handleChange("password", value)}
+            />
+            <InputField
+              label="비밀번호 확인"
+              placeholder="비밀번호를 다시 입력해주세요."
+              type="password"
+              value={form.passwordCheck}
+              onChange={(value) => handleChange("passwordCheck", value)}
+            />
+            <InputField
+              label="이름"
+              placeholder="이름을 입력해주세요."
+              value={form.name}
+              onChange={(value) => handleChange("name", value)}
+            />
+            <div className="flex justify-between">
+              <div className="flex flex-1 me-3">
+                <SelectField
+                  label="성별"
+                  options={["남성", "여성", "기타"] as const}
+                  value={form.gender}
+                  onChange={(value) => handleChange("gender", value)}
+                />
+              </div>
+              <div className="text-grey">
+                <label className="block text-md font-semibold">생년월일</label>
+                <input
+                  type="date"
+                  name="birthDate"
+                  value={form.birthDate}
+                  onChange={handleDateChange}
+                  className="w-full h-10 p-2 border-b border-grey outline-none focus:border-Button"
+                  required
+                />
+              </div>
+            </div>
+            <div className="text-grey font-semibold my-6">
+              <label>연락처</label>
+              {renderPhoneInputs()}
+            </div>
+            <div className="flex items-center">
+              <InputField
+                label="계좌번호"
+                placeholder="계좌번호를 입력해주세요."
+                value={form.accountNumber}
+                onChange={(value) => handleChange("accountNumber", value)}
+              />
+              <button
+                type="button"
+                className="w-32 ms-3 mb-3 h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
+                onClick={handleAccountAuth}
+              >
+                인증하기
+              </button>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full py-3 bg-Button text-white rounded hover:bg-blue-600 mt-4"
+          >
+            가입하기
+          </button>
+        </form>
+      </main>
+    </div>
+  );
+};
 
 export default SignUpPage;

@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
+import InputField from "@/components/common/InputField";
 import { useNavigation } from "@/hooks/useNavigation";
 
-function LoginPage() {
+const LoginPage: React.FC = () => {
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
 
-  const { goToHome, goToSignUp, goToBack } = useNavigation();
+  const { goToHome, goToSignUp } = useNavigation();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+  const handleChange = (name: string, value: string) => {
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,59 +23,43 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex-col items-center p-6 h-screen">
-      <div className="relative flex justify-center items-center mb-24">
-        <IoMdArrowRoundBack
-          className="text-[24px] absolute left-0 cursor-pointer"
-          onClick={goToBack} // 뒤로 가기 기능 추가
-        />
-        <h1 className="text-3xl font-bold">로그인</h1>
-      </div>
-      <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-        <div>
-          <label>아이디</label>
-          <br />
-          <input
-            type="text"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-4"
-            required
-          />
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <br />
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            className="w-full p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-12"
-            required
-          />
-        </div>
-        <div className="flex justify-center">
+    <div className="flex flex-col min-h-screen">
+      <HeaderBackChatNotify />
+      <main className="px-4 py-6 flex flex-col">
+        <h1 className="text-xl font-bold text-Button mb-2">로그인</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="bg-white rounded-lg p-4 mb-4">
+            <InputField
+              label="아이디"
+              placeholder="아이디를 입력해주세요."
+              value={form.username}
+              onChange={(value) => handleChange("username", value)}
+            />
+            <InputField
+              label="비밀번호"
+              placeholder="비밀번호를 입력해주세요."
+              type="password"
+              value={form.password}
+              onChange={(value) => handleChange("password", value)}
+            />
+          </div>
           <button
             type="submit"
-            className="mt-4 w-full h-10 rounded-[10px] border-2 border-blue-500 font-bold text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out"
+            className="w-full py-3 bg-Button text-white rounded hover:bg-blue-600 mt-4"
           >
             로그인
           </button>
-        </div>
-      </form>
-      <div className="flex justify-center mt-4">
+        </form>
         <button
-          type="button"
           onClick={goToSignUp}
-          className="w-full h-10 rounded-[10px] border-2 border-gray-500 font-bold text-gray-500 hover:bg-gray-500 hover:text-white transition duration-200 ease-in-out"
+          className="w-full py-3 bg-gray-300 text-white rounded hover:bg-gray-400 mt-4"
         >
           회원가입
         </button>
-      </div>
+      </main>
     </div>
   );
-}
+};
 
 export default LoginPage;

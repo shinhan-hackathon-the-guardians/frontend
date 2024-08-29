@@ -16,14 +16,14 @@ const InputField: React.FC<InputFieldProps> = ({
   onChange,
 }) => {
   return (
-    <div className="w-full mb-8 text-grey">
+    <div className="w-full mb-6 text-grey">
       <label className="block text-md font-semibold mb-2">{label}</label>
       <input
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border-b border-grey focus:border-Button outline-none transition-all duration-100 ease-in-out text-md"
+        className="w-full border-b border-grey focus:border-Button outline-none transition-all duration-100 ease-in-out text-md pb-2"
       />
     </div>
   );
