@@ -1,15 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
-import AddGroupMemberPage from "@/pages/AddGroupMemberPage";
 import MainPage from "@/pages/MainPage";
 import PaymentRequestPage from "@/pages/PaymentRequestPage";
 import VerificationCodePage from "@/pages/VerificationCodePage";
+import AddGroupMemberPage from "@/pages/AddGroupMemberPage";
 import GroupMemberListPage from "@/pages/GroupMemberListPage";
-import QuestionBankPage from "@/pages/QuestionBankPage";
+import MemberSettingsPage from "@/pages/MemberSettingsPage";
+import GroupSettingsPage from "@/pages/GroupSettingsPage";
 import GuardianExamPage from "@/pages/GuardianExamPage";
+import QuestionBankPage from "@/pages/QuestionBankPage";
 import SignUpPage from "@/pages/SignUpPage";
 import LoginPage from "@/pages/LoginPage";
-import MemberSettingsPage from "@/pages/MemberSettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "memberSettings",
         element: <MemberSettingsPage />,
+      },
+      {
+        path: "groupSettings",
+        element: <GroupSettingsPage />,
       },
       {
         path: "paymentRequest",
