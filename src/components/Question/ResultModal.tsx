@@ -21,7 +21,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg w-full max-w-[340px]">
+      <div className="bg-white p-6 rounded-lg w-full max-w-[330px]">
         <div className="flex justify-around items-center">
           <div className="text-lg font-bold text-grey">
             <p>문제 개수 : {totalQuestions}개</p>
