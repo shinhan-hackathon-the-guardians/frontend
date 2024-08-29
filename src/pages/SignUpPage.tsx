@@ -37,9 +37,7 @@ const SignUpPage: React.FC = () => {
 
   const handlePhoneChange = (index: number, value: string) => {
     const newPhoneParts = [...phoneParts];
-    newPhoneParts[index] = value
-      .replace(/\D/g, "")
-      .slice(0, index === 0 ? 3 : 4);
+    newPhoneParts[index] = value.replace(/\D/g, "").slice(0, index === 0 ? 3 : 4);
     setPhoneParts(newPhoneParts);
     setForm((prev) => ({ ...prev, phoneNumber: newPhoneParts.join("-") }));
 
@@ -86,7 +84,7 @@ const SignUpPage: React.FC = () => {
             type="text"
             value={phoneParts[index]}
             onChange={(e) => handlePhoneChange(index, e.target.value)}
-            className="w-1/3 border rounded p-1 mt-2 text-center outline-none focus:border-Button"
+            className="w-1/3 border rounded p-1 mt-2 text-center outline-none focus:border-Button focus:border-2"
           />
           {index < 2 && <span>-</span>}
         </React.Fragment>
@@ -152,7 +150,7 @@ const SignUpPage: React.FC = () => {
                   name="birthDate"
                   value={form.birthDate}
                   onChange={handleDateChange}
-                  className="w-full h-10 p-2 border-b border-grey outline-none focus:border-Button"
+                  className="w-full h-10 p-2 border-b border-grey outline-none focus:border-Button focus:border-b-2"
                   required
                 />
               </div>
