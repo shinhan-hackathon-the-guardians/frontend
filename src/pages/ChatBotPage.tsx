@@ -72,10 +72,13 @@ function ChatBotPage() {
               }`}
             >
               {message.sender === "bot" && (
-                <img src={chatbotProfile} alt="Chatbot" className="w-12 mr-4" />
+                <div>
+                  <img src={chatbotProfile} alt="Chatbot" className="w-10 mt-2 mr-4" />
+                  <p className="font-bold text-center mt-1 mr-4 text-gray-700">가디</p>
+                </div>
               )}
               <div
-                className={`max-w-xs p-4 rounded-lg ${
+                className={`max-w-60 p-4 rounded-lg ${
                   message.sender === "user"
                     ? "bg-blue-500 text-white text-right"
                     : "bg-gray-200 text-black text-left"
