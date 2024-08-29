@@ -1,6 +1,6 @@
 import { useNavigation } from "@/hooks/useNavigation";
-import { FaRegBell } from "react-icons/fa6";
 import { HiHome } from "react-icons/hi";
+import { GoBellFill } from "react-icons/go";
 
 function HeaderLogoChatNotify() {
   const { goToHome } = useNavigation();
@@ -14,7 +14,7 @@ function HeaderLogoChatNotify() {
         <HiHome />
       </div>
       <div className="flex items-center">
-        <FaRegBell className="text-[28px] cursor-pointer m-1" />
+        <GoBellFill className="text-white text-[28px] cursor-pointer m-1" />
       </div>
     </header>
   );
