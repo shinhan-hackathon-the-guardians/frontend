@@ -146,14 +146,14 @@ const GuardianExamPage: React.FC = () => {
         <button
           onClick={handleNextQuestion}
           disabled={!showResult || isLastQuestion}
-          className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-blue-300 mx-auto max-w-md"
+          className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
           다음
         </button>
         <button
           onClick={handleShowResults}
           disabled={!showResult || !isLastQuestion}
-          className="w-full bg-grey text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md"
+          className="w-full bg-Button text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
           결과 보기
         </button>
