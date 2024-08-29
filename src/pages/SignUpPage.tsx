@@ -37,7 +37,9 @@ const SignUpPage: React.FC = () => {
 
   const handlePhoneChange = (index: number, value: string) => {
     const newPhoneParts = [...phoneParts];
-    newPhoneParts[index] = value.replace(/\D/g, "").slice(0, index === 0 ? 3 : 4);
+    newPhoneParts[index] = value
+      .replace(/\D/g, "")
+      .slice(0, index === 0 ? 3 : 4);
     setPhoneParts(newPhoneParts);
     setForm((prev) => ({ ...prev, phoneNumber: newPhoneParts.join("-") }));
 
