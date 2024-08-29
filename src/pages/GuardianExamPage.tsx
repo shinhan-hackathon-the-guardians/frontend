@@ -14,9 +14,7 @@ import Loading from "@/components/common/Loading";
 const GuardianExamPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<
-    "correct" | "incorrect" | null
-  >(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<"correct" | "incorrect" | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [timeLeft, setTimeLeft] = useState<number>(QUESTION_TIME);
   const [showResult, setShowResult] = useState<boolean>(false);
@@ -89,7 +87,8 @@ const GuardianExamPage: React.FC = () => {
 
   const getButtonType = (buttonValue: "correct" | "incorrect"): ButtonType => {
     if (!showResult || !questions[currentIndex]) return "default";
-    if (questions[currentIndex].answer === buttonValue) return "correct";
+    if (selectedAnswer === questions[currentIndex].answer && selectedAnswer === buttonValue)
+      return "correct";
     if (selectedAnswer === buttonValue) return "incorrect";
     return "default";
   };
@@ -140,9 +139,7 @@ const GuardianExamPage: React.FC = () => {
             disabled={showResult}
           />
         </div>
-        {showResult && (
-          <Explanation explanation={currentQuestion.explanation} />
-        )}
+        {showResult && <Explanation explanation={currentQuestion.explanation} />}
       </main>
       <div className="p-4">
         <button
