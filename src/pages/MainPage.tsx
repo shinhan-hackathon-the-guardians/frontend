@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigation } from "@/hooks/useNavigation";
+import { useAuthStore } from "@/stores/userAuthStore";
 import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
 import WarningModal from "@/components/Question/WarningModal";
 import guardian from "@/assets/images/guardian.png";
@@ -7,7 +8,6 @@ import graduate from "@/assets/images/graduate.png";
 import group from "@/assets/images/group.png";
 import chat from "@/assets/images/chatbot.png";
 import badge from "@/assets/images/guardianBadge.png";
-import { useAuthStore } from "@/stores/userAuthStore";
 
 function MainPage() {
   const { goToQuestionBank, goToAddGroupMember, goToGroupMemberList, goToChatBot } =
