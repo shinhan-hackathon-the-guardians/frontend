@@ -1,4 +1,3 @@
-// src/router.tsx
 import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
 import SplashScreen from "@/pages/SplashScreen";
@@ -37,7 +36,7 @@ const router = createBrowserRouter([
         element: <GroupMemberListPage />,
       },
       {
-        path: "memberSettings",
+        path: "memberSettings/:target_user_id",
         element: <MemberSettingsPage />,
       },
       {
