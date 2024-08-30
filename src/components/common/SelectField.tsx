@@ -28,7 +28,7 @@ function SelectField<T extends string>({ label, options, value, onChange }: Sele
   return (
     <div className="w-full mb-2 text-grey" ref={dropdownRef}>
       <div>
-        <label className="block text-md font-semibold mb-2" id={`${label}-label`}>
+        <label className="block text-md font-semibold mb-1" id={`${label}-label`}>
           {label}
         </label>
         <button
@@ -36,7 +36,7 @@ function SelectField<T extends string>({ label, options, value, onChange }: Sele
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-labelledby={`${label}-label`}
-          className="w-full border-b border-grey cursor-pointer flex justify-between items-center focus:border-blue-500 focus:border-b-2 text-md outline-none transition-all duration-100 ease-in-out bg-white pb-2"
+          className="text-sm h-10 w-full border-b border-grey cursor-pointer flex justify-between items-center focus:border-blue-500 focus:border-b-2 text-md outline-none transition-all duration-100 ease-in-out bg-white "
           onClick={() => setIsOpen(!isOpen)}
         >
           <span>{value}</span>
@@ -57,7 +57,7 @@ function SelectField<T extends string>({ label, options, value, onChange }: Sele
         <div
           ref={optionsRef}
           role="listbox"
-          className="bg-white border-solid border-2 border-Button rounded-lg shadow-lg"
+          className="text-sm bg-white border-solid border-2 border-Button rounded-lg shadow-lg"
         >
           {options.map((option) => (
             <div

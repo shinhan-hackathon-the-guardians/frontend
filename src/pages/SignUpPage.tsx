@@ -47,9 +47,7 @@ const SignUpPage: React.FC = () => {
 
   const handlePhoneChange = (index: number, value: string) => {
     const newPhoneParts = [...phoneParts];
-    newPhoneParts[index] = value
-      .replace(/\D/g, "")
-      .slice(0, index === 0 ? 3 : 4);
+    newPhoneParts[index] = value.replace(/\D/g, "").slice(0, index === 0 ? 3 : 4);
     setPhoneParts(newPhoneParts);
     setForm((prev) => ({ ...prev, phone_number: newPhoneParts.join("-") }));
 
@@ -150,7 +148,7 @@ const SignUpPage: React.FC = () => {
             type="text"
             value={phoneParts[index]}
             onChange={(e) => handlePhoneChange(index, e.target.value)}
-            className="w-1/3 border rounded p-1 mt-2 text-center outline-none focus:border-Button focus:border-2"
+            className="w-1/3 text-sm border font-normal rounded p-1 mt-2 text-center outline-none focus:border-Button focus:border-2"
           />
           {index < 2 && <span>-</span>}
         </React.Fragment>
@@ -176,7 +174,7 @@ const SignUpPage: React.FC = () => {
               />
               <button
                 type="button"
-                className="w-32 ms-3 mb-3 h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
+                className="w-32 text-sm ml-3  h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
                 onClick={handleUsernameCheck}
               >
                 중복 체크
@@ -212,13 +210,13 @@ const SignUpPage: React.FC = () => {
                 />
               </div>
               <div className="text-grey">
-                <label className="block text-md font-semibold">생년월일</label>
+                <label className="block text-md mb-1 font-semibold">생년월일</label>
                 <input
                   type="date"
                   name="birth_date"
                   value={form.birth_date}
                   onChange={handleDateChange}
-                  className="w-full h-10 p-2 border-b border-grey outline-none focus:border-Button focus:border-b-2"
+                  className="text-sm px-1 w-full h-10  border-b border-grey outline-none focus:border-Button focus:border-b-2"
                   required
                 />
               </div>
@@ -236,7 +234,7 @@ const SignUpPage: React.FC = () => {
               />
               <button
                 type="button"
-                className={`w-32 ms-3 mb-3 h-10 rounded-lg transition duration-200 ease-in-out ${
+                className={`text-sm w-32 ml-3 h-10 rounded-lg transition duration-200 ease-in-out ${
                   isAccountVerified
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "border border-Button text-Button hover:bg-Button hover:text-white"
@@ -272,10 +270,10 @@ const SignUpPage: React.FC = () => {
           </div>
           <button
             type="submit"
-            className={`w-full py-3 rounded mt-4 ${
+            className={`w-full py-3 rounded mt-2 ${
               isFormValid
                 ? "bg-Button text-white hover:bg-blue-600"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-gray-300 cursor-not-allowed text-white"
             }`}
             disabled={!isFormValid}
           >
