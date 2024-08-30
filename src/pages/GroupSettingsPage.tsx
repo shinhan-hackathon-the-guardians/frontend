@@ -12,8 +12,8 @@ const GroupSettingsPage = () => {
   const [groupSettings, setGroupSettings] = useState<GroupSettings>({
     name: "",
     description: "",
-    approval_requirement: 1,
-    creation_date: new Date(),
+    approval_request: 1,
+    created_at: "",
   });
   const [isLoading, setIsLoading] = useState(true);
   const { goToGroupMemberList } = useNavigation();
@@ -45,7 +45,7 @@ const GroupSettingsPage = () => {
       const settingsToUpdate: GroupSettingsRequest = {
         name: groupSettings.name,
         description: groupSettings.description,
-        approval_requirement: groupSettings.approval_requirement,
+        approval_requirement: groupSettings.approval_request,
       };
       await updateGroupSettings(family_id!, settingsToUpdate);
       alert("그룹 설정이 성공적으로 저장되었습니다.");
@@ -82,13 +82,13 @@ const GroupSettingsPage = () => {
             label="승인 인원 숫자"
             placeholder="승인 인원 숫자를 입력해주세요."
             type="number"
-            value={groupSettings.approval_requirement.toString()}
-            onChange={(value) => handleInputChange("approval_requirement")(value)}
+            value={groupSettings.approval_request.toString()}
+            onChange={(value) => handleInputChange("approval_request")(value)}
           />
           <div className="w-full mb-8 text-grey">
             <label className="block text-md font-semibold mb-2">그룹 개설일</label>
-            <div className="w-full border-b-2 border-grey p-2 text-lg">
-              {new Date(groupSettings.creation_date).toLocaleDateString()}
+            <div className="w-full border-b border-grey p-2 text-lg">
+              {groupSettings.created_at}
             </div>
           </div>
           <button

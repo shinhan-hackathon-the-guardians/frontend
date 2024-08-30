@@ -5,7 +5,6 @@ import { GroupSettings, GroupSettingsRequest } from "@/types/GroupSettings";
 export const getGroupSettingsInfo = async (family_id: string): Promise<GroupSettings> => {
   try {
     const response = await axiosInstance.get<GroupSettings>(`/family/${family_id}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching group info:", error);

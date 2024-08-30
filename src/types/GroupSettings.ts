@@ -11,8 +11,8 @@ export interface GroupListResponse {
 export interface GroupSettings {
   name: string;
   description: string;
-  approval_requirement: number;
-  creation_date: Date;
+  approval_request: number;
+  created_at: string;
 }
 
 // 그룹 세부 설정 수정하기
