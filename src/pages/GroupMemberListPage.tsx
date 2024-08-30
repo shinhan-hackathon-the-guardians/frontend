@@ -22,7 +22,7 @@ const GroupMemberListPage: React.FC = () => {
         const familyId = user?.familyId;
         if (familyId) {
           const data = await getGroupMemberList(familyId);
-          setMembers(data.users);
+          setMembers(data.user_list);
           setFamilyName(data.name);
           setFamilyDescription(data.description);
         }
@@ -32,7 +32,7 @@ const GroupMemberListPage: React.FC = () => {
     };
 
     fetchData();
-    setIsAddEnabled(!!user?.familyId && user?.role === "OWNER");
+    setIsAddEnabled(!!user?.familyId && user?.role === "OWNER" && members.length < 12);
   }, [user]);
 
   const handlePinToggle = (id: number) => {
