@@ -4,5 +4,16 @@ export interface FamilyResponse {
   name: string;
   description: string;
   approval_request: number;
-  users: Member[];
+  user_list: Member[];
+}
+
+export interface ChatBotHistoryResponse {
+  userId: string;
+  message: string;
+  from_user: boolean;
+  timestamp: string;
+}
+
+export interface ChatResponse {
+  message: string;
 }

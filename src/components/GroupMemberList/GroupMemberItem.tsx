@@ -54,17 +54,11 @@ const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
       onClick={handleItemClick}
     >
       <div className="flex-shrink-0 mr-4">
-        <img
-          src={imageSrc}
-          alt={member.name}
-          className="w-12 h-12 rounded-full"
-        />
+        <img src={imageSrc} alt={member.name} className="w-12 h-12 rounded-full" />
       </div>
       <div className="flex-grow">
         <div className="flex flex-col">
-          <span className="text-gray-500 text-sm mb-1">
-            {member.relationship}
-          </span>
+          <span className="text-gray-500 text-sm mb-1">{member.relationship}</span>
           <div className="flex items-center">
             <h3 className="text-lg font-medium">{member.name}</h3>
             {member.isPinned && <FcBookmark />}
@@ -72,13 +66,13 @@ const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
           <p className="text-gray-500 text-sm">{member.birthday}</p>
         </div>
       </div>
-      <div className="absolute top-2 right-2 flex flex-col items-end">
+      <div className="absolute top-0 right-2 flex flex-col items-end">
         <GroupMemberOptions
           isPinned={member.isPinned}
           onPinToggle={() => onPinToggle(!member.isPinned)}
         />
         <span className="me-2">
-          {member.level ? (
+          {member.level === "GUARDIAN" ? (
             <img src={guardianBadge} alt="Guardian Badge" className="h-4 w-4" />
           ) : (
             <div className="h-4 w-4" />
