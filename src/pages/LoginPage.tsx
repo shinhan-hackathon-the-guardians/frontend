@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigation } from "@/hooks/useNavigation";
 import { userAuthService } from "@/services/userAuthService";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
+import { CurrentTokenContext } from "@/App";
 
 const LoginPage: React.FC = () => {
   const [form, setForm] = useState({
@@ -10,6 +11,7 @@ const LoginPage: React.FC = () => {
     password: "",
   });
 
+  const currentToken = useContext(CurrentTokenContext);
   const { goToHome, goToSignUp } = useNavigation();
 
   const handleChange = (name: string, value: string) => {
@@ -21,6 +23,12 @@ const LoginPage: React.FC = () => {
     try {
       await userAuthService.login(form.username, form.password);
       console.log("Login successful");
+
+      if (currentToken) {
+        await userAuthService.saveDeviceToken(currentToken); // 로그인 성공 시 deviceToken 전송
+        console.log("Device token sent successfully");
+      }
+
       goToHome();
     } catch (error) {
       console.error("Login failed:", error);

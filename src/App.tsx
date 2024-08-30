@@ -1,12 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import { messaging } from "@/utils/firebase";
 import { getToken, onMessage } from "firebase/messaging";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
 import NotificationModal from "@/components/Notification/NotificationModal";
 import AuthNotificationModal from "@/components/Notification/AuthNotificationModal";
 // import { useNavigation } from "./hooks/useNavigation";
+
+export const CurrentTokenContext = createContext<string | null>(null);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,6 +20,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const [deviceToken, setdeviceToken] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<
     "payment" | "notification" | "auth"
@@ -40,6 +43,7 @@ function App() {
           .then((currentToken) => {
             if (currentToken) {
               console.log("FCM Token:", currentToken);
+              setdeviceToken(currentToken);
               // 서버에 토큰 전송 또는 저장 로직을 여기에 추가할 수 있습니다.
             } else {
               console.log("등록된 토큰이 없습니다.");
@@ -112,37 +116,39 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="w-full sm:max-w-[360px] min-w-[344px] mx-auto bg-BackGround">
-        <Outlet />
-        {modalType === "payment" && (
-          <PaymentRequestModal
-            isOpen={isModalOpen}
-            onClose={handleModalClose}
-            onConfirm={handleModalConfirm}
-            name={modalData.name}
-            accountInfo={modalData.accountInfo}
-            amount={modalData.amount}
-          />
-        )}
-        {modalType === "notification" && (
-          <NotificationModal
-            isOpen={isModalOpen}
-            onClose={handleModalClose}
-            name={modalData.name}
-            accountInfo={modalData.accountInfo}
-            amount={modalData.amount}
-          />
-        )}
-        {modalType === "auth" && (
-          <AuthNotificationModal
-            isOpen={isModalOpen}
-            onClose={handleModalClose}
-            name={modalData.name}
-            accountInfo={modalData.accountInfo}
-            amount={modalData.amount}
-          />
-        )}
-      </div>
+      <CurrentTokenContext.Provider value={deviceToken}>
+        <div className="w-full sm:max-w-[360px] min-w-[344px] mx-auto bg-BackGround">
+          <Outlet />
+          {modalType === "payment" && (
+            <PaymentRequestModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              onConfirm={handleModalConfirm}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+          {modalType === "notification" && (
+            <NotificationModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+          {modalType === "auth" && (
+            <AuthNotificationModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+        </div>
+      </CurrentTokenContext.Provider>
     </QueryClientProvider>
   );
 }
