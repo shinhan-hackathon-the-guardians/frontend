@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { getQuestions } from "@/services/questionService";
 import { Question } from "@/types/Question";
 import { ButtonType } from "@/types/AnswerButton";
+import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import QuestionInfo from "@/components/Question/QuestionInfo";
 import AnswerButton from "@/components/Question/AnswerButton";
 import Explanation from "@/components/Question/Explanation";
-import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
 import WarningModal from "@/components/Question/WarningModal";
 import Loading from "@/components/common/Loading";
 
@@ -61,7 +61,7 @@ const QuestionBankPage: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <HeaderLogoChatNotify />
+      <HeaderBackChatNotify />
       <main className="flex-grow flex flex-col">
         <QuestionInfo
           question={currentQuestion.question}

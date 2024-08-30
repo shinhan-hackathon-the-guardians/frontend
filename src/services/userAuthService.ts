@@ -1,8 +1,7 @@
-import { User } from "@/types/User";
 import { useAuthStore } from "@/stores/userAuthStore";
 import axiosInstance from "@/services/axiosInstance";
 
-// 회원가입 데이터 인터페이스
+// 회원가입 데이터 인터페이스 // snake_case 안지키면 서버에서 다 400에러남
 interface SignupData {
   username: string;
   password: string;
@@ -57,34 +56,35 @@ export const userAuthService = {
   },
 
   // 계좌 송금 (인증 코드 발송)
-  sendAuthenticationAmount: async (
-    accountNumber: string
-  ): Promise<{ account_number: string; csrf_token: string }> => {
+  sendAuthenticationAccount: async (
+    account_number: string
+  ): Promise<{ account_number: string; csrf_token: string; auth_code: string }> => {
     try {
       const response = await axiosInstance.post("/user/accountAuthCode", {
-        accountNumber,
+        account_number,
       });
       return {
         account_number: response.data.account_number,
         csrf_token: response.data.csrf_token,
+        auth_code: response.data.auth_code,
       };
     } catch (error) {
-      console.error("Failed to send authentication amount:", error);
+      console.error("Failed to send authentication account:", error);
       throw error;
     }
   },
 
   // 계좌 인증 (인증 코드 확인)
   authenticateAccount: async (
-    accountNumber: string,
+    account_number: string,
     csrf_token: string,
-    authCode: string
+    auth_code: string
   ): Promise<{ account_number: string; csrf_token: string }> => {
     try {
       const response = await axiosInstance.post("/user/accountAuthCode/check", {
-        accountNumber,
+        account_number,
         csrf_token,
-        authCode,
+        auth_code,
       });
       return {
         account_number: response.data.account_number,
@@ -99,44 +99,10 @@ export const userAuthService = {
   // 회원가입
   signup: async (signupData: SignupData): Promise<void> => {
     try {
-      await axiosInstance.post("/signup", signupData);
+      await axiosInstance.post("/user/signup", signupData);
     } catch (error) {
       console.error("Signup failed:", error);
       throw error;
     }
   },
-
-  // 현재 사용자 정보 가져오기
-  getCurrentUser: async (): Promise<User | null> => {
-    try {
-      const response = await axiosInstance.get("/user/info");
-      const user = response.data;
-      useAuthStore.getState().setUser(user);
-      return user;
-    } catch (error) {
-      console.error("Failed to get current user:", error);
-      useAuthStore.getState().logout();
-      return null;
-    }
-  },
 };
-
-// 앱 시작 시 인증 상태 초기화
-// 보통 이렇게 함수 하나당 export하는 방식
-// 위에서 userAuthService로 묶은 것은
-// getUserLogin보단 userAuthService.login이
-// 나아 보였기 때문
-// 다른 파일에서는 export만 하는 것을 추천
-export const initializeAuthState = async () => {
-  try {
-    const sessionUser = await userAuthService.getCurrentUser();
-    if (sessionUser) {
-      useAuthStore.getState().login(sessionUser);
-    }
-  } catch (error) {
-    console.error("Failed to initialize auth state:", error);
-  }
-};
-
-// 앱 시작 시 인증 상태 초기화 함수 호출
-initializeAuthState();
