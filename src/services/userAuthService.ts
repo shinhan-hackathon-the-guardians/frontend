@@ -58,7 +58,11 @@ export const userAuthService = {
   // 계좌 송금 (인증 코드 발송)
   sendAuthenticationAccount: async (
     account_number: string
-  ): Promise<{ account_number: string; csrf_token: string; auth_code: string }> => {
+  ): Promise<{
+    account_number: string;
+    csrf_token: string;
+    auth_code: string;
+  }> => {
     try {
       const response = await axiosInstance.post("/user/accountAuthCode", {
         account_number,
@@ -102,6 +106,18 @@ export const userAuthService = {
       await axiosInstance.post("/user/signup", signupData);
     } catch (error) {
       console.error("Signup failed:", error);
+      throw error;
+    }
+  },
+
+  // 디바이스 토큰 전송
+  saveDeviceToken: async (device_token: string): Promise<void> => {
+    try {
+      await axiosInstance.post("/user/deviceToken", {
+        deviceToken: device_token,
+      });
+    } catch (error) {
+      console.error("Failed to send device token:", error);
       throw error;
     }
   },

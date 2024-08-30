@@ -4,7 +4,7 @@ interface PaymentRequestModalProps {
   onConfirm: () => void;
   name: string;
   accountInfo: string;
-  amount: number;
+  amount: string;
 }
 
 function PaymentRequestModal({
@@ -26,7 +26,7 @@ function PaymentRequestModal({
         </h2>
         <p className="text-lg font-medium text-gray-800">{accountInfo}</p>
         <p className="text-2xl font-bold text-blue-600 my-2">
-          {amount.toLocaleString()}원
+          {parseInt(amount, 10).toLocaleString()}원
         </p>
         <p className="text-gray-900">계좌 이체 수락하시겠습니까?</p>
         <div className="flex justify-around mt-6">
