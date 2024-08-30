@@ -4,8 +4,8 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   retry?: boolean;
 }
 
-// const baseURL = "https://guardian.givendragon.site/api";
-const baseURL = "http://localhost:8080";
+const baseURL = "https://guardian.givendragon.site/api";
+// const baseURL = "http://localhost:8080";
 
 const axiosInstance = axios.create({
   baseURL,
@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // 세션 쿠키를 포함하여 요청
+  withCredentials: true,
 });
 
 // 요청 인터셉터 설정 (요청을 보낼 때의 처리)
@@ -26,7 +26,6 @@ axiosInstance.interceptors.request.use(onRequest);
 
 // 응답 오류 처리
 const onResponseError = (error: AxiosError | Error) => {
-  // 응답 오류를 콘솔에 기록합니다.
   console.error(`🚨 [API] | Error ${error.message}`);
   return Promise.reject(error);
 };
@@ -34,5 +33,4 @@ const onResponseError = (error: AxiosError | Error) => {
 // 응답 인터셉터 설정 (응답을 받을 때의 처리)
 axiosInstance.interceptors.response.use((response) => response, onResponseError);
 
-// Axios 인스턴스 익스포트
 export default axiosInstance;
