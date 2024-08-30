@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstance";
 import { GroupListResponse } from "@/types/GroupSettings";
 
-export const getGroupMemberList = async (familyId: string): Promise<GroupListResponse> => {
+export const getGroupMemberList = async (familyId: number): Promise<GroupListResponse> => {
   try {
     const response = await axiosInstance.get<GroupListResponse>(`/family/${familyId}/users`);
     return response.data;
@@ -12,7 +12,7 @@ export const getGroupMemberList = async (familyId: string): Promise<GroupListRes
 };
 
 export const postGroupMemberInvite = async (
-  familyId: string,
+  familyId: number,
   name: string,
   phone_number: string
 ): Promise<void> => {
