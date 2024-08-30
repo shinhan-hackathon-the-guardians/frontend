@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuthStore } from "@/stores/userAuthStore";
 import { getGroupMemberList } from "@/services/groupMemberService";
-import { useAuthStore } from "@/stores/userAuthStore";
 import { Member } from "@/types/Member";
 import HeaderBackSetting from "@/components/Header/HeaderBackSetting";
 import GroupInfo from "@/components/GroupMemberList/GroupInfo";
