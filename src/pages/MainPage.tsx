@@ -42,7 +42,7 @@ function MainPage() {
               {/* 이름을 별도의 flex 컨테이너에 넣어 items-start 적용 */}
               <div className="flex flex-col h-full">
                 <h1 className="text-2xl font-bold text-left">
-                  {user?.name || "김신한"}
+                  {user?.userName || "김신한"}
                   <span className="text-xl ml-1">고객님</span>
                 </h1>
                 <p className="text-left text-[10pt] text-gray-400 font-bold">
@@ -58,7 +58,7 @@ function MainPage() {
                   <div className="w-[44px] h-[44px]" />
                 )}
                 <span className="text-[10pt] text-gray-400 font-bold">
-                  {user?.role || "비회원"}
+                  {user?.role && user.role !== "NONE" ? user.role : "회원"}
                 </span>
               </div>
             </div>
