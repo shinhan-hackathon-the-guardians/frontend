@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { messaging } from "@/utils/firebase";
+import { getToken, onMessage } from "firebase/messaging";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Assuming you're using react-router
 import UnreadSticker from "@/components/Notification/UnreadSticker";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal"; // Import the modal component
@@ -25,6 +27,54 @@ function PaymentRequestPage() {
     null
   );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // 알림 권한 요청 및 토큰 가져오기
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        getToken(messaging, {
+          vapidKey:
+            "BAWo9PXefNNss1PK-mO3E2Usodda1UzH7sv4oDjQuwEeT5UXbR-ZbPI0nk_460sEMB28MIwjJJFi-XT8Lb1n9TQ",
+        })
+          .then((currentToken) => {
+            if (currentToken) {
+              console.log("FCM Token:", currentToken);
+              // 서버에 토큰 전송 또는 저장
+              /*axios
+                .post("/api/save-token", { token: currentToken })
+                .then((response) => {
+                  console.log("토큰이 성공적으로 저장되었습니다.");
+                })
+                .catch((error) => {
+                  console.error("토큰 저장 오류:", error);
+                });*/
+            } else {
+              console.log("등록된 토큰이 없습니다.");
+            }
+          })
+          .catch((err) => {
+            if (err.response && err.response.status === 404) {
+              console.warn(
+                "토큰을 찾을 수 없습니다. 이미 삭제된 토큰일 수 있습니다."
+              );
+            } else {
+              console.error("토큰 가져오기 오류:", err);
+            }
+          });
+      }
+    });
+
+    // 포그라운드 메시지 수신 처리
+    const unsubscribe = onMessage(messaging, (payload) => {
+      console.log("메시지 수신:", payload);
+      // 필요 시 사용자에게 알림 표시 또는 상태 업데이트
+    });
+
+    // 컴포넌트 언마운트 시 이벤트 핸들러 해제
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const handleClick = (request: PaymentRequest) => {
     setSelectedRequest(request);
