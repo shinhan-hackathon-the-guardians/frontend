@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@/components/common/Button";
 import { useNavigation } from "@/hooks/useNavigation";
+import { PASS_THRESHOLD } from "@/constant/common";
 
 interface ResultModalProps {
   isOpen: boolean;
@@ -9,8 +10,7 @@ interface ResultModalProps {
 }
 
 const ResultModal: React.FC<ResultModalProps> = ({ isOpen, correctAnswers, totalQuestions }) => {
-  const passThreshold = Math.ceil(totalQuestions * 0.7); // 70% 이상 맞추면 합격
-  const isPassed = correctAnswers >= passThreshold;
+  const isPassed = correctAnswers >= PASS_THRESHOLD;
   const { goToHome } = useNavigation();
 
   if (!isOpen) return null;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getQuestions } from "@/services/questionService";
+import { getPractice } from "@/services/questionService";
 import { Question } from "@/types/Question";
 import { ButtonType } from "@/types/AnswerButton";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
@@ -19,7 +19,7 @@ const QuestionBankPage: React.FC = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const data = await getQuestions();
+        const data = await getPractice();
         setQuestions(data);
       } catch (error) {
         console.error("질문을 불러오는데 실패했습니다", error);
@@ -94,7 +94,6 @@ const QuestionBankPage: React.FC = () => {
         </button>
         <button
           onClick={handleGuardianExamClick}
-          disabled={!isLastQuestion || selectedAnswer === null}
           className="w-full bg-Button text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
           시험 보러가기

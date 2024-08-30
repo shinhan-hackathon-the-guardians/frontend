@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getQuestions } from "@/services/questionService";
+import { getQuestions, postQuestionComplete } from "@/services/questionService";
 import { Question } from "@/types/Question";
 import { ButtonType } from "@/types/AnswerButton";
 import { QUESTION_TIME } from "@/constant/common";
@@ -107,8 +107,13 @@ const GuardianExamPage: React.FC = () => {
     }
   };
 
-  const handleShowResults = () => {
-    setShowModal(true);
+  const handleResults = async (correctAnswers: number) => {
+    try {
+      await postQuestionComplete(correctAnswers >= PASS_THRESHOLD);
+      setShowModal(true);
+    } catch (error) {
+      console.error("Failed to post question completion:", error);
+    }
   };
 
   if (loading) return <Loading />;
@@ -144,6 +149,7 @@ const GuardianExamPage: React.FC = () => {
       </main>
       <div className="p-4">
         <button
+          type="button"
           onClick={handleNextQuestion}
           disabled={!showResult || isLastQuestion}
           className="w-full bg-Button text-white py-3 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
@@ -151,7 +157,8 @@ const GuardianExamPage: React.FC = () => {
           다음
         </button>
         <button
-          onClick={handleShowResults}
+          type="button"
+          onClick={() => handleResults(correctAnswers)}
           disabled={!showResult || !isLastQuestion}
           className="w-full bg-Button text-white py-3 mt-4 rounded-lg disabled:bg-gray-300 mx-auto max-w-md hover:bg-blue-600"
         >
