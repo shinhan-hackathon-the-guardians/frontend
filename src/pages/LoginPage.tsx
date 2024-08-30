@@ -36,12 +36,12 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <HeaderBackChatNotify />
-      <main className="px-4 py-6 flex flex-col">
+      <main className="px-4 py-6 flex-1 flex flex-col h-full">
         <h1 className="text-xl font-bold text-Button mb-2">로그인</h1>
 
-        <form onSubmit={handleSubmit}>
+        <form className="flex-1 h-full flex flex-col justify-between" onSubmit={handleSubmit}>
           <div className="bg-white rounded-lg p-4 mb-4">
             <InputField
               label="아이디"
@@ -57,19 +57,22 @@ const LoginPage: React.FC = () => {
               onChange={(value) => handleChange("password", value)}
             />
           </div>
-          <button
-            type="submit"
-            className="w-full py-3 bg-Button text-white rounded hover:bg-blue-600 mt-4"
-          >
-            로그인
-          </button>
+
+          <div className="mt-auto">
+            <button
+              type="submit"
+              className="w-full py-3 bg-Button text-white rounded hover:bg-blue-600 mt-4"
+            >
+              로그인
+            </button>
+            <button
+              onClick={goToSignUp}
+              className="w-full py-3 bg-gray-300 text-white rounded hover:bg-gray-400 mt-4"
+            >
+              회원가입
+            </button>
+          </div>
         </form>
-        <button
-          onClick={goToSignUp}
-          className="w-full py-3 bg-gray-300 text-white rounded hover:bg-gray-400 mt-4"
-        >
-          회원가입
-        </button>
       </main>
     </div>
   );
