@@ -14,6 +14,7 @@ import QuestionBankPage from "@/pages/QuestionBankPage";
 import SignUpPage from "@/pages/SignUpPage";
 import LoginPage from "@/pages/LoginPage";
 import ChatBotPage from "@/pages/ChatBotPage";
+import TransactionPage from "@/pages/TransactionPage";
 
 const router = createBrowserRouter([
   {
