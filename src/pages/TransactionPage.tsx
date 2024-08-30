@@ -1,18 +1,26 @@
 import InputField from "@/components/common/InputField";
+import shinhan from "@/assets/images/shinhan_log_white.png";
 
 const TransactionPage: React.FC = () => {
   return (
-    <div className="h-svh">
+    <div className="h-svh overflow-y-hidden">
       {/* Header */}
-      <div className="bg-Button px-4 py-4 text-center text-white text-2xl font-bold">
-        결제 테스트 페이지
+      <div className="bg-Button px-4 py-3 text-center text-2xl font-bold flex justify-center">
+        <img className=" h-8 " src={shinhan}></img>
+        {/* <div className="">신한은행</div> */}
       </div>
 
       {/* Content */}
-      <div className="p-4 h-full  text-gray-600">
+      <div
+        className="p-4 h-full overflow-y-scroll  text-gray-600"
+        style={{
+          msOverflowStyle: "none" /* IE and Edge */,
+          scrollbarWidth: "none" /* Firefox */,
+        }}
+      >
         {/* deposit */}
         <div className="mb-6">
-          <div className="text-lg font-bold">입금</div>
+          <div className="text-lg font-bold mb-2">입금</div>
 
           <form className="bg-white p-4 text-sm flex flex-col" action="">
             <InputField label="계좌번호" placeholder="계좌번호를 입력하세요." />
@@ -25,7 +33,7 @@ const TransactionPage: React.FC = () => {
 
         {/* Withdrawal */}
         <div className="mb-6">
-          <div className="text-lg font-bold">출금</div>
+          <div className="text-lg font-bold mb-2">출금</div>
 
           <form className="bg-white p-4 text-sm flex flex-col" action="">
             <InputField label="계좌번호" placeholder="계좌번호를 입력하세요." />
@@ -38,7 +46,7 @@ const TransactionPage: React.FC = () => {
 
         {/* Transfer */}
         <div className="mb-6">
-          <div className="text-lg font-bold">계좌 이체</div>
+          <div className="text-lg font-bold mb-2">계좌 이체</div>
 
           <form className="bg-white p-4 text-sm flex flex-col" action="">
             <InputField label="나의 계좌번호" placeholder="출금할 계좌번호를 입력하세요." />
@@ -51,8 +59,8 @@ const TransactionPage: React.FC = () => {
         </div>
 
         {/* Payment */}
-        <div className="mb-6">
-          <div className="text-lg font-bold">결제</div>
+        <div className="mb-6 pb-12">
+          <div className="text-lg font-bold mb-2">결제</div>
 
           <form className="bg-white p-4 text-sm flex flex-col" action="">
             <InputField label="계좌번호" placeholder="계좌번호를 입력하세요." />
