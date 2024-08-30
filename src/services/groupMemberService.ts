@@ -3,7 +3,7 @@ import { GroupListResponse } from "@/types/GroupSettings";
 
 export const getGroupMemberList = async (familyId: string): Promise<GroupListResponse> => {
   try {
-    const response = await axiosInstance.get<GroupListResponse>(`/family/${familyId}`);
+    const response = await axiosInstance.get<GroupListResponse>(`/family/${familyId}/users`);
     return response.data;
   } catch (error) {
     console.error("Failed to fetch group member list", error);

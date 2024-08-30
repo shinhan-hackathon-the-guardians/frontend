@@ -47,7 +47,7 @@ const GroupSettingsPage = () => {
         description: groupSettings.description,
         approval_requirement: groupSettings.approval_requirement,
       };
-      await updateGroupSettings(settingsToUpdate);
+      await updateGroupSettings(family_id!, settingsToUpdate);
       alert("그룹 설정이 성공적으로 저장되었습니다.");
       goToGroupMemberList();
     } catch (error) {

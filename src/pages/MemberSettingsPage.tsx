@@ -8,7 +8,7 @@ import {
   getMemberSettingsInfo,
   updateMemberSettings,
   updateMemberLevel,
-} from "@/services/groupSettingsService";
+} from "@/services/memberSettingsService";
 
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
@@ -51,7 +51,7 @@ const MemberSettingsPage = () => {
   // 그룹원 세부 설정 - level 변경
   const handleSaveRole = async () => {
     try {
-      await updateMemberLevel(family_id!, {
+      await updateMemberLevel({
         target_user_id: memberSettings.target_user_id,
         new_role: memberSettings.role,
       });
@@ -67,9 +67,9 @@ const MemberSettingsPage = () => {
     try {
       await updateMemberSettings(family_id!, {
         target_user_id: memberSettings.target_user_id,
+        period: memberSettings.period,
         single_transaction_limit: memberSettings.single_transaction_limit,
         max_limit_amount: memberSettings.max_limit_amount,
-        period: memberSettings.period,
       });
       goToGroupMemberList();
     } catch (error) {

@@ -34,9 +34,9 @@ export interface MemberSettings {
 // 그룹원 세부 설정 수정하기
 export interface MemberSettingsRequest {
   target_user_id: number;
+  period: string;
   single_transaction_limit: number;
   max_limit_amount: number;
-  period: string;
 }
 
 // 그룹원 세부 설정 level 수정하기
