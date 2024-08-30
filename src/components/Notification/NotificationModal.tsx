@@ -25,10 +25,12 @@ function NotificationModal({
           서포터 <span className="text-blue-600 font-bold">{name}</span>님의
         </h2>
         <p className="text-lg font-medium text-gray-800">{accountInfo}</p>
-        <p className="text-2xl font-bold text-blue-600 my-2">
-          {parseInt(amount, 10).toLocaleString()}원
+        <p className="text-xl font-bold text-blue-600 my-2">
+          <span className="text-sm text-black">결제 시도 금액 </span>
+          {parseInt(amount, 10).toLocaleString()}원{" "}
+          <span className="text-sm text-black">으로</span>
         </p>
-        <p className="text-gray-900">계좌 이체 수락하시겠습니까?</p>
+        <p className="text-gray-900"> 결제 한도를 초과하였습니다.</p>
         <div className="flex justify-around mt-6">
           <button
             onClick={onClose}
@@ -36,12 +38,6 @@ function NotificationModal({
           >
             확인
           </button>
-          {/* <button
-              onClick={onClose}
-              className="bg-blue-600 text-white px-4 py-2 rounded w-24 font-medium"
-            >
-              아니오
-            </button> */}
         </div>
       </div>
     </div>
