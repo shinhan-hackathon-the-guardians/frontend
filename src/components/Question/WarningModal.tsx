@@ -51,14 +51,14 @@ const WarningModal: React.FC<WarningModalProps> = ({ isOpen, onClose }) => {
           </p>
           <div className="flex justify-end space-x-2">
             <button
-              className="w-20 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors duration-200"
+              className="w-20 px-4 py-2 text-sm bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors duration-200"
               onClick={goToGuardianExam}
             >
               예
             </button>
             <button
               onClick={onClose}
-              className="w-20 px-4 py-2 bg-Button text-white rounded hover:bg-blue-600 transition-colors duration-200"
+              className="w-20 px-4 py-2 text-sm bg-Button text-white rounded hover:bg-blue-600 transition-colors duration-200"
             >
               아니오
             </button>

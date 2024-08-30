@@ -4,7 +4,7 @@ import { TbMessageChatbot } from "react-icons/tb";
 import { FaRegBell } from "react-icons/fa6";
 
 function HeaderBackChatNotify() {
-  const { goToBack, goToPaymentRequest, goToChatBot } = useNavigation();
+  const { goToBack, goToNotification, goToChatBot } = useNavigation();
 
   return (
     <header className="flex items-center justify-between p-2 bg-[#F5F6FA] shadow-md h-[44px]">
@@ -19,7 +19,7 @@ function HeaderBackChatNotify() {
         />
         <FaRegBell
           className="text-[24px] cursor-pointer ml-2"
-          onClick={goToPaymentRequest}
+          onClick={goToNotification}
         />
       </div>
     </header>

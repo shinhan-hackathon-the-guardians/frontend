@@ -5,7 +5,7 @@ import { TbLogout } from "react-icons/tb";
 import { userAuthService } from "@/services/userAuthService";
 
 function HeaderLogoChatNotify() {
-  const { goToHome, goToPaymentRequest, goToSplash } = useNavigation();
+  const { goToHome, goToNotification, goToSplash } = useNavigation();
 
   return (
     <header className="flex items-center justify-between p-2 bg-[#167CFA] shadow-md h-[44px]">
@@ -18,7 +18,7 @@ function HeaderLogoChatNotify() {
       <div className="flex items-center">
         <GoBellFill
           className="text-white text-[28px] cursor-pointer m-1"
-          onClick={goToPaymentRequest}
+          onClick={goToNotification}
         />
         <TbLogout
           className="text-white text-[28px] cursor-pointer m-1"
