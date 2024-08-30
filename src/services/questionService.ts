@@ -1,9 +1,10 @@
 import axiosInstance from "./axiosInstance";
 import { Question } from "@/types/Question";
-// import { financeQuestions as dummyFinanceQuestions } from "@/utils/data";
+import { financeQuestions as dummyFinanceQuestions } from "@/utils/data";
 
 // 가디언 시험 파트
 const getQuestions = async (): Promise<Question[]> => {
+  return dummyFinanceQuestions;
   try {
     const response = await axiosInstance.get("/question");
     return response.data;
@@ -24,6 +25,7 @@ const postQuestionComplete = async (isPassed: boolean): Promise<void> => {
 
 // 문제은행 파트
 const getPractice = async (): Promise<Question[]> => {
+  return dummyFinanceQuestions;
   try {
     const response = await axiosInstance.get("/question");
     return response.data;
