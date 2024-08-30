@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useAuthStore } from "@/stores/userAuthStore";
+import { postGroupMemberInvite } from "@/services/groupMemberService";
+import { RELATIONSHIP_OPTIONS, Relationship } from "@/constant/relationship";
+import { useNavigation } from "@/hooks/useNavigation";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
 import SelectField from "@/components/common/SelectField";
 import Button from "@/components/common/Button";
-import { RELATIONSHIP_OPTIONS, Relationship } from "@/constant/relationship";
 
 const AddGroupMemberPage: React.FC = () => {
   const [relationship, setRelationship] = useState<Relationship>(
@@ -11,13 +14,26 @@ const AddGroupMemberPage: React.FC = () => {
   );
   const [name, setName] = useState("");
   const [tel, setTel] = useState("");
+  const user = useAuthStore((state) => state.user);
+  const { goToHome } = useNavigation();
 
   const handleRelationshipChange = (value: Relationship) => {
     setRelationship(value);
   };
 
-  const handleAddMember = () => {
-    // 멤버 추가 로직
+  const handleAddMember = async () => {
+    if (!user || !user.familyId) {
+      console.error("사용자 정보 또는 가족 ID가 없습니다.");
+      return;
+    }
+
+    try {
+      await postGroupMemberInvite(user.familyId, name, tel);
+      console.log("그룹원 초대가 성공적으로 전송되었습니다.");
+      goToHome();
+    } catch (error) {
+      console.error("그룹원 초대 중 오류가 발생했습니다.", error);
+    }
   };
 
   return (
