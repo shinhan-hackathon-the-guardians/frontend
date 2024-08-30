@@ -148,7 +148,7 @@ const SignUpPage: React.FC = () => {
             type="text"
             value={phoneParts[index]}
             onChange={(e) => handlePhoneChange(index, e.target.value)}
-            className="w-1/3 text-sm border rounded p-1 mt-2 text-center outline-none focus:border-Button focus:border-2"
+            className="w-1/3 text-sm border font-normal rounded p-1 mt-2 text-center outline-none focus:border-Button focus:border-2"
           />
           {index < 2 && <span>-</span>}
         </React.Fragment>
