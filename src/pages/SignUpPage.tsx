@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
 import SelectField from "@/components/common/SelectField";
 import { userAuthService } from "@/services/userAuthService";
 import { useNavigation } from "@/hooks/useNavigation";
+import { CurrentTokenContext } from "@/App";
 
 type Gender = "MALE" | "FEMALE";
 
@@ -20,6 +21,8 @@ interface SignUpForm {
 }
 
 const SignUpPage: React.FC = () => {
+  const deviceToken = useContext(CurrentTokenContext);
+
   const [form, setForm] = useState<SignUpForm>({
     username: "",
     password: "",
@@ -44,7 +47,9 @@ const SignUpPage: React.FC = () => {
 
   const handlePhoneChange = (index: number, value: string) => {
     const newPhoneParts = [...phoneParts];
-    newPhoneParts[index] = value.replace(/\D/g, "").slice(0, index === 0 ? 3 : 4);
+    newPhoneParts[index] = value
+      .replace(/\D/g, "")
+      .slice(0, index === 0 ? 3 : 4);
     setPhoneParts(newPhoneParts);
     setForm((prev) => ({ ...prev, phone_number: newPhoneParts.join("-") }));
 
@@ -84,7 +89,10 @@ const SignUpPage: React.FC = () => {
   // 1원 송금 함수
   const handleAccountAuth = async () => {
     try {
-      const response = await userAuthService.sendAuthenticationAccount(form.account_number);
+      const response = await userAuthService.sendAuthenticationAccount(
+        form.account_number,
+        deviceToken!
+      );
       setForm((prev) => ({ ...prev, csrf_token: response.csrf_token }));
       setShowAuthCodeInput(true);
       alert("인증 코드가 발송되었습니다. 입력해주세요.");
@@ -228,8 +236,13 @@ const SignUpPage: React.FC = () => {
               />
               <button
                 type="button"
-                className="w-32 ms-3 mb-3 h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
+                className={`w-32 ms-3 mb-3 h-10 rounded-lg transition duration-200 ease-in-out ${
+                  isAccountVerified
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "border border-Button text-Button hover:bg-Button hover:text-white"
+                }`}
                 onClick={handleAccountAuth}
+                disabled={isAccountVerified} // 인증 성공 시 버튼 비활성화
               >
                 송금하기
               </button>
@@ -244,8 +257,13 @@ const SignUpPage: React.FC = () => {
                 />
                 <button
                   type="button"
-                  className="w-32 ms-3 mb-3 h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
+                  className={`w-32 ms-3 mb-3 h-10 rounded-lg transition duration-200 ease-in-out ${
+                    isAccountVerified
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "border border-Button text-Button hover:bg-Button hover:text-white"
+                  }`}
                   onClick={handleAuthCodeVerification}
+                  disabled={isAccountVerified} // 인증 성공 시 버튼 비활성화
                 >
                   인증하기
                 </button>
