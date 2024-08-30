@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { getQuestions, postQuestionComplete } from "@/services/questionService";
 import { Question } from "@/types/Question";
 import { ButtonType } from "@/types/AnswerButton";
-import { QUESTION_TIME } from "@/constant/common";
+import { PASS_THRESHOLD, QUESTION_TIME } from "@/constant/common";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import QuestionInfo from "@/components/Question/QuestionInfo";
 import AnswerButton from "@/components/Question/AnswerButton";
