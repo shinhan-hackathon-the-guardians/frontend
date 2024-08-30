@@ -1,5 +1,6 @@
 export interface User {
-  name: string;
+  userId: string;
+  userName: string;
   level: "GUARDIAN" | "SUPPORTER";
   role: "NONE" | "MEMBER" | "MANAGER" | "OWNER";
   familyId: string;

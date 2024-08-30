@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useNavigation } from "@/hooks/useNavigation";
+import { userAuthService } from "@/services/userAuthService";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
-import { useNavigation } from "@/hooks/useNavigation";
 
 const LoginPage: React.FC = () => {
   const [form, setForm] = useState({
@@ -15,11 +16,15 @@ const LoginPage: React.FC = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 로그인 요청 로직 추가
-    console.log("Login form submitted", form);
-    goToHome();
+    try {
+      await userAuthService.login(form.username, form.password);
+      console.log("Login successful");
+      goToHome();
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (

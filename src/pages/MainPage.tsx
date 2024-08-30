@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigation } from "@/hooks/useNavigation";
+import { useAuthStore } from "@/stores/userAuthStore";
 import HeaderLogoChatNotify from "@/components/Header/HeaderLogoChatNotify";
 import WarningModal from "@/components/Question/WarningModal";
 import guardian from "@/assets/images/guardian.png";
@@ -12,6 +13,7 @@ function MainPage() {
   const { goToQuestionBank, goToAddGroupMember, goToGroupMemberList, goToChatBot } =
     useNavigation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const user = useAuthStore((state) => state.user);
 
   const handleGuardianExamClick = () => {
     setIsModalOpen(true);
@@ -40,15 +42,24 @@ function MainPage() {
               {/* 이름을 별도의 flex 컨테이너에 넣어 items-start 적용 */}
               <div className="flex flex-col h-full">
                 <h1 className="text-2xl font-bold text-left">
-                  김신한<span className="text-xl ml-1">고객님</span>
+                  {user?.userName || "김신한"}
+                  <span className="text-xl ml-1">고객님</span>
                 </h1>
-                <p className="text-left text-[10pt] text-gray-400 font-bold ">신한이네 가족</p>
+                <p className="text-left text-[10pt] text-gray-400 font-bold">
+                  {user?.familyName || "아직 그룹이 없습니다"}
+                </p>
               </div>
 
               {/* 우측 이미지와 Owner 텍스트 */}
               <div className="flex flex-col justify-center h-full">
-                <img src={badge} alt="프로필 이미지" className="w-[44px] h-[44px] rounded-full " />
-                <span className="text-[10pt] text-gray-400 font-bold">Owner</span>
+                {user?.level === "GUARDIAN" ? (
+                  <img src={badge} alt="프로필 이미지" className="w-[44px] h-[44px] rounded-full" />
+                ) : (
+                  <div className="w-[44px] h-[44px]" />
+                )}
+                <span className="text-[10pt] text-gray-400 font-bold">
+                  {user?.role && user.role !== "NONE" ? user.role : "회원"}
+                </span>
               </div>
             </div>
           </div>
@@ -62,7 +73,7 @@ function MainPage() {
                 className="bg-blue-500 text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
                 onClick={goToAddGroupMember}
               >
-                구성원 초대하기
+                {user?.familyId ? "구성원 초대하기" : "그룹 만들기"}
               </button>
             </div>
           </div>
