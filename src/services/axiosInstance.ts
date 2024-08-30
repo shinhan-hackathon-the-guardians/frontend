@@ -4,7 +4,7 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   retry?: boolean;
 }
 
-const baseURL = "http://192.168.10.123:8080";
+const baseURL = "https://guardian.givendragon.site";
 // const baseURL = "http://localhost:8080";
 
 const axiosInstance = axios.create({
