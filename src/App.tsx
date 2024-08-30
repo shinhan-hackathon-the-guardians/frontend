@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { messaging } from "@/utils/firebase";
 import { getToken, onMessage } from "firebase/messaging";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
-import { useNavigation } from "./hooks/useNavigation";
+import NotificationModal from "@/components/Notification/NotificationModal";
+// import { useNavigation } from "./hooks/useNavigation";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,12 +18,15 @@ const queryClient = new QueryClient({
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"payment" | "notification">(
+    "payment"
+  );
   const [modalData, setModalData] = useState({
     name: "",
     accountInfo: "",
     amount: "0",
   });
-  const { goToVerification } = useNavigation();
+  // const { goToVerification } = useNavigation();
 
   useEffect(() => {
     // 알림 권한 요청 및 토큰 가져오기
@@ -57,16 +61,28 @@ function App() {
       console.log("메시지 수신:", payload);
 
       // 메시지 수신 시 Modal 데이터 설정
+      const title = payload.notification?.title;
       const body = payload.notification?.body;
       const [name, accountInfo, amount] = body
         ? body.split(",")
         : ["", "", "0"];
 
-      setModalData({
-        name: name || "이름 정보 없음",
-        accountInfo: accountInfo || "계좌 정보 없음",
-        amount: amount,
-      });
+      if (title === "확인") {
+        setModalType("notification"); // NotificationModal을 보여주도록 설정
+        setModalData({
+          name: name || "이름 정보 없음",
+          accountInfo: accountInfo || "계좌 정보 없음",
+          amount: amount,
+        });
+      } else {
+        setModalType("payment"); // PaymentRequestModal을 보여주도록 설정
+        setModalData({
+          name: name || "이름 정보 없음",
+          accountInfo: accountInfo || "계좌 정보 없음",
+          amount: amount,
+        });
+      }
+
       setIsModalOpen(true);
     });
 
@@ -83,21 +99,31 @@ function App() {
   const handleModalConfirm = () => {
     setIsModalOpen(false);
     // 필요한 추가 로직을 여기 추가할 수 있습니다.
-    goToVerification();
+    // goToVerification();
   };
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="w-full sm:max-w-[360px] min-w-[344px] mx-auto bg-BackGround">
         <Outlet />
-        <PaymentRequestModal
-          isOpen={isModalOpen}
-          onClose={handleModalClose}
-          onConfirm={handleModalConfirm}
-          name={modalData.name}
-          accountInfo={modalData.accountInfo}
-          amount={modalData.amount}
-        />
+        {modalType === "payment" ? (
+          <PaymentRequestModal
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            onConfirm={handleModalConfirm}
+            name={modalData.name}
+            accountInfo={modalData.accountInfo}
+            amount={modalData.amount}
+          />
+        ) : (
+          <NotificationModal
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            name={modalData.name}
+            accountInfo={modalData.accountInfo}
+            amount={modalData.amount}
+          />
+        )}
       </div>
     </QueryClientProvider>
   );
