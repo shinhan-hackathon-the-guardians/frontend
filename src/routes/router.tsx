@@ -73,6 +73,10 @@ const router = createBrowserRouter([
         path: "chatbot",
         element: <ChatBotPage />,
       },
+      {
+        path: "transaction",
+        element: <TransactionPage />,
+      },
     ],
   },
 ]);
