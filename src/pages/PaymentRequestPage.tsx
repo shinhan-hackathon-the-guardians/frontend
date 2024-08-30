@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Assuming you're using react-router
 import UnreadSticker from "@/components/Notification/UnreadSticker";
-import PaymentRequestModal from "@/components/Notification/PaymentRequestModal"; // Import the modal component
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 
 interface PaymentRequest {
@@ -20,34 +17,13 @@ const paymentRequests: PaymentRequest[] = [
 ];
 
 function PaymentRequestPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState<PaymentRequest | null>(
-    null
-  );
-  const navigate = useNavigate();
-
-  const handleClick = (request: PaymentRequest) => {
-    setSelectedRequest(request);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleConfirm = () => {
-    setIsModalOpen(false);
-    // Navigate to the Verification Code page
-    navigate("/verification"); // Example route
-  };
-
   return (
     <div>
       <HeaderBackChatNotify />
       <div className="min-h-screen bg-[#F5F6FA] flex flex-col items-center">
         <div className="w-full flex justify-start p-6">
           <h1 className="flex items-end text-xl font-bold">
-            <div className="text-2xl font-bold">김신한</div> 님의 요청내역
+            <div className="text-2xl font-bold">김신한</div> 그룹 가입 신청 내역
           </h1>
         </div>
 
@@ -55,7 +31,6 @@ function PaymentRequestPage() {
           <div
             key={index}
             className="relative w-full max-w-xs bg-white shadow-md rounded-lg p-6 mb-6 cursor-pointer"
-            onClick={() => handleClick(request)}
           >
             <UnreadSticker />
             <div className="flex flex-col gap-4">
@@ -73,17 +48,6 @@ function PaymentRequestPage() {
             </div>
           </div>
         ))}
-
-        {selectedRequest && (
-          <PaymentRequestModal
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-            onConfirm={handleConfirm}
-            name={selectedRequest.name}
-            accountInfo={selectedRequest.accountInfo}
-            amount={selectedRequest.amount}
-          />
-        )}
       </div>
     </div>
   );

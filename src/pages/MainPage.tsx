@@ -13,7 +13,7 @@ function MainPage() {
   const { goToQuestionBank, goToAddGroupMember, goToGroupMemberList, goToChatBot } =
     useNavigation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const user = useAuthStore((state) => state.user);
+  const { user } = useAuthStore();
 
   const handleGuardianExamClick = () => {
     setIsModalOpen(true);
