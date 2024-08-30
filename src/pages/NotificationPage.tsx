@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import HeaderBack from "@/components/Header/HeaderBack";
 import { notificationService } from "@/services/notificationService";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
-import "@/mock/mock";
+// import "@/mock/mock";
 
 interface Approval {
   approval_id: number;
