@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import HeaderBack from "@/components/Header/HeaderBack";
 import { notificationService } from "@/services/notificationService";
+import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
 import "@/mock/mock";
 
 interface Approval {
@@ -22,6 +23,20 @@ interface Notification {
 function NotificationPage() {
   const [approval, setApproval] = useState<Approval | null>(null);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal 상태 관리
+  const [selectedNotification, setSelectedNotification] =
+    useState<Notification | null>(null); // 선택된 Notification 관리
+
+  // 대기 중인 알림 목록 가져오기
+  const fetchNotifications = async () => {
+    try {
+      const notificationData =
+        await notificationService.getUnansweredNotifications();
+      setNotifications(notificationData);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
 
   useEffect(() => {
     // 그룹 초대 요청 목록 가져오기
@@ -31,17 +46,6 @@ function NotificationPage() {
         setApproval(approvalData);
       } catch (error) {
         console.error("Error fetching approval:", error);
-      }
-    };
-
-    // 대기 중인 알림 목록 가져오기
-    const fetchNotifications = async () => {
-      try {
-        const notificationData =
-          await notificationService.getUnansweredNotifications();
-        setNotifications(notificationData);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
       }
     };
 
@@ -57,9 +61,38 @@ function NotificationPage() {
       await notificationService.replyApproval(approvalId, approvalStatus);
       // 응답 후 다시 데이터 갱신
       setApproval(null);
+      console.log(approval);
     } catch (error) {
       console.error("Error sending approval reply:", error);
     }
+  };
+
+  const handleNotificationReply = async (isApprove: boolean) => {
+    if (selectedNotification) {
+      try {
+        await notificationService.replyNotification(
+          selectedNotification.notification_id,
+          isApprove
+        );
+        setNotifications([]); // notifications 초기화
+        await fetchNotifications(); // fetchNotifications 실행
+        closeModal();
+
+        // console.log(selectedNotification);
+      } catch (error) {
+        console.error("Error sending notification reply:", error);
+      }
+    }
+  };
+
+  const openModal = (notification: Notification) => {
+    setSelectedNotification(notification);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedNotification(null);
   };
 
   return (
@@ -102,6 +135,7 @@ function NotificationPage() {
           <div
             key={notification.notification_id}
             className="w-full max-w-md bg-white shadow-md rounded-lg px-6 py-4 mb-6"
+            onClick={() => openModal(notification)}
           >
             <span className="text-sm text-gray-600">
               {notification.transaction_time}
@@ -136,6 +170,17 @@ function NotificationPage() {
             </div>
           </div>
         ))}
+
+        {selectedNotification && (
+          <PaymentRequestModal
+            isOpen={isModalOpen}
+            onClose={() => handleNotificationReply(false)} // 아니오 버튼 클릭 시
+            onConfirm={() => handleNotificationReply(true)} // 예 버튼 클릭 시
+            name={selectedNotification.sender_name}
+            accountInfo={selectedNotification.account_number}
+            amount={selectedNotification.transaction_balance.toString()}
+          />
+        )}
       </div>
     </div>
   );
