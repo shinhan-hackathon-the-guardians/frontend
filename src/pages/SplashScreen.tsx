@@ -5,7 +5,7 @@ import { useAuthStore } from "@/stores/userAuthStore";
 
 const SplashScreen: React.FC = () => {
   const { goToHome, goToLogin } = useNavigation();
-  const isLogin = useAuthStore((state) => state.isLogin);
+  const { isLogin } = useAuthStore();
 
   const handleClick = () => {
     if (isLogin) {

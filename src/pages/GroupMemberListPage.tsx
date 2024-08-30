@@ -11,7 +11,7 @@ const GroupMemberListPage: React.FC = () => {
   const [familyName, setFamilyName] = useState<string>("아직 그룹이 없습니다.");
   const [familyDescription, setFamilyDescription] =
     useState<string>("하단의 +버튼으로 그룹원을 초대해 주세요.");
-  const user = useAuthStore((state) => state.user);
+  const { user } = useAuthStore();
 
   useEffect(() => {
     const fetchData = async () => {
