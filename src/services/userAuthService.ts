@@ -57,7 +57,8 @@ export const userAuthService = {
 
   // 계좌 송금 (인증 코드 발송)
   sendAuthenticationAccount: async (
-    account_number: string
+    account_number: string,
+    device_token: string
   ): Promise<{
     account_number: string;
     csrf_token: string;
@@ -66,7 +67,9 @@ export const userAuthService = {
     try {
       const response = await axiosInstance.post("/user/accountAuthCode", {
         account_number,
+        device_token,
       });
+
       return {
         account_number: response.data.account_number,
         csrf_token: response.data.csrf_token,
