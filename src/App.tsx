@@ -5,6 +5,7 @@ import { messaging } from "@/utils/firebase";
 import { getToken, onMessage } from "firebase/messaging";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
 import NotificationModal from "@/components/Notification/NotificationModal";
+import AuthNotificationModal from "@/components/Notification/AuthNotificationModal";
 // import { useNavigation } from "./hooks/useNavigation";
 
 const queryClient = new QueryClient({
@@ -18,9 +19,9 @@ const queryClient = new QueryClient({
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<"payment" | "notification">(
-    "payment"
-  );
+  const [modalType, setModalType] = useState<
+    "payment" | "notification" | "auth"
+  >("payment");
   const [modalData, setModalData] = useState({
     name: "",
     accountInfo: "",
@@ -67,7 +68,14 @@ function App() {
         ? body.split(",")
         : ["", "", "0"];
 
-      if (title === "확인") {
+      if (title === "인증") {
+        setModalType("auth"); // AuthNotificationModal을 보여주도록 설정
+        setModalData({
+          name: name || "이름 정보 없음",
+          accountInfo: accountInfo || "계좌 정보 없음",
+          amount: amount,
+        });
+      } else if (title === "확인") {
         setModalType("notification"); // NotificationModal을 보여주도록 설정
         setModalData({
           name: name || "이름 정보 없음",
@@ -106,7 +114,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="w-full sm:max-w-[360px] min-w-[344px] mx-auto bg-BackGround">
         <Outlet />
-        {modalType === "payment" ? (
+        {modalType === "payment" && (
           <PaymentRequestModal
             isOpen={isModalOpen}
             onClose={handleModalClose}
@@ -115,8 +123,18 @@ function App() {
             accountInfo={modalData.accountInfo}
             amount={modalData.amount}
           />
-        ) : (
+        )}
+        {modalType === "notification" && (
           <NotificationModal
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            name={modalData.name}
+            accountInfo={modalData.accountInfo}
+            amount={modalData.amount}
+          />
+        )}
+        {modalType === "auth" && (
+          <AuthNotificationModal
             isOpen={isModalOpen}
             onClose={handleModalClose}
             name={modalData.name}
