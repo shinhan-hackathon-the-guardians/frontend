@@ -44,7 +44,6 @@ const MemberSettingsPage = () => {
         console.error("그룹 설정 불러오기 실패:", error);
         alert("그룹 설정을 불러오는데 실패했습니다.");
       } finally {
-        console.log(memberSettings);
         setIsLoading(false);
       }
     };
@@ -66,9 +65,9 @@ const MemberSettingsPage = () => {
   // 그룹원 세부 설정 - level 변경
   const handleSaveRole = async () => {
     try {
-      await updateMemberLevel(family_id!, parseInt(target_user_id!), {
-        user_id: parseInt(target_user_id!),
-        user_role: role,
+      await updateMemberLevel(family_id!, {
+        target_user_id: parseInt(target_user_id!),
+        new_role: role,
       });
       goToGroupMemberList();
     } catch (error) {

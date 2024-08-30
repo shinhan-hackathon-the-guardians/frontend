@@ -40,6 +40,6 @@ export interface MemberSettingsRequest {
 
 // 그룹원 세부 설정 level 수정하기
 export interface MemberLevelSettingsRequest {
-  user_id: number;
-  user_role: "MEMBER" | "MANAGER";
+  target_user_id: number;
+  new_role: "MEMBER" | "MANAGER";
 }

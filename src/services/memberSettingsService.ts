@@ -10,7 +10,6 @@ import {
 export const getMemberSettingsInfo = async (target_user_id: number): Promise<MemberSettings> => {
   try {
     const response = await axiosInstance.get<MemberSettings>(`/limit/user/${target_user_id}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching group settings info:", error);
@@ -45,12 +44,10 @@ export const updateMemberSettings = async (settings: MemberSettingsRequest): Pro
 // 그룹원 세부 설정 - 권한 설정 수정
 export const updateMemberLevel = async (
   family_id: number,
-  target_user_id: number,
   settings: MemberLevelSettingsRequest
 ): Promise<void> => {
   try {
-    console.log(settings);
-    await axiosInstance.put(`/family/${family_id}/userRole/${target_user_id}`, settings);
+    await axiosInstance.post(`/family/${family_id}/userRole`, settings);
   } catch (error) {
     console.error("Error updating member level:", error);
     throw error;
