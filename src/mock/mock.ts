@@ -9,14 +9,14 @@ const mock = new MockAdapter(axiosInstance);
 const approvalMockData = {
   approval_id: 1,
   family_id: 101,
-  family_name: "테스트 가족",
-  family_description: "이것은 테스트 가족입니다.",
+  family_name: "신한이네 가족",
+  family_description: "신한이네 가족입니다.",
 };
 
 const notificationsMockData = [
   {
     notification_id: 1,
-    sender_name: "홍길동",
+    sender_name: "서포터1",
     transaction_time: "2024-08-31 12:34:56",
     transaction_balance: 100000,
     transaction_type: "DEPOSIT",
@@ -24,7 +24,7 @@ const notificationsMockData = [
   },
   {
     notification_id: 2,
-    sender_name: "이몽룡",
+    sender_name: "서포터2",
     transaction_time: "2024-08-30 15:00:00",
     transaction_balance: 50000,
     transaction_type: "WITHDRAWAL",

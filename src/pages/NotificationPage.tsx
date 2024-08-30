@@ -67,18 +67,18 @@ function NotificationPage() {
       <HeaderBack />
       <div className="min-h-screen bg-[#F5F6FA] flex flex-col items-center">
         <div className="w-full flex justify-start px-6 py-2">
-          <span className="text-xl font-bold">알림</span>
+          <span className="text-xl font-bold">그룹 초대</span>
         </div>
 
         {approval && (
-          <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mb-6">
-            <h2 className="text-lg font-semibold mb-4">
-              {approval.family_name} 그룹 가입 신청
+          <div className="w-full max-w-md bg-white shadow-md rounded-lg px-6 py-4 mb-6">
+            <h2 className="text-lg font-semibold mb-1">
+              {approval.family_name}
             </h2>
             <p className="text-sm text-gray-700 mb-4">
               {approval.family_description}
             </p>
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-end gap-2">
               <button
                 className="bg-blue-500 text-white py-2 px-4 rounded"
                 onClick={() => handleApprovalReply(approval.approval_id, true)}
@@ -95,30 +95,45 @@ function NotificationPage() {
           </div>
         )}
 
+        <div className="w-full flex justify-start px-6 py-2">
+          <span className="text-xl font-bold">이체 내역</span>
+        </div>
         {notifications.map((notification) => (
           <div
             key={notification.notification_id}
-            className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mb-6"
+            className="w-full max-w-md bg-white shadow-md rounded-lg px-6 py-4 mb-6"
           >
+            <span className="text-sm text-gray-600">
+              {notification.transaction_time}
+            </span>
             <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600 mt-2 block">
+                신한 {notification.account_number}
+              </span>
               <span className="text-sm text-gray-900">
                 {notification.sender_name}
               </span>
-              <span className="text-sm text-gray-600">
-                {notification.transaction_time}
-              </span>
             </div>
             <div className="flex justify-between items-center mt-4">
+              <span
+                className={`text-sm ${
+                  notification.transaction_type === "DEPOSIT"
+                    ? "text-red"
+                    : "text-blue-500"
+                }`}
+              >
+                {notification.transaction_type === "DEPOSIT"
+                  ? "입금"
+                  : notification.transaction_type === "WITHDRAWAL"
+                  ? "출금"
+                  : notification.transaction_type === "TRANSFER"
+                  ? "이체"
+                  : "결제"}
+              </span>
               <span className="text-xl font-semibold text-gray-900">
                 {notification.transaction_balance.toLocaleString()}원
               </span>
-              <span className="text-sm text-gray-600">
-                {notification.transaction_type}
-              </span>
             </div>
-            <span className="text-sm text-gray-600 mt-2 block">
-              계좌 번호: {notification.account_number}
-            </span>
           </div>
         ))}
       </div>
