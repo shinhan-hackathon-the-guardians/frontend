@@ -4,7 +4,6 @@ import { FamilyResponse } from "@/types/Response";
 export const getGroupMemberList = async (familyId: string): Promise<FamilyResponse> => {
   try {
     const response = await axiosInstance.get<FamilyResponse>(`/family/${familyId}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Failed to fetch group member list", error);
@@ -22,7 +21,6 @@ export const postGroupMemberInvite = async (
       name,
       phone_number,
     };
-
     await axiosInstance.post(`/family/${familyId}/invite`, payload);
   } catch (error) {
     console.error("Failed to invite group member", error);
