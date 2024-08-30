@@ -114,7 +114,7 @@ export const userAuthService = {
   saveDeviceToken: async (device_token: string): Promise<void> => {
     try {
       await axiosInstance.post("/user/deviceToken", {
-        deviceToken: device_token,
+        device_token: device_token,
       });
     } catch (error) {
       console.error("Failed to send device token:", error);
