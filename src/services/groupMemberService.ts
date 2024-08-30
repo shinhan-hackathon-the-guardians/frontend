@@ -1,9 +1,9 @@
 import axiosInstance from "./axiosInstance";
-import { FamilyResponse } from "@/types/Response";
+import { GroupListResponse } from "@/types/GroupSettings";
 
-export const getGroupMemberList = async (familyId: string): Promise<FamilyResponse> => {
+export const getGroupMemberList = async (familyId: string): Promise<GroupListResponse> => {
   try {
-    const response = await axiosInstance.get<FamilyResponse>(`/family/${familyId}`);
+    const response = await axiosInstance.get<GroupListResponse>(`/family/${familyId}`);
     return response.data;
   } catch (error) {
     console.error("Failed to fetch group member list", error);

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 interface SelectFieldProps<T extends string> {
   label: string;
   options: readonly T[];
-  value: T;
+  value: string;
   onChange: (value: T) => void;
 }
 

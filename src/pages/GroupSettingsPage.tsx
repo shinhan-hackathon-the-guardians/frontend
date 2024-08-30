@@ -1,20 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getGroupSettingsInfo, updateGroupSettings } from "@/services/groupSettingsService";
+import { useAuthStore } from "@/stores/userAuthStore";
+import { GroupSettings } from "@/types/GroupSettings";
+import { GroupSettingsRequest } from "@/types/GroupSettings";
+import { useNavigation } from "@/hooks/useNavigation";
 import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
 import InputField from "@/components/common/InputField";
-import { updateGroupSettings } from "@/services/groupSettingsService";
-import { GroupSettings } from "@/types/GroupSettings";
-import { useNavigation } from "@/hooks/useNavigation";
-
-const family_id = "1";
+import Loading from "@/components/common/Loading";
 
 const GroupSettingsPage = () => {
   const [groupSettings, setGroupSettings] = useState<GroupSettings>({
-    groupName: "신한이네",
-    groupMotto: "건강이 최고",
-    approvalLimit: 1,
-    creationDate: "2024.08.29",
+    name: "",
+    description: "",
+    approval_requirement: 1,
+    creation_date: new Date(),
   });
-  const { goToBack } = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
+  const { goToGroupMemberList } = useNavigation();
+  const { user } = useAuthStore();
+  const family_id = user?.familyId;
+
+  useEffect(() => {
+    const fetchGroupSettings = async () => {
+      try {
+        const fetchedSettings = await getGroupSettingsInfo(family_id!);
+        setGroupSettings(fetchedSettings);
+      } catch (error) {
+        console.error("그룹 설정 불러오기 실패:", error);
+        alert("그룹 설정을 불러오는데 실패했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchGroupSettings();
+  }, [family_id]);
 
   const handleInputChange = (key: keyof GroupSettings) => (value: string) => {
     setGroupSettings((prev) => ({ ...prev, [key]: value }));
@@ -22,14 +42,23 @@ const GroupSettingsPage = () => {
 
   const handleSaveSettings = async () => {
     try {
-      await updateGroupSettings(family_id, groupSettings);
+      const settingsToUpdate: GroupSettingsRequest = {
+        name: groupSettings.name,
+        description: groupSettings.description,
+        approval_requirement: groupSettings.approval_requirement,
+      };
+      await updateGroupSettings(settingsToUpdate);
       alert("그룹 설정이 성공적으로 저장되었습니다.");
-      goToBack();
+      goToGroupMemberList();
     } catch (error) {
       console.error("그룹 설정 저장 실패:", error);
       alert("그룹 설정 저장에 실패했습니다.");
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -40,28 +69,26 @@ const GroupSettingsPage = () => {
           <InputField
             label="그룹명"
             placeholder="그룹명을 입력해주세요."
-            value={groupSettings.groupName}
-            onChange={handleInputChange("groupName")}
+            value={groupSettings.name}
+            onChange={handleInputChange("name")}
           />
           <InputField
             label="그룹 표어"
             placeholder="그룹 표어를 입력해주세요."
-            value={groupSettings.groupMotto}
-            onChange={handleInputChange("groupMotto")}
+            value={groupSettings.description}
+            onChange={handleInputChange("description")}
           />
           <InputField
             label="승인 인원 숫자"
             placeholder="승인 인원 숫자를 입력해주세요."
             type="number"
-            value={groupSettings.approvalLimit.toString()}
-            onChange={(value) => handleInputChange("approvalLimit")(value)}
+            value={groupSettings.approval_requirement.toString()}
+            onChange={(value) => handleInputChange("approval_requirement")(value)}
           />
           <div className="w-full mb-8 text-grey">
-            <label className="block text-md font-semibold mb-2">
-              그룹 개설일
-            </label>
+            <label className="block text-md font-semibold mb-2">그룹 개설일</label>
             <div className="w-full border-b-2 border-grey p-2 text-lg">
-              {groupSettings.creationDate}
+              {new Date(groupSettings.creation_date).toLocaleDateString()}
             </div>
           </div>
           <button
