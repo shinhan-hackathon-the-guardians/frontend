@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuthStore } from "@/stores/userAuthStore";
 import { getGroupMemberList } from "@/services/groupMemberService";
+import { useNavigation } from "@/hooks/useNavigation";
 import { Member } from "@/types/Member";
 import HeaderBackSetting from "@/components/Header/HeaderBackSetting";
 import GroupInfo from "@/components/GroupMemberList/GroupInfo";
@@ -11,12 +12,14 @@ const GroupMemberListPage: React.FC = () => {
   const [familyName, setFamilyName] = useState<string>("아직 그룹이 없습니다.");
   const [familyDescription, setFamilyDescription] =
     useState<string>("하단의 +버튼으로 그룹원을 초대해 주세요.");
+  const [isAddEnabled, setIsAddEnabled] = useState(false);
   const { user } = useAuthStore();
+  const { goToAddGroupMember } = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const familyId = user?.familyId || "1";
+        const familyId = user?.familyId;
         if (familyId) {
           const data = await getGroupMemberList(familyId);
           setMembers(data.users);
@@ -29,7 +32,8 @@ const GroupMemberListPage: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+    setIsAddEnabled(!!user?.familyId && user?.role === "OWNER");
+  }, [user]);
 
   const handlePinToggle = (id: number) => {
     setMembers(
@@ -40,7 +44,7 @@ const GroupMemberListPage: React.FC = () => {
   };
 
   const handleAddMember = () => {
-    // 멤버 추가 로직
+    goToAddGroupMember();
   };
 
   return (
@@ -52,6 +56,7 @@ const GroupMemberListPage: React.FC = () => {
           members={members}
           onPinToggle={handlePinToggle}
           handleAddMember={handleAddMember}
+          isAddEnabled={isAddEnabled}
         />
       </main>
     </div>
