@@ -1,22 +1,21 @@
 import axiosInstance from "./axiosInstance";
 import { Question } from "@/types/Question";
-import { financeQuestions as dummyFinanceQuestions } from "@/utils/data";
+// import { financeQuestions as dummyFinanceQuestions } from "@/utils/data";
 
 // 가디언 시험 파트
 const getQuestions = async (): Promise<Question[]> => {
-  return dummyFinanceQuestions;
   try {
     const response = await axiosInstance.get("/question");
-    return response.data;
+    return response.data.questions;
   } catch (error) {
     console.error("Failed to get question", error);
     throw error;
   }
 };
 
-const postQuestionComplete = async (isPassed: boolean): Promise<void> => {
+const postQuestionComplete = async (pass: boolean): Promise<void> => {
   try {
-    await axiosInstance.post<Question[]>("/question/practice", { isPassed });
+    await axiosInstance.post("/question/complete", { pass });
   } catch (error) {
     console.error("Failed to post question result:", error);
     throw error;
@@ -25,10 +24,9 @@ const postQuestionComplete = async (isPassed: boolean): Promise<void> => {
 
 // 문제은행 파트
 const getPractice = async (): Promise<Question[]> => {
-  return dummyFinanceQuestions;
   try {
-    const response = await axiosInstance.get("/question");
-    return response.data;
+    const response = await axiosInstance.get("/question/practice");
+    return response.data.questions;
   } catch (error) {
     console.error("Failed to get practice", error);
     throw error;
