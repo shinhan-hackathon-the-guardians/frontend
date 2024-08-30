@@ -1,3 +1,3 @@
-export const PERIOD_OPTIONS = ["일주일", "15일", "한달"] as const;
+export const PERIOD_OPTIONS = ["DAY1", "DAY7", "DAY15", "DAY30"] as const;
 
 export type Period = (typeof PERIOD_OPTIONS)[number];

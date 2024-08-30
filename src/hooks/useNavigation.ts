@@ -9,7 +9,8 @@ export const useNavigation = () => {
   const goToQuestionBank = () => navigate("/questionBank");
   const goToAddGroupMember = () => navigate("/addGroupMember");
   const goToGroupMemberList = () => navigate("/groupMemberList");
-  const goToMemberSettings = () => navigate("/memberSettings");
+  const goToMemberSettings = (target_user_id: string) =>
+    navigate(`/memberSettings/${target_user_id}`);
   const goToGroupSettings = () => navigate("/groupSettings");
   const goToPaymentRequest = () => navigate("/paymentRequest");
   const goToVerification = () => navigate("/verification");

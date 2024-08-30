@@ -25,10 +25,9 @@ export interface GroupSettingsRequest {
 // 그룹원 세부 설정 받아오기
 export interface MemberSettings {
   target_user_id: number;
-  role: "MEMBER" | "MANAGER";
+  period: string;
   single_transaction_limit: number;
   max_limit_amount: number;
-  period: string;
 }
 
 // 그룹원 세부 설정 수정하기
@@ -41,6 +40,6 @@ export interface MemberSettingsRequest {
 
 // 그룹원 세부 설정 level 수정하기
 export interface MemberLevelSettingsRequest {
-  target_user_id: number;
-  new_role: "MEMBER" | "MANAGER";
+  user_id: number;
+  user_role: "MEMBER" | "MANAGER";
 }
