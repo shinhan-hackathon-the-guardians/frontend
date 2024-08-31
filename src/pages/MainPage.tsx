@@ -73,7 +73,11 @@ function MainPage() {
               {/* 우측 이미지와 Owner 텍스트 */}
               <div className="flex flex-col justify-center h-full">
                 {user?.level === "GUARDIAN" ? (
-                  <img src={badge} alt="프로필 이미지" className="w-[44px] h-[44px] rounded-full" />
+                  <img
+                    src={badge}
+                    alt="프로필 이미지"
+                    className="w-[44px] h-[44px] rounded-full ms-2"
+                  />
                 ) : (
                   <div className="w-[44px] h-[44px]" />
                 )}
