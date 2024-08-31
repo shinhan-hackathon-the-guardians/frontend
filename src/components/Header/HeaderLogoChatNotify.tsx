@@ -1,7 +1,7 @@
 import { useNavigation } from "@/hooks/useNavigation";
 import { HiHome } from "react-icons/hi";
 import { GoBellFill } from "react-icons/go";
-import { TbLogout } from "react-icons/tb";
+import { RiLogoutBoxLine } from "react-icons/ri";
 import { userAuthService } from "@/services/userAuthService";
 
 function HeaderLogoChatNotify() {
@@ -20,7 +20,7 @@ function HeaderLogoChatNotify() {
           className="text-white text-[28px] cursor-pointer m-1"
           onClick={goToNotification}
         />
-        <TbLogout
+        <RiLogoutBoxLine
           className="text-white text-[28px] cursor-pointer m-1"
           onClick={() => {
             userAuthService.logout();
