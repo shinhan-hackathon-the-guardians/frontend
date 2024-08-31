@@ -125,3 +125,15 @@ export const userAuthService = {
     }
   },
 };
+
+export const getUserInfo = async (): Promise<"GUARDIAN" | "SUPPORTER"> => {
+  try {
+    const response = await axiosInstance.get("/user/info");
+    const data = response.data;
+    console.log(data);
+    return data.level as "GUARDIAN" | "SUPPORTER";
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    throw error;
+  }
+};

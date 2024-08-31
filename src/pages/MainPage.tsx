@@ -19,12 +19,32 @@ function MainPage() {
     setIsModalOpen(true);
   };
 
+  const renderContent = () => {
+    if (user?.level === "SUPPORTER") {
+      return <div className="text-grey text-sm">서포터는 그룹을 만들 수 없습니다.</div>;
+    } else if (user?.level === "GUARDIAN") {
+      if (user.role === "MEMBER") {
+        return <div className="text-grey text-sm">MEMBER는 권한이 없습니다.</div>;
+      } else if (user.role === "NONE" || user.role === "MANAGER" || user.role === "OWNER") {
+        return (
+          <button
+            className="bg-Button text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
+            onClick={goToAddGroupMember}
+          >
+            {user?.familyId ? "구성원 초대하기" : "그룹 만들기"}
+          </button>
+        );
+      }
+    }
+    return null;
+  };
+
   return (
     <div>
       <HeaderLogoChatNotify />
       <div className="bg-[#F5F6FA] min-h-screen flex flex-col items-center">
         {/* 상단 바 영역 */}
-        <div className="bg-[#167CFA] w-full h-[300px] flex flex-col pt-8 px-6 pb-0 text-white">
+        <div className="bg-Button w-full h-[300px] flex flex-col pt-8 px-6 pb-0 text-white">
           {/* 상단 텍스트 블록 */}
           <div className="flex flex-col justify-start h-full">
             <p className="text-[16pt] leading-tight">
@@ -53,7 +73,11 @@ function MainPage() {
               {/* 우측 이미지와 Owner 텍스트 */}
               <div className="flex flex-col justify-center h-full">
                 {user?.level === "GUARDIAN" ? (
-                  <img src={badge} alt="프로필 이미지" className="w-[44px] h-[44px] rounded-full" />
+                  <img
+                    src={badge}
+                    alt="프로필 이미지"
+                    className="w-[44px] h-[44px] rounded-full ms-2"
+                  />
                 ) : (
                   <div className="w-[44px] h-[44px]" />
                 )}
@@ -68,14 +92,7 @@ function MainPage() {
         {/* 메뉴들 */}
         <div className="px-6 mb-6">
           <div className="mb-6 p-6 flex justify-between items-center bg-[#EBF0FD] py-4 rounded-b-[20px]">
-            <div className="flex-1 flex justify-center">
-              <button
-                className="bg-blue-500 text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
-                onClick={goToAddGroupMember}
-              >
-                {user?.familyId ? "구성원 초대하기" : "그룹 만들기"}
-              </button>
-            </div>
+            <div className="flex-1 flex justify-center">{renderContent()}</div>
           </div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-4 justify-items-center">
             {/* 가디언 평가 */}

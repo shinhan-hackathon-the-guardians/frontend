@@ -3,6 +3,7 @@ import GroupMemberOptions from "./GroupMemberOptions";
 import { Member } from "@/types/Member";
 import { FcBookmark } from "react-icons/fc";
 import { useNavigation } from "@/hooks/useNavigation";
+import { useAuthStore } from "@/stores/userAuthStore";
 
 // 개별적으로 이미지 임포트
 import fatherImage from "@/assets/images/groupList/아버지.svg";
@@ -36,8 +37,10 @@ const relationshipImageMap: Record<string, string> = {
 const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
   const imageSrc = relationshipImageMap[member.relationship] || etcImage;
   const { goToMemberSettings } = useNavigation();
+  const { user } = useAuthStore();
+  const isClickable = user?.role !== "MEMBER";
 
-  const handleItemClick = (e: React.MouseEvent) => {
+  const handleItemClick = (e: React.MouseEvent, target_user_id: number) => {
     // 옵션 버튼이나 그 하위 요소를 클릭한 경우 이벤트 전파를 막음
     if (
       !e.currentTarget.contains(e.target as Node) ||
@@ -45,13 +48,15 @@ const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
     ) {
       return;
     }
-    goToMemberSettings();
+    goToMemberSettings(String(target_user_id));
   };
 
   return (
     <div
-      className="relative bg-white rounded-lg shadow-md p-4 flex items-center cursor-pointer"
-      onClick={handleItemClick}
+      className={`relative bg-white rounded-lg shadow-md p-4 flex items-center ${
+        isClickable ? "cursor-pointer" : "cursor-not-allowed"
+      }`}
+      onClick={(e) => isClickable && handleItemClick(e, member.id)}
     >
       <div className="flex-shrink-0 mr-4">
         <img src={imageSrc} alt={member.name} className="w-12 h-12 rounded-full" />
