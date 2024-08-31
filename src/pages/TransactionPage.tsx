@@ -3,11 +3,6 @@ import shinhan from "@/assets/images/shinhan_log_white.png";
 import { useState } from "react";
 import { transactionService } from "@/services/transactionService";
 
-interface DepositTransaction {
-  accountNumber: string;
-  transactionBalance: number;
-}
-
 const TransactionPage: React.FC = () => {
   // 사용자 정보 조회
   // useEffect()로 시작할때 텍스트로 넣어놓은 값으로 실행 (0884755843206405)
