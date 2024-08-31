@@ -18,8 +18,6 @@ const FamilyInviteModal: React.FC<FamilyInviteModalProps> = ({
   name,
   description,
   ownerName,
-  onAccept,
-  onReject,
 }) => {
   if (!isOpen) return null;
 
@@ -39,16 +37,10 @@ const FamilyInviteModal: React.FC<FamilyInviteModalProps> = ({
         <p className="text-sm text-gray-600 mt-2">소유자: {ownerName}</p>
         <div className="flex justify-around mt-6">
           <button
-            onClick={onAccept}
-            className="bg-blue-500 text-white px-4 py-2 rounded w-24 font-medium"
+            onClick={onClose}
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded w-24 font-medium"
           >
-            수락
-          </button>
-          <button
-            onClick={onReject}
-            className="bg-red-500 text-white px-4 py-2 rounded w-24 font-medium"
-          >
-            거절
+            확인
           </button>
         </div>
       </div>

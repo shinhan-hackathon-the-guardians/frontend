@@ -6,9 +6,9 @@ import { getToken, onMessage } from "firebase/messaging";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
 import NotificationModal from "@/components/Notification/NotificationModal";
 import { notificationService } from "@/services/notificationService";
-import UnifiedModal from "./components/Notification/UnifiedModal";
-import FamilyInviteModal from "./components/Notification/FamilyInviteModal";
-import AuthNotificationModal from "./components/Notification/AuthNotificationModal";
+import UnifiedModal from "@/components/Notification/UnifiedModal";
+import FamilyInviteModal from "@/components/Notification/FamilyInviteModal";
+import AuthNotificationModal from "@/components/Notification/AuthNotificationModal";
 // import { useNavigation } from "./hooks/useNavigation";
 
 export const CurrentTokenContext = createContext<string | null>(null);
@@ -120,6 +120,7 @@ function App() {
             description: body.bank || "인증 코드 없음",
           }));
           break;
+
         case "가족초대":
           setModalType("familyInvite");
           setModalData((prevData) => ({
@@ -219,7 +220,7 @@ function App() {
       <CurrentTokenContext.Provider value={deviceToken}>
         <div className="w-full sm:max-w-[360px] min-w-[344px] mx-auto bg-BackGround">
           <Outlet />
-          {modalType === "payment" && ( // 결제
+          {modalType === "payment" && (
             <PaymentRequestModal
               isOpen={isModalOpen}
               onClose={handleModalClose}
@@ -230,7 +231,7 @@ function App() {
               amount={modalData.amount}
             />
           )}
-          {modalType === "auth" && ( // 결제
+          {modalType === "auth" && (
             <AuthNotificationModal
               isOpen={isModalOpen}
               onClose={handleModalClose}
@@ -248,15 +249,6 @@ function App() {
               amount={modalData.amount}
             />
           )}
-          {/* {modalType === "auth" && ( // 인증
-            <AuthNotificationModal
-              isOpen={isModalOpen}
-              onClose={handleModalClose}
-              name={modalData.name}
-              accountInfo={modalData.accountInfo}
-              amount={modalData.amount}
-            />
-          )} */}
           {modalType === "familyInvite" && (
             <FamilyInviteModal
               isOpen={isModalOpen}
@@ -267,15 +259,6 @@ function App() {
               ownerName={modalData.ownerName}
             />
           )}
-          {/* {modalType === "deposit" && (
-            <DepositModal
-              isOpen={isModalOpen}
-              onClose={handleModalClose}
-              name={modalData.name}
-              accountInfo={modalData.accountInfo}
-              amount={modalData.amount}
-            />
-          )} */}
           {["approvalRequest", "transactionResult"].includes(modalType) && (
             <UnifiedModal
               isOpen={isModalOpen}
