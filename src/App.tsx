@@ -6,6 +6,7 @@ import { getToken, onMessage } from "firebase/messaging";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
 import NotificationModal from "@/components/Notification/NotificationModal";
 import AuthNotificationModal from "@/components/Notification/AuthNotificationModal";
+import { notificationService } from "@/services/notificationService";
 // import { useNavigation } from "./hooks/useNavigation";
 
 export const CurrentTokenContext = createContext<string | null>(null);
@@ -29,6 +30,7 @@ function App() {
     name: "",
     accountInfo: "",
     amount: "0",
+    notificationId: 0,
   });
   // const { goToVerification } = useNavigation();
 
@@ -72,28 +74,22 @@ function App() {
         ? body.split(",")
         : ["", "", "0"];
 
+      const notificationId = payload.data?.notificationId || 0;
+
       if (title === "인증") {
-        setModalType("auth"); // AuthNotificationModal을 보여주도록 설정
-        setModalData({
-          name: name || "이름 정보 없음",
-          accountInfo: accountInfo || "계좌 정보 없음",
-          amount: amount,
-        });
+        setModalType("auth");
       } else if (title === "확인") {
-        setModalType("notification"); // NotificationModal을 보여주도록 설정
-        setModalData({
-          name: name || "이름 정보 없음",
-          accountInfo: accountInfo || "계좌 정보 없음",
-          amount: amount,
-        });
+        setModalType("notification");
       } else {
-        setModalType("payment"); // PaymentRequestModal을 보여주도록 설정
-        setModalData({
-          name: name || "이름 정보 없음",
-          accountInfo: accountInfo || "계좌 정보 없음",
-          amount: amount,
-        });
+        setModalType("payment");
       }
+
+      setModalData({
+        name: name || "이름 정보 없음",
+        accountInfo: accountInfo || "계좌 정보 없음",
+        amount: amount,
+        notificationId: Number(notificationId),
+      });
 
       setIsModalOpen(true);
     });
@@ -108,10 +104,32 @@ function App() {
     setIsModalOpen(false);
   };
 
-  const handleModalConfirm = () => {
-    setIsModalOpen(false);
-    // 필요한 추가 로직을 여기 추가할 수 있습니다.
-    // goToVerification();
+  const handleModalConfirm = async () => {
+    try {
+      if (modalData.notificationId) {
+        await notificationService.replyNotification(
+          modalData.notificationId,
+          true
+        );
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error confirming notification:", error);
+    }
+  };
+
+  const handleModalReject = async () => {
+    try {
+      if (modalData.notificationId) {
+        await notificationService.replyNotification(
+          modalData.notificationId,
+          false
+        );
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error rejecting notification:", error);
+    }
   };
 
   return (
@@ -124,6 +142,7 @@ function App() {
               isOpen={isModalOpen}
               onClose={handleModalClose}
               onConfirm={handleModalConfirm}
+              onReject={handleModalReject}
               name={modalData.name}
               accountInfo={modalData.accountInfo}
               amount={modalData.amount}
