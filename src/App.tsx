@@ -120,7 +120,7 @@ function App() {
             description: body.bank || "인증 코드 없음",
           }));
           break;
-        case "가족 초대 알림":
+        case "가족초대":
           setModalType("familyInvite");
           setModalData((prevData) => ({
             ...prevData,
