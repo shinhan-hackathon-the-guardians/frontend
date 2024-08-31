@@ -7,6 +7,7 @@ interface AuthState {
   user: User | null;
   login: (user: User) => void;
   logout: () => void;
+  updateLevel: (newLevel: "GUARDIAN" | "SUPPORTER") => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -16,6 +17,10 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       login: (user: User) => set({ isLogin: true, user }),
       logout: () => set({ isLogin: false, user: null }),
+      updateLevel: (newLevel: "GUARDIAN" | "SUPPORTER") =>
+        set((state) => ({
+          user: state.user ? { ...state.user, level: newLevel } : null,
+        })),
     }),
     {
       name: "userAuth",
