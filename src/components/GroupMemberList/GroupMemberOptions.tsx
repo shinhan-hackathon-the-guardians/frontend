@@ -15,7 +15,6 @@ const GroupMemberOptions: React.FC<Props> = ({ isPinned, onPinToggle }) => {
   };
   const handlePinClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    Z;
     onPinToggle();
     setIsOpen(false);
   };
