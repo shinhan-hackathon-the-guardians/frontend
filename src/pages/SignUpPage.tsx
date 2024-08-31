@@ -5,6 +5,7 @@ import SelectField from "@/components/common/SelectField";
 import { userAuthService } from "@/services/userAuthService";
 import { useNavigation } from "@/hooks/useNavigation";
 import { CurrentTokenContext } from "@/App";
+import toast, { Toaster } from "react-hot-toast";
 
 type Gender = "MALE" | "FEMALE";
 
@@ -56,35 +57,30 @@ const SignUpPage: React.FC = () => {
     }
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, birth_date: e.target.value }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (form.password !== form.password_check) {
-      alert("비밀번호가 일치하지 않습니다.");
+      toast.error("비밀번호가 일치하지 않습니다.");
       return;
     }
     if (!isAccountVerified) {
-      alert("계좌 인증이 필요합니다.");
+      toast.error("계좌 인증이 필요합니다.");
       return;
     }
     if (!isUsernameChecked) {
-      alert("아이디 중복 체크가 필요합니다.");
+      toast.error("아이디 중복 체크가 필요합니다.");
       return;
     }
     try {
       await userAuthService.signup(form);
-      alert("회원가입이 완료되었습니다.");
+      toast.success("회원가입이 완료되었습니다.");
       goToLogin();
     } catch (error) {
       console.error("Signup failed:", error);
-      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+      toast.error("회원가입에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
-  // 1원 송금 함수
   const handleAccountAuth = async () => {
     try {
       const response = await userAuthService.sendAuthenticationAccount(
@@ -93,14 +89,13 @@ const SignUpPage: React.FC = () => {
       );
       setForm((prev) => ({ ...prev, csrf_token: response.csrf_token }));
       setShowAuthCodeInput(true);
-      alert("인증 코드가 발송되었습니다. 입력해주세요.");
+      toast.success("인증 코드가 발송되었습니다. 입력해주세요.");
     } catch (error) {
       console.error("Failed to send authentication code:", error);
-      alert("인증 코드 발송에 실패했습니다. 다시 시도해주세요.");
+      toast.error("인증 코드 발송에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
-  // 1원 인증 함수
   const handleAuthCodeVerification = async () => {
     try {
       const response = await userAuthService.authenticateAccount(
@@ -110,33 +105,20 @@ const SignUpPage: React.FC = () => {
       );
       setForm((prev) => ({ ...prev, csrf_token: response.csrf_token }));
       setIsAccountVerified(true);
-      alert("계좌가 성공적으로 인증되었습니다.");
+      toast.success("계좌가 성공적으로 인증되었습니다.");
     } catch (error) {
       console.error("Failed to verify auth code:", error);
-      alert("인증에 실패했습니다. 다시 시도해주세요.");
+      toast.error("인증에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
-  //id 중복 체크
   const handleUsernameCheck = async () => {
     if (form.username.length < 4) {
-      alert("아이디는 4자 이상이어야 합니다.");
+      toast.error("아이디는 4자 이상이어야 합니다.");
       return;
     }
-    alert("사용 가능한 아이디입니다.");
     setIsUsernameChecked(true);
-    // try {
-    //   const isAvailable = await userAuthService.checkUsername(form.username);
-    //   if (isAvailable) {
-    //     setIsUsernameChecked(true);
-    //     alert("사용 가능한 아이디입니다.");
-    //   } else {
-    //     alert("이미 사용 중인 아이디입니다. 다른 아이디를 선택해주세요.");
-    //   }
-    // } catch (error) {
-    //   console.error("Username check failed:", error);
-    //   alert("아이디 중복 체크에 실패했습니다. 다시 시도해주세요.");
-    // }
+    toast.success("사용 가능한 아이디입니다.");
   };
 
   const renderPhoneInputs = () => (
@@ -161,11 +143,12 @@ const SignUpPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <HeaderBackChatNotify />
+      <Toaster position="top-center" reverseOrder={false} />
       <main className="px-4 py-6 flex flex-col">
         <h1 className="text-xl font-bold text-Button mb-2">회원가입</h1>
         <form onSubmit={handleSubmit}>
           <div className="bg-white rounded-lg p-4 mb-4">
-            <div className="flex items-center ">
+            <div className="flex items-center">
               <InputField
                 label="아이디"
                 placeholder="아이디를 입력해주세요."
@@ -174,7 +157,7 @@ const SignUpPage: React.FC = () => {
               />
               <button
                 type="button"
-                className="w-32 text-sm ml-3  h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
+                className="w-32 text-sm ml-3 h-10 rounded-lg border border-Button text-Button hover:bg-Button hover:text-white transition duration-200 ease-in-out"
                 onClick={handleUsernameCheck}
               >
                 중복 체크
@@ -215,8 +198,8 @@ const SignUpPage: React.FC = () => {
                   type="date"
                   name="birth_date"
                   value={form.birth_date}
-                  onChange={handleDateChange}
-                  className="text-sm px-1 w-full h-10  border-b border-grey outline-none focus:border-Button focus:border-b-2"
+                  onChange={(e) => handleChange("birth_date", e.target.value)}
+                  className="text-sm px-1 w-full h-10 border-b border-grey outline-none focus:border-Button focus:border-b-2"
                   required
                 />
               </div>
@@ -240,7 +223,7 @@ const SignUpPage: React.FC = () => {
                     : "border border-Button text-Button hover:bg-Button hover:text-white"
                 }`}
                 onClick={handleAccountAuth}
-                disabled={isAccountVerified} // 인증 성공 시 버튼 비활성화
+                disabled={isAccountVerified}
               >
                 송금하기
               </button>
@@ -261,7 +244,7 @@ const SignUpPage: React.FC = () => {
                       : "border border-Button text-Button hover:bg-Button hover:text-white"
                   }`}
                   onClick={handleAuthCodeVerification}
-                  disabled={isAccountVerified} // 인증 성공 시 버튼 비활성화
+                  disabled={isAccountVerified}
                 >
                   인증하기
                 </button>
