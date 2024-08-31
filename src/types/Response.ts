@@ -17,3 +17,5 @@ export interface ChatBotHistoryResponse {
 export interface ChatResponse {
   message: string;
 }
+
+export interface DepositResponse {}
