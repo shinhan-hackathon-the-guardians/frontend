@@ -9,6 +9,7 @@ const TransactionPage: React.FC = () => {
   const myAccountNumber = "0882302967364715";
   const yourTransferAccountNumber = "0884755843206405";
 
+  const [name, setName] = useState("");
   const [balance, setBalance] = useState();
   const [triggerBalanceUpdate, setTriggerBalanceUpdate] = useState(0);
 
@@ -17,6 +18,7 @@ const TransactionPage: React.FC = () => {
       try {
         const data = await transactionService.balance(myAccountNumber);
         setBalance(data.transaction_balance);
+        setName(data.name);
         // console.log(data);
         // console.log(data.transaction_balance);
       } catch (error) {
@@ -33,7 +35,10 @@ const TransactionPage: React.FC = () => {
     transaction_balance: 0 as number,
   });
 
-  const handleDepositTransaction = (account_number: string, transaction_balance: number) => {
+  const handleDepositTransaction = (
+    account_number: string,
+    transaction_balance: number
+  ) => {
     setDepositTransactionBalance((prev) => ({
       ...prev,
       account_number: account_number,
@@ -65,7 +70,10 @@ const TransactionPage: React.FC = () => {
     transaction_balance: 0 as number,
   });
 
-  const handleWithdrawalTransaction = (account_number: string, transaction_balance: number) => {
+  const handleWithdrawalTransaction = (
+    account_number: string,
+    transaction_balance: number
+  ) => {
     setWithdrawalTransactionBalance((prev) => ({
       ...prev,
       account_number: account_number,
@@ -188,7 +196,7 @@ const TransactionPage: React.FC = () => {
       >
         {/* userinfo */}
         <div className="mb-6 bg-white p-6 rounded-xl shadow-md  ">
-          <div className="text-lg font-bold mb-2 text-gray-900">김신한</div>
+          <div className="text-lg font-bold mb-2 text-gray-900">{name}</div>
           <div className="flex justify-between">
             <div className="text-sm font-bold mb-2">계좌번호: </div>
             <div className="text-sm">
@@ -209,13 +217,19 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6">
           <div className="text-lg font-bold mb-2">입금</div>
 
-          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form
+            className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded"
+            action=""
+          >
             <InputField
               label="계좌번호"
               placeholder="계좌번호를 입력하세요."
               value={depositTransaction.account_number}
               onChange={(value: string) =>
-                handleDepositTransaction(value, depositTransaction.transaction_balance)
+                handleDepositTransaction(
+                  value,
+                  depositTransaction.transaction_balance
+                )
               }
             />
             <InputField
@@ -223,7 +237,10 @@ const TransactionPage: React.FC = () => {
               placeholder="입금할 금액을 입력하세요."
               value={depositTransaction.transaction_balance as number}
               onChange={(value: string) =>
-                handleDepositTransaction(depositTransaction.account_number, parseFloat(value))
+                handleDepositTransaction(
+                  depositTransaction.account_number,
+                  parseFloat(value)
+                )
               }
             />
             <div className="text-right">
@@ -242,13 +259,19 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6">
           <div className="text-lg font-bold mb-2">출금</div>
 
-          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form
+            className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded"
+            action=""
+          >
             <InputField
               label="계좌번호"
               placeholder="계좌번호를 입력하세요."
               value={withdrawalTransaction.account_number}
               onChange={(value: string) =>
-                handleWithdrawalTransaction(value, withdrawalTransaction.transaction_balance)
+                handleWithdrawalTransaction(
+                  value,
+                  withdrawalTransaction.transaction_balance
+                )
               }
             />
             <InputField
@@ -256,7 +279,10 @@ const TransactionPage: React.FC = () => {
               placeholder="출금할 금액을 입력하세요."
               value={withdrawalTransaction.transaction_balance as number}
               onChange={(value: string) =>
-                handleWithdrawalTransaction(withdrawalTransaction.account_number, parseFloat(value))
+                handleWithdrawalTransaction(
+                  withdrawalTransaction.account_number,
+                  parseFloat(value)
+                )
               }
             />
             <div className="text-right">
@@ -275,7 +301,10 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6">
           <div className="text-lg font-bold mb-2">계좌 이체</div>
 
-          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form
+            className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded"
+            action=""
+          >
             <InputField
               label="나의 계좌번호"
               placeholder="출금할 계좌번호를 입력하세요."
@@ -328,7 +357,10 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6 pb-12">
           <div className="text-lg font-bold mb-2">결제</div>
 
-          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form
+            className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded"
+            action=""
+          >
             <InputField
               label="계좌번호"
               placeholder="계좌번호를 입력하세요."

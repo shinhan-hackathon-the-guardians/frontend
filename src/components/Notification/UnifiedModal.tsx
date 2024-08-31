@@ -32,9 +32,15 @@ const UnifiedModal: React.FC<UnifiedModalProps> = ({
         <p className="text-lg font-medium text-gray-800">
           거래 유형: {transactionType}
         </p>
-        <p className="text-sm text-gray-600 mt-2">
-          송신자 계좌: {senderAccountNumber}
-        </p>
+        {transactionType === "WITHDRAWAL" ? (
+          <div></div>
+        ) : (
+          <div>
+            <p className="text-sm text-gray-600 mt-2">
+              송신자 계좌: {senderAccountNumber}
+            </p>
+          </div>
+        )}
         <p className="text-sm text-gray-600 mt-2">수신자: {receiver}</p>
         <p className="text-xl font-bold text-blue-600 my-2">
           거래 금액: {parseInt(transactionBalance, 10).toLocaleString()}원
@@ -42,9 +48,15 @@ const UnifiedModal: React.FC<UnifiedModalProps> = ({
         <div className="flex justify-around mt-6">
           <button
             onClick={onClose}
-            className="bg-gray-200 text-gray-800 px-4 py-2 rounded w-24 font-medium"
+            className=" text-white px-4 py-2 rounded w-24 font-sm bg-Button text-sm"
           >
-            확인
+            승인
+          </button>
+          <button
+            onClick={onClose}
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded w-24 font-sm text-sm"
+          >
+            거절
           </button>
         </div>
       </div>

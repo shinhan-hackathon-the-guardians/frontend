@@ -21,7 +21,10 @@ export const notificationService = {
       });
       return response.data;
     } catch (error) {
-      console.error("🚨 [NotificationService] | Error in replyApproval:", error);
+      console.error(
+        "🚨 [NotificationService] | Error in replyApproval:",
+        error
+      );
       throw error;
     }
   },
@@ -29,13 +32,18 @@ export const notificationService = {
   // (이체 내역) 알림 응답 전송
   replyNotification: async (notificationId: number, isApprove: boolean) => {
     try {
+      console.log(notificationId);
+      console.log(isApprove);
       const response = await axiosInstance.post("/notification/reply", {
-        notificationId: notificationId,
+        notification_id: notificationId,
         is_approve: isApprove,
       });
       return response.data;
     } catch (error) {
-      console.error("🚨 [NotificationService] | Error in replyNotification:", error);
+      console.error(
+        "🚨 [NotificationService] | Error in replyNotification:",
+        error
+      );
       throw error;
     }
   },
@@ -47,7 +55,10 @@ export const notificationService = {
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error("🚨 [NotificationService] | Error in getUnansweredNotifications:", error);
+      console.error(
+        "🚨 [NotificationService] | Error in getUnansweredNotifications:",
+        error
+      );
       throw error;
     }
   },
@@ -55,10 +66,15 @@ export const notificationService = {
   // 특정 (이체 내역) 알림 상세 조회
   getNotificationDetails: async (notificationId: number) => {
     try {
-      const response = await axiosInstance.get(`/notification/${notificationId}`);
+      const response = await axiosInstance.get(
+        `/notification/${notificationId}`
+      );
       return response.data;
     } catch (error) {
-      console.error("🚨 [NotificationService] | Error in getNotificationDetails:", error);
+      console.error(
+        "🚨 [NotificationService] | Error in getNotificationDetails:",
+        error
+      );
       throw error;
     }
   },
