@@ -13,12 +13,22 @@ const AddGroupMemberPage: React.FC = () => {
     RELATIONSHIP_OPTIONS[RELATIONSHIP_OPTIONS.length - 1]
   );
   const [name, setName] = useState("");
-  const [tel, setTel] = useState("");
+  const [phoneParts, setPhoneParts] = useState(["010", "", ""]);
   const user = useAuthStore((state) => state.user);
   const { goToHome } = useNavigation();
 
   const handleRelationshipChange = (value: Relationship) => {
     setRelationship(value);
+  };
+
+  const handlePhoneChange = (index: number, value: string) => {
+    const newPhoneParts = [...phoneParts];
+    newPhoneParts[index] = value.replace(/\D/g, "").slice(0, index === 0 ? 3 : 4);
+    setPhoneParts(newPhoneParts);
+
+    if (value.length === (index === 0 ? 3 : 4) && index < 2) {
+      document.getElementById(`phonePart${index + 2}`)?.focus();
+    }
   };
 
   const handleAddMember = async () => {
@@ -27,14 +37,34 @@ const AddGroupMemberPage: React.FC = () => {
       return;
     }
 
+    const formattedPhoneNumber = phoneParts.join("-");
+
     try {
-      await postGroupMemberInvite(user.familyId, name, tel);
+      await postGroupMemberInvite(user.familyId, name, formattedPhoneNumber, relationship);
       console.log("그룹원 초대가 성공적으로 전송되었습니다.");
       goToHome();
     } catch (error) {
       console.error("그룹원 초대 중 오류가 발생했습니다.", error);
     }
   };
+
+  const renderPhoneInputs = () => (
+    <div className="flex items-center space-x-2">
+      {[0, 1, 2].map((index) => (
+        <React.Fragment key={index}>
+          <input
+            id={`phonePart${index + 1}`}
+            type="text"
+            value={phoneParts[index]}
+            onChange={(e) => handlePhoneChange(index, e.target.value)}
+            className="w-1/3 text-sm border font-normal rounded p-1 mt-2 text-center outline-none focus:border-Button focus:border-2"
+            maxLength={index === 0 ? 3 : 4}
+          />
+          {index < 2 && <span>-</span>}
+        </React.Fragment>
+      ))}
+    </div>
+  );
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -48,13 +78,10 @@ const AddGroupMemberPage: React.FC = () => {
             value={name}
             onChange={setName}
           />
-          <InputField
-            label="전화번호"
-            placeholder="전화번호를 입력해주세요."
-            type="tel"
-            value={tel}
-            onChange={setTel}
-          />
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
+            {renderPhoneInputs()}
+          </div>
           <SelectField<Relationship>
             label="관계"
             options={RELATIONSHIP_OPTIONS}
