@@ -13,18 +13,15 @@ export const notificationService = {
   },
 
   // 그룹 초대 응답 전송 (true= 수락, false= 거절)
-  replyApproval: async (approvalId: number, approvalStatus: boolean) => {
+  replyApproval: async (approval_id: number, accept_status: boolean) => {
     try {
       const response = await axiosInstance.post("/approval/reply", {
-        approval_id: approvalId,
-        approval_status: approvalStatus,
+        approval_id,
+        accept_status,
       });
       return response.data;
     } catch (error) {
-      console.error(
-        "🚨 [NotificationService] | Error in replyApproval:",
-        error
-      );
+      console.error("🚨 [NotificationService] | Error in replyApproval:", error);
       throw error;
     }
   },
@@ -38,10 +35,7 @@ export const notificationService = {
       });
       return response.data;
     } catch (error) {
-      console.error(
-        "🚨 [NotificationService] | Error in replyNotification:",
-        error
-      );
+      console.error("🚨 [NotificationService] | Error in replyNotification:", error);
       throw error;
     }
   },
@@ -52,10 +46,7 @@ export const notificationService = {
       const response = await axiosInstance.get("/notification/unanswered");
       return response.data;
     } catch (error) {
-      console.error(
-        "🚨 [NotificationService] | Error in getUnansweredNotifications:",
-        error
-      );
+      console.error("🚨 [NotificationService] | Error in getUnansweredNotifications:", error);
       throw error;
     }
   },
@@ -63,15 +54,10 @@ export const notificationService = {
   // 특정 (이체 내역) 알림 상세 조회
   getNotificationDetails: async (notificationId: number) => {
     try {
-      const response = await axiosInstance.get(
-        `/notification/${notificationId}`
-      );
+      const response = await axiosInstance.get(`/notification/${notificationId}`);
       return response.data;
     } catch (error) {
-      console.error(
-        "🚨 [NotificationService] | Error in getNotificationDetails:",
-        error
-      );
+      console.error("🚨 [NotificationService] | Error in getNotificationDetails:", error);
       throw error;
     }
   },
