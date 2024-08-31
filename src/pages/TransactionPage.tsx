@@ -1,6 +1,6 @@
 import InputField from "@/components/common/InputField";
 import shinhan from "@/assets/images/shinhan_log_white.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { transactionService } from "@/services/transactionService";
 
 const TransactionPage: React.FC = () => {
@@ -8,6 +8,24 @@ const TransactionPage: React.FC = () => {
   // useEffect()로 시작할때 텍스트로 넣어놓은 값으로 실행 (0884755843206405)
   const myAccountNumber = "0882302967364715";
   const yourTransferAccountNumber = "0884755843206405";
+
+  const [balance, setBalance] = useState();
+  const [triggerBalanceUpdate, setTriggerBalanceUpdate] = useState(0);
+
+  useEffect(() => {
+    const getAccountBalance = async () => {
+      try {
+        const data = await transactionService.balance(myAccountNumber);
+        setBalance(data.transaction_balance);
+        // console.log(data);
+        // console.log(data.transaction_balance);
+      } catch (error) {
+        console.log("Failed to load chat history", error);
+      }
+    };
+
+    getAccountBalance();
+  }, [triggerBalanceUpdate]);
 
   // 입금
   const [depositTransaction, setDepositTransactionBalance] = useState({
@@ -37,6 +55,8 @@ const TransactionPage: React.FC = () => {
       account_number: depositTransaction.account_number,
       transaction_balance: 0,
     });
+
+    setTriggerBalanceUpdate((prev) => prev + 1);
   };
 
   // 출금
@@ -67,6 +87,8 @@ const TransactionPage: React.FC = () => {
       account_number: withdrawalTransaction.account_number,
       transaction_balance: 0,
     });
+
+    setTriggerBalanceUpdate((prev) => prev + 1);
   };
 
   // 이체
@@ -105,6 +127,8 @@ const TransactionPage: React.FC = () => {
       deposit_account_number: transferTransaction.deposit_account_number,
       transaction_balance: 0,
     });
+
+    setTriggerBalanceUpdate((prev) => prev + 1);
   };
 
   // 결제
@@ -127,6 +151,7 @@ const TransactionPage: React.FC = () => {
     }));
 
     console.log(paymentTransaction);
+    setTriggerBalanceUpdate((prev) => prev + 1);
   };
 
   const sendPaymentTransaction = async (e: React.FormEvent) => {
@@ -173,7 +198,10 @@ const TransactionPage: React.FC = () => {
           </div>
           <div className="flex justify-between">
             <div className="text-sm font-bold mb-2">잔액 : </div>
-            <div className="text-sm">50,000원</div>
+            <div className="text-sm">
+              {balance}
+              <span>원</span>
+            </div>
           </div>
         </div>
 
