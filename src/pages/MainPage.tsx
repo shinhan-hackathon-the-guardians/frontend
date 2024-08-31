@@ -24,7 +24,7 @@ function MainPage() {
       <HeaderLogoChatNotify />
       <div className="bg-[#F5F6FA] min-h-screen flex flex-col items-center">
         {/* 상단 바 영역 */}
-        <div className="bg-[#167CFA] w-full h-[300px] flex flex-col pt-8 px-6 pb-0 text-white">
+        <div className="bg-Button w-full h-[300px] flex flex-col pt-8 px-6 pb-0 text-white">
           {/* 상단 텍스트 블록 */}
           <div className="flex flex-col justify-start h-full">
             <p className="text-[16pt] leading-tight">
@@ -70,7 +70,7 @@ function MainPage() {
           <div className="mb-6 p-6 flex justify-between items-center bg-[#EBF0FD] py-4 rounded-b-[20px]">
             <div className="flex-1 flex justify-center">
               <button
-                className="bg-blue-500 text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
+                className="bg-Button text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
                 onClick={goToAddGroupMember}
               >
                 {user?.familyId ? "구성원 초대하기" : "그룹 만들기"}
