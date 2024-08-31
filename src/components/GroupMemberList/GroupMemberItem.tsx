@@ -15,7 +15,7 @@ import grandmotherImage from "@/assets/images/groupList/할머니.svg";
 import brotherImage from "@/assets/images/groupList/형제.svg";
 import sisterImage from "@/assets/images/groupList/자매.svg";
 import etcImage from "@/assets/images/groupList/기타.svg";
-import guardianBadge from "@/assets/images/guardianBadge.png";
+import guardianBadgeRe from "@/assets/images/guardianBadgeRe.png";
 
 interface Props {
   member: Member;
@@ -32,6 +32,12 @@ const relationshipImageMap: Record<string, string> = {
   형제: brotherImage,
   자매: sisterImage,
   기타: etcImage,
+};
+
+const roleMap = {
+  MEMBER: "Member",
+  MANAGER: "Manager",
+  OWNER: "Owner",
 };
 
 const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
@@ -68,7 +74,7 @@ const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
             <h3 className="text-lg font-medium">{member.name}</h3>
             {member.isPinned && <FcBookmark />}
           </div>
-          <p className="text-gray-500 text-sm">{member.birthday}</p>
+          <p className="text-gray-500 text-sm">{member.birthdate}</p>
         </div>
       </div>
       <div className="absolute top-0 right-2 flex flex-col items-end">
@@ -78,12 +84,12 @@ const GroupMemberItem: React.FC<Props> = ({ member, onPinToggle }) => {
         />
         <span className="me-2">
           {member.level === "GUARDIAN" ? (
-            <img src={guardianBadge} alt="Guardian Badge" className="h-4 w-4" />
+            <img src={guardianBadgeRe} alt="Guardian BadgeRe" className="h-4 w-4" />
           ) : (
             <div className="h-4 w-4" />
           )}
         </span>
-        <span className="text-xs text-gray-500 mt-4 me-2">{member.role}</span>
+        <span className="text-xs text-gray-500 mt-7 me-2">{roleMap[member.role]}</span>
       </div>
     </div>
   );
