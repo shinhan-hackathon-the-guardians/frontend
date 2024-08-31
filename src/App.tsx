@@ -4,11 +4,17 @@ import { useEffect, useState, createContext } from "react";
 import { messaging } from "@/utils/firebase";
 import { getToken, onMessage } from "firebase/messaging";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
-import NotificationModal from "@/components/Notification/NotificationModal";
 import { notificationService } from "@/services/notificationService";
 import UnifiedModal from "@/components/Notification/UnifiedModal";
 import FamilyInviteModal from "@/components/Notification/FamilyInviteModal";
 import AuthNotificationModal from "@/components/Notification/AuthNotificationModal";
+import DepositModal from "./components/Notification/DepositModal";
+import WithdrawalSuccessModal from "./components/Notification/WithdrawalSuccessModal";
+import WithdrawalFailureModal from "./components/Notification/WithdrawalFailureModal";
+import TransferSuccessModal from "./components/Notification/TransferSuccessModal";
+import TransferFailureModal from "./components/Notification/TransferFailureModal";
+import PaymentSuccessModal from "./components/Notification/PaymentSuccessModal";
+import PaymentFailureModal from "./components/Notification/PaymentFailureModal";
 // import { useNavigation } from "./hooks/useNavigation";
 
 export const CurrentTokenContext = createContext<string | null>(null);
@@ -45,6 +51,12 @@ function App() {
     | "auth"
     | "familyInvite"
     | "deposit"
+    | "withdrawalSuccess"
+    | "withdrawalFailure"
+    | "transferSuccess"
+    | "transferFailure"
+    | "paymentSuccess"
+    | "paymentFailure"
     | "approvalRequest"
     | "transactionResult"
   >("payment");
@@ -132,12 +144,69 @@ function App() {
           }));
           break;
 
-        case "입금 알림":
+        case "입금":
           setModalType("deposit");
           setModalData((prevData) => ({
             ...prevData,
             name: body.name || "이름 정보 없음",
             accountInfo: body.account_number || "계좌 정보 없음",
+            amount: body.transaction_balance?.toString() || "0",
+          }));
+          break;
+
+        case "출금 성공":
+          setModalType("withdrawalSuccess");
+          setModalData((prevData) => ({
+            ...prevData,
+            name: body.name || "이름 정보 없음",
+            accountInfo: body.account_number || "계좌 정보 없음",
+            amount: body.transaction_balance?.toString() || "0",
+          }));
+          break;
+        case "출금 실패":
+          setModalType("withdrawalFailure");
+          setModalData((prevData) => ({
+            ...prevData,
+            name: body.name || "이름 정보 없음",
+            accountInfo: body.account_number || "계좌 정보 없음",
+            amount: body.transaction_balance?.toString() || "0",
+          }));
+          break;
+
+        case "이체 성공":
+          setModalType("transferSuccess");
+          setModalData((prevData) => ({
+            ...prevData,
+            name: body.name || "이름 정보 없음",
+            accountInfo: body.receiver || "계좌 정보 없음",
+            amount: body.transaction_balance?.toString() || "0",
+          }));
+          break;
+        case "이체 실패":
+          setModalType("transferFailure");
+          setModalData((prevData) => ({
+            ...prevData,
+            name: body.name || "이름 정보 없음",
+            accountInfo: body.receiver || "계좌 정보 없음",
+            amount: body.transaction_balance?.toString() || "0",
+          }));
+          break;
+
+        case "결제 성공":
+          setModalType("paymentSuccess");
+          setModalData((prevData) => ({
+            ...prevData,
+            name: body.name || "이름 정보 없음",
+            accountInfo: body.receiver || "계좌 정보 없음",
+            amount: body.transaction_balance?.toString() || "0",
+          }));
+          break;
+        case "결제 실패":
+          setModalType("paymentFailure");
+          setModalData((prevData) => ({
+            ...prevData,
+            name: body.name || "이름 정보 없음",
+            accountInfo: body.receiver || "계좌 정보 없음",
             amount: body.transaction_balance?.toString() || "0",
           }));
           break;
@@ -240,8 +309,9 @@ function App() {
               amount={modalData.amount}
             />
           )}
-          {["notification", "deposit"].includes(modalType) && ( // 초대
-            <NotificationModal
+          {/* 입금 */}
+          {["deposit"].includes(modalType) && ( // 초대
+            <DepositModal
               isOpen={isModalOpen}
               onClose={handleModalClose}
               name={modalData.name}
@@ -249,6 +319,68 @@ function App() {
               amount={modalData.amount}
             />
           )}
+          {/* 출금 성공 */}
+          {["withdrawalSuccess"].includes(modalType) && ( // 초대
+            <WithdrawalSuccessModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+          {/* 출금 실패 */}
+          {["withdrawalFailure"].includes(modalType) && ( // 초대
+            <WithdrawalFailureModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+          {/* 이체 성공 */}
+          {["transferSuccess"].includes(modalType) && ( // 초대
+            <TransferSuccessModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+          {/* 이체 실패 */}
+          {["transferFailure"].includes(modalType) && ( // 초대
+            <TransferFailureModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+          {/* 결제 성공 */}
+          {["paymentSuccess"].includes(modalType) && ( // 초대
+            <PaymentSuccessModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+          {/* 결제 실패 */}
+          {["paymentFailure"].includes(modalType) && ( // 초대
+            <PaymentFailureModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              name={modalData.name}
+              accountInfo={modalData.accountInfo}
+              amount={modalData.amount}
+            />
+          )}
+
+          {/* 가족 그룹 초대 */}
           {modalType === "familyInvite" && (
             <FamilyInviteModal
               isOpen={isModalOpen}
