@@ -28,6 +28,7 @@ function NotificationPage() {
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null); // 선택된 Notification 관리
 
   const { user } = useAuthStore(); // 로그인된 사용자 정보 가져오기
+  const { updateGroup } = useAuthStore();
 
   // 대기 중인 알림 목록 가져오기
   const fetchNotifications = async () => {
@@ -54,9 +55,18 @@ function NotificationPage() {
     fetchNotifications();
   }, []);
 
-  const handleApprovalReply = async (approval_id: number, accept_status: boolean) => {
+  const handleApprovalReply = async (
+    approval_id: number,
+    accept_status: boolean,
+    family_id: number,
+    family_name: string
+  ) => {
     try {
       await notificationService.replyApproval(approval_id, accept_status);
+      // 응답 후 수락이라면 유저 그룹 업데이트
+      if (accept_status && family_id && family_name) {
+        updateGroup(family_id, family_name);
+      }
       // 응답 후 다시 데이터 갱신
       setApproval(null);
       console.log(approval);
@@ -110,13 +120,17 @@ function NotificationPage() {
               <div className="flex justify-end gap-2">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded"
-                  onClick={() => handleApprovalReply(item.approval_id, true)}
+                  onClick={() =>
+                    handleApprovalReply(item.approval_id, true, item.family_id, item.family_name)
+                  }
                 >
                   수락
                 </button>
                 <button
                   className="bg-red text-white py-2 px-4 rounded"
-                  onClick={() => handleApprovalReply(item.approval_id, false)}
+                  onClick={() =>
+                    handleApprovalReply(item.approval_id, false, item.family_id, item.family_name)
+                  }
                 >
                   거절
                 </button>
