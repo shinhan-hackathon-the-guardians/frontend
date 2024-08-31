@@ -14,12 +14,14 @@ export const getGroupMemberList = async (familyId: number): Promise<GroupListRes
 export const postGroupMemberInvite = async (
   familyId: number,
   name: string,
-  phone_number: string
+  phone_number: string,
+  relationship: string
 ): Promise<void> => {
   try {
     const payload = {
       name,
       phone_number,
+      relationship,
     };
     await axiosInstance.post(`/family/${familyId}/invite`, payload);
   } catch (error) {
