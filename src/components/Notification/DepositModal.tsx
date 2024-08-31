@@ -22,7 +22,7 @@ function DepositModal({
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative bg-white p-6 rounded-lg shadow-lg max-w-sm text-center z-50">
         <h2 className="text-md mb-2">
-          서포터 <span className="text-blue-600 font-bold">{name}</span>님의
+          <span className="text-blue-600 font-bold">{name}</span>님의
         </h2>
         <p className="text-sm font-medium text-gray-800">
           <span>신한 </span>
