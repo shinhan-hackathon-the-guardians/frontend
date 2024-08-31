@@ -11,8 +11,6 @@ function WithdrawalSuccessModal({
   isOpen,
   onClose,
   // onConfirm,
-  name,
-  accountInfo,
   amount,
 }: NotificationModalProps) {
   if (!isOpen) return null;
