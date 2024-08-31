@@ -19,7 +19,10 @@ export const transactionService = {
   },
 
   // 입금
-  deposit: async (account_number: string, transaction_balance: number): Promise<any> => {
+  deposit: async (
+    account_number: string,
+    transaction_balance: number
+  ): Promise<unknown> => {
     try {
       const response = await axiosInstance.post(`/transactions/deposit`, {
         account_number: account_number,
@@ -32,7 +35,10 @@ export const transactionService = {
     }
   },
 
-  withdrawal: async (account_number: string, transaction_balance: number): Promise<any> => {
+  withdrawal: async (
+    account_number: string,
+    transaction_balance: number
+  ): Promise<unknown> => {
     console.log(transaction_balance);
     try {
       const response = await axiosInstance.post(`/transactions/withdrawal`, {
@@ -50,7 +56,7 @@ export const transactionService = {
     withdrawal_account_number: string,
     deposit_account_number: string,
     transaction_balance: number
-  ): Promise<any> => {
+  ): Promise<unknown> => {
     console.log(transaction_balance);
     try {
       const response = await axiosInstance.post(`/transactions/transfer`, {
@@ -69,7 +75,7 @@ export const transactionService = {
     account_number: string,
     business_name: string,
     transaction_balance: number
-  ): Promise<any> => {
+  ): Promise<unknown> => {
     console.log(transaction_balance);
     try {
       const response = await axiosInstance.post(`/transactions/payment`, {
