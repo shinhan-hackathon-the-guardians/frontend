@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import HeaderBack from "@/components/Header/HeaderBack";
 import { notificationService } from "@/services/notificationService";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
+import { useAuthStore } from "@/stores/userAuthStore";
 import "@/mock/mock";
 
 interface Approval {
@@ -26,6 +27,8 @@ function NotificationPage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal 상태 관리
   const [selectedNotification, setSelectedNotification] =
     useState<Notification | null>(null); // 선택된 Notification 관리
+
+  const { user } = useAuthStore(); // 로그인된 사용자 정보 가져오기
 
   // 대기 중인 알림 목록 가져오기
   const fetchNotifications = async () => {
@@ -97,11 +100,11 @@ function NotificationPage() {
     <div>
       <HeaderBack />
       <div className="min-h-screen bg-[#F5F6FA] flex flex-col items-center">
-        <div className="w-full flex justify-start px-6 py-2">
+        <div className="w-full flex justify-start mt-2 px-6 py-2">
           <span className="text-xl font-bold">그룹 초대</span>
         </div>
 
-        {approval && (
+        {approval && approval.family_name ? (
           <div className="w-full max-w-md bg-white shadow-md rounded-lg px-6 py-4 mb-6">
             <h2 className="text-lg font-semibold mb-1">
               {approval.family_name}
@@ -124,61 +127,77 @@ function NotificationPage() {
               </button>
             </div>
           </div>
+        ) : (
+          <div className="text-center text-gray-600 my-6">
+            초대 내역이 없습니다.
+          </div>
         )}
 
-        <div className="w-full flex justify-start px-6 py-2">
-          <span className="text-xl font-bold">이체 내역</span>
-        </div>
-        {notifications.map((notification) => (
-          <div
-            key={notification.notification_id}
-            className="w-full max-w-md bg-white shadow-md rounded-lg px-6 py-4 mb-6"
-            onClick={() => openModal(notification)}
-          >
-            <span className="text-sm text-gray-600">
-              {notification.transaction_time}
-            </span>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600 mt-2 block">
-                신한 {notification.account_number}
-              </span>
-              <span className="text-sm text-gray-900">
-                {notification.sender_name}
-              </span>
+        {user && user.role !== "NONE" && user.role !== "MEMBER" && (
+          <>
+            <div className="w-full flex justify-start mt-6 px-6 py-2">
+              <span className="text-xl font-bold">이체 내역</span>
             </div>
-            <div className="flex justify-between items-center mt-4">
-              <span
-                className={`text-sm ${
-                  notification.transaction_type === "DEPOSIT"
-                    ? "text-red"
-                    : "text-blue-500"
-                }`}
-              >
-                {notification.transaction_type === "DEPOSIT"
-                  ? "입금"
-                  : notification.transaction_type === "WITHDRAWAL"
-                  ? "출금"
-                  : notification.transaction_type === "TRANSFER"
-                  ? "이체"
-                  : "결제"}
-              </span>
-              <span className="text-xl font-semibold text-gray-900">
-                {notification.transaction_balance.toLocaleString()}원
-              </span>
-            </div>
-          </div>
-        ))}
+            {notifications.length > 0 ? (
+              notifications.map((notification) => (
+                <div
+                  key={notification.notification_id}
+                  className="w-full max-w-md bg-white shadow-md rounded-lg px-6 py-4 mb-6"
+                  onClick={() => openModal(notification)}
+                >
+                  <span className="text-sm text-gray-600">
+                    {notification.transaction_time}
+                  </span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600 mt-2 block">
+                      신한 {notification.account_number}
+                    </span>
+                    <span className="text-sm text-gray-900">
+                      {notification.sender_name}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center mt-4">
+                    <span
+                      className={`text-sm ${
+                        notification.transaction_type === "DEPOSIT"
+                          ? "text-red"
+                          : "text-blue-500"
+                      }`}
+                    >
+                      {notification.transaction_type === "DEPOSIT"
+                        ? "입금"
+                        : notification.transaction_type === "WITHDRAWAL"
+                        ? "출금"
+                        : notification.transaction_type === "TRANSFER"
+                        ? "이체"
+                        : "결제"}
+                    </span>
+                    <span className="text-xl font-semibold text-gray-900">
+                      {notification.transaction_balance.toLocaleString()}원
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center text-gray-600 mt-6">
+                이체 내역이 없습니다.
+              </div>
+            )}
 
-        {selectedNotification && (
-          <PaymentRequestModal
-            isOpen={isModalOpen}
-            onClose={closeModal} // 모달 외부 클릭 시 closeModal만 실행
-            onConfirm={() => handleNotificationReply(true)} // 예 버튼 클릭 시
-            onReject={() => handleNotificationReply(false)} // 아니오 버튼 클릭 시
-            name={selectedNotification?.sender_name || ""}
-            accountInfo={selectedNotification?.account_number || ""}
-            amount={selectedNotification?.transaction_balance.toString() || "0"}
-          />
+            {selectedNotification && (
+              <PaymentRequestModal
+                isOpen={isModalOpen}
+                onClose={closeModal} // 모달 외부 클릭 시 closeModal만 실행
+                onConfirm={() => handleNotificationReply(true)} // 예 버튼 클릭 시
+                onReject={() => handleNotificationReply(false)} // 아니오 버튼 클릭 시
+                name={selectedNotification?.sender_name || ""}
+                accountInfo={selectedNotification?.account_number || ""}
+                amount={
+                  selectedNotification?.transaction_balance.toString() || "0"
+                }
+              />
+            )}
+          </>
         )}
       </div>
     </div>
