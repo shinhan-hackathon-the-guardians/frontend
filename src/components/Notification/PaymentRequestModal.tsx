@@ -14,7 +14,6 @@ function PaymentRequestModal({
   onConfirm,
   onReject,
   name,
-  accountInfo,
   amount,
 }: PaymentRequestModalProps) {
   if (!isOpen) return null;
@@ -33,13 +32,12 @@ function PaymentRequestModal({
       ></div>
       <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-sm text-center z-50">
         <h2 className="text-md mb-2">
-          서포터 <span className="text-blue-600 font-bold">{name}</span>님의
+          신한 <span className="text-blue-600 font-bold">{name}</span>님의
         </h2>
-        <p className="text-lg font-medium text-gray-800">{accountInfo}</p>
-        <p className="text-2xl font-bold text-blue-600 my-2">
+        <p className="text-lg font-bold text-blue-600 my-2">
           {parseInt(amount, 10).toLocaleString()}원
         </p>
-        <p className="text-gray-900">계좌 이체 수락하시겠습니까?</p>
+        <p className="text-gray-900">계좌 이체 승인 요청</p>
         <div className="flex justify-around mt-6">
           <button
             onClick={onConfirm}

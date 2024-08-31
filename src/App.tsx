@@ -257,6 +257,7 @@ function App() {
   };
 
   const handleModalConfirm = async () => {
+    console.log("send relpy answer. : CONFIRM");
     try {
       if (modalData.notificationId) {
         await notificationService.replyNotification(
@@ -271,6 +272,7 @@ function App() {
   };
 
   const handleModalReject = async () => {
+    console.log("send relpy answer. : REJECT");
     try {
       if (modalData.notificationId) {
         await notificationService.replyNotification(
@@ -289,15 +291,17 @@ function App() {
       <CurrentTokenContext.Provider value={deviceToken}>
         <div className="w-full sm:max-w-[360px] min-w-[344px] mx-auto bg-BackGround">
           <Outlet />
-          {modalType === "payment" && (
+          {["approvalRequest", "transactionResult", "payment"].includes(
+            modalType
+          ) && ( // 초대
             <PaymentRequestModal
               isOpen={isModalOpen}
               onClose={handleModalClose}
               onConfirm={handleModalConfirm}
               onReject={handleModalReject}
-              name={modalData.name}
+              name={modalData.senderAccountNumber}
               accountInfo={modalData.accountInfo}
-              amount={modalData.amount}
+              amount={modalData.transactionBalance}
             />
           )}
           {modalType === "auth" && (
@@ -391,7 +395,9 @@ function App() {
               ownerName={modalData.ownerName}
             />
           )}
-          {["approvalRequest", "transactionResult"].includes(modalType) && (
+
+          {/* 승인 요청 */}
+          {["transactionResult"].includes(modalType) && (
             <UnifiedModal
               isOpen={isModalOpen}
               onClose={handleModalClose}
