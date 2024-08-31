@@ -7,29 +7,29 @@ const mock = new MockAdapter(axiosInstance);
 
 // Mock 데이터
 const approvalMockData = {
-  // approval_id: 1,
-  // family_id: 101,
-  // family_name: "신한이네 가족",
-  // family_description: "신한이네 가족입니다.",
+  approval_id: 1,
+  family_id: 101,
+  family_name: "신한이네 가족",
+  family_description: "신한이네 가족입니다.",
 };
 
 const notificationsMockData = [
-  // {
-  //   notification_id: 1,
-  //   sender_name: "서포터1",
-  //   transaction_time: "2024-08-31 12:34:56",
-  //   transaction_balance: 100000,
-  //   transaction_type: "DEPOSIT",
-  //   account_number: "123-456-789",
-  // },
-  // {
-  //   notification_id: 2,
-  //   sender_name: "서포터2",
-  //   transaction_time: "2024-08-30 15:00:00",
-  //   transaction_balance: 50000,
-  //   transaction_type: "WITHDRAWAL",
-  //   account_number: "987-654-321",
-  // },
+  {
+    notification_id: 1,
+    sender_name: "서포터1",
+    transaction_time: "2024-08-31 12:34:56",
+    transaction_balance: 100000,
+    transaction_type: "DEPOSIT",
+    account_number: "123-456-789",
+  },
+  {
+    notification_id: 2,
+    sender_name: "서포터2",
+    transaction_time: "2024-08-30 15:00:00",
+    transaction_balance: 50000,
+    transaction_type: "WITHDRAWAL",
+    account_number: "987-654-321",
+  },
 ];
 
 // GET /approval 요청에 대한 Mock 응답
