@@ -181,7 +181,7 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6">
           <div className="text-lg font-bold mb-2">입금</div>
 
-          <form className="bg-white p-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
             <InputField
               label="계좌번호"
               placeholder="계좌번호를 입력하세요."
@@ -214,7 +214,7 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6">
           <div className="text-lg font-bold mb-2">출금</div>
 
-          <form className="bg-white p-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
             <InputField
               label="계좌번호"
               placeholder="계좌번호를 입력하세요."
@@ -247,7 +247,7 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6">
           <div className="text-lg font-bold mb-2">계좌 이체</div>
 
-          <form className="bg-white p-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
             <InputField
               label="나의 계좌번호"
               placeholder="출금할 계좌번호를 입력하세요."
@@ -300,7 +300,7 @@ const TransactionPage: React.FC = () => {
         <div className="mb-6 pb-12">
           <div className="text-lg font-bold mb-2">결제</div>
 
-          <form className="bg-white p-4 text-sm flex flex-col shadow-md rounded" action="">
+          <form className="bg-white px-6 py-4 text-sm flex flex-col shadow-md rounded" action="">
             <InputField
               label="계좌번호"
               placeholder="계좌번호를 입력하세요."
