@@ -1,7 +1,9 @@
 import React from "react";
-import Button from "@/components/common/Button";
 import { useNavigation } from "@/hooks/useNavigation";
 import { PASS_THRESHOLD } from "@/constant/common";
+import { getUserInfo } from "@/services/userAuthService";
+import Button from "@/components/common/Button";
+import { useAuthStore } from "@/stores/userAuthStore";
 
 interface ResultModalProps {
   isOpen: boolean;
@@ -12,8 +14,15 @@ interface ResultModalProps {
 const ResultModal: React.FC<ResultModalProps> = ({ isOpen, correctAnswers, totalQuestions }) => {
   const isPassed = correctAnswers >= PASS_THRESHOLD;
   const { goToHome } = useNavigation();
+  const { updateLevel } = useAuthStore();
 
   if (!isOpen) return null;
+
+  const handleClickMain = async () => {
+    const level = await getUserInfo();
+    updateLevel(level);
+    goToHome();
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -33,7 +42,7 @@ const ResultModal: React.FC<ResultModalProps> = ({ isOpen, correctAnswers, total
             )}
           </div>
         </div>
-        <Button text="메인으로" onClick={goToHome} />
+        <Button text="메인으로" onClick={handleClickMain} />
       </div>
     </div>
   );

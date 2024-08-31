@@ -9,9 +9,10 @@ export const useNavigation = () => {
   const goToQuestionBank = () => navigate("/questionBank");
   const goToAddGroupMember = () => navigate("/addGroupMember");
   const goToGroupMemberList = () => navigate("/groupMemberList");
-  const goToMemberSettings = () => navigate("/memberSettings");
+  const goToMemberSettings = (target_user_id: string) =>
+    navigate(`/memberSettings/${target_user_id}`);
   const goToGroupSettings = () => navigate("/groupSettings");
-  const goToPaymentRequest = () => navigate("/paymentRequest");
+  const goToNotification = () => navigate("/notification");
   const goToVerification = () => navigate("/verification");
   const goToSignUp = () => navigate("/signup");
   const goToLogin = () => navigate("/login");
@@ -27,7 +28,7 @@ export const useNavigation = () => {
     goToGroupMemberList,
     goToMemberSettings,
     goToGroupSettings,
-    goToPaymentRequest,
+    goToNotification,
     goToVerification,
     goToSignUp,
     goToLogin,

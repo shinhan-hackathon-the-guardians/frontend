@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigation } from "@/hooks/useNavigation";
 import { userAuthService } from "@/services/userAuthService";
-import HeaderBackChatNotify from "@/components/Header/HeaderBackChatNotify";
+import HeaderBack from "@/components/Header/HeaderBack";
 import InputField from "@/components/common/InputField";
 import { CurrentTokenContext } from "@/App";
 
@@ -37,11 +37,14 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen ">
-      <HeaderBackChatNotify />
+      <HeaderBack />
       <main className="px-4 py-6 flex-1 flex flex-col h-full">
         <h1 className="text-xl font-bold text-Button mb-2">로그인</h1>
 
-        <form className="flex-1 h-full flex flex-col justify-between" onSubmit={handleSubmit}>
+        <form
+          className="flex-1 h-full flex flex-col justify-between"
+          onSubmit={handleSubmit}
+        >
           <div className="bg-white rounded-lg p-4 mb-4">
             <InputField
               label="아이디"
