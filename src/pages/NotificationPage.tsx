@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import HeaderBack from "@/components/Header/HeaderBack";
 import { notificationService } from "@/services/notificationService";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
-// import "@/mock/mock";
+import "@/mock/mock";
 
 interface Approval {
   approval_id: number;
@@ -77,8 +77,6 @@ function NotificationPage() {
         setNotifications([]); // notifications 초기화
         await fetchNotifications(); // fetchNotifications 실행
         closeModal();
-
-        // console.log(selectedNotification);
       } catch (error) {
         console.error("Error sending notification reply:", error);
       }
@@ -174,11 +172,12 @@ function NotificationPage() {
         {selectedNotification && (
           <PaymentRequestModal
             isOpen={isModalOpen}
-            onClose={() => handleNotificationReply(false)} // 아니오 버튼 클릭 시
+            onClose={closeModal} // 모달 외부 클릭 시 closeModal만 실행
             onConfirm={() => handleNotificationReply(true)} // 예 버튼 클릭 시
-            name={selectedNotification.sender_name}
-            accountInfo={selectedNotification.account_number}
-            amount={selectedNotification.transaction_balance.toString()}
+            onReject={() => handleNotificationReply(false)} // 아니오 버튼 클릭 시
+            name={selectedNotification?.sender_name || ""}
+            accountInfo={selectedNotification?.account_number || ""}
+            amount={selectedNotification?.transaction_balance.toString() || "0"}
           />
         )}
       </div>
