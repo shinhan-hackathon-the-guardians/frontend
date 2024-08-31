@@ -8,19 +8,10 @@ function HeaderBackChatNotify() {
 
   return (
     <header className="flex items-center justify-between p-2 bg-[#F5F6FA] shadow-md h-[44px]">
-      <IoChevronBackOutline
-        className="text-[24px] cursor-pointer"
-        onClick={goToBack}
-      />
+      <IoChevronBackOutline className="text-[24px] cursor-pointer" onClick={goToBack} />
       <div className="flex items-center">
-        <TbMessageChatbot
-          className="text-[24px] cursor-pointer"
-          onClick={goToChatBot}
-        />
-        <FaRegBell
-          className="text-[24px] cursor-pointer ml-2"
-          onClick={goToNotification}
-        />
+        <TbMessageChatbot className="text-[24px] cursor-pointer" onClick={goToChatBot} />
+        <FaRegBell className="text-[24px] cursor-pointer ml-2" onClick={goToNotification} />
       </div>
     </header>
   );
