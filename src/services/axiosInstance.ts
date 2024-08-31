@@ -17,9 +17,7 @@ const axiosInstance = axios.create({
 });
 
 // 요청 인터셉터 설정 (요청을 보낼 때의 처리)
-const onRequest = (
-  config: CustomAxiosRequestConfig
-): CustomAxiosRequestConfig => {
+const onRequest = (config: CustomAxiosRequestConfig): CustomAxiosRequestConfig => {
   // 요청을 보내기 전에 수행할 작업이 있으면 여기에 추가
   return config;
 };
@@ -34,9 +32,6 @@ const onResponseError = (error: AxiosError | Error) => {
 };
 
 // 응답 인터셉터 설정 (응답을 받을 때의 처리)
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  onResponseError
-);
+axiosInstance.interceptors.response.use((response) => response, onResponseError);
 
 export default axiosInstance;

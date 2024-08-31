@@ -8,7 +8,7 @@ function HeaderLogoChatNotify() {
   const { goToHome, goToNotification, goToSplash } = useNavigation();
 
   return (
-    <header className="flex items-center justify-between p-2 bg-[#167CFA] shadow-md h-[44px]">
+    <header className="flex items-center justify-between p-2 bg-Button shadow-md h-[44px]">
       <div
         className="flex items-center px-3 text-white cursor-pointer text-[32px]"
         onClick={goToHome}

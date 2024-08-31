@@ -28,7 +28,7 @@ function MainPage() {
       } else if (user.role === "NONE" || user.role === "MANAGER" || user.role === "OWNER") {
         return (
           <button
-            className="bg-blue-500 text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
+            className="bg-Button text-white py-2 px-6 rounded-[20px] hover:bg-blue-600"
             onClick={goToAddGroupMember}
           >
             {user?.familyId ? "구성원 초대하기" : "그룹 만들기"}
@@ -44,7 +44,7 @@ function MainPage() {
       <HeaderLogoChatNotify />
       <div className="bg-[#F5F6FA] min-h-screen flex flex-col items-center">
         {/* 상단 바 영역 */}
-        <div className="bg-[#167CFA] w-full h-[300px] flex flex-col pt-8 px-6 pb-0 text-white">
+        <div className="bg-Button w-full h-[300px] flex flex-col pt-8 px-6 pb-0 text-white">
           {/* 상단 텍스트 블록 */}
           <div className="flex flex-col justify-start h-full">
             <p className="text-[16pt] leading-tight">
