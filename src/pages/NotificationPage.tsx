@@ -3,7 +3,7 @@ import HeaderBack from "@/components/Header/HeaderBack";
 import { notificationService } from "@/services/notificationService";
 import PaymentRequestModal from "@/components/Notification/PaymentRequestModal";
 import { useAuthStore } from "@/stores/userAuthStore";
-import "@/mock/mock";
+// import "@/mock/mock";
 
 interface Approval {
   approval_id: number;
