@@ -22,7 +22,7 @@ interface Notification {
 }
 
 function NotificationPage() {
-  const [approval, setApproval] = useState<Approval | null>(null);
+  const [approval, setApproval] = useState<Approval[] | null>(null);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal 상태 관리
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null); // 선택된 Notification 관리
@@ -99,25 +99,30 @@ function NotificationPage() {
           <span className="text-xl font-bold">그룹 초대</span>
         </div>
 
-        {approval && approval.family_name ? (
-          <div className="w-full max-w-md bg-white shadow-md rounded-lg px-6 py-4 mb-6">
-            <h2 className="text-lg font-semibold mb-1">{approval.family_name}</h2>
-            <p className="text-sm text-gray-700 mb-4">{approval.family_description}</p>
-            <div className="flex justify-end gap-2">
-              <button
-                className="bg-blue-500 text-white py-2 px-4 rounded"
-                onClick={() => handleApprovalReply(approval.approval_id, true)}
-              >
-                수락
-              </button>
-              <button
-                className="bg-red text-white py-2 px-4 rounded"
-                onClick={() => handleApprovalReply(approval.approval_id, false)}
-              >
-                거절
-              </button>
+        {approval && approval.length > 0 ? (
+          approval.map((item) => (
+            <div
+              key={item.approval_id}
+              className="w-full max-w-[330px] bg-white shadow-md rounded-lg px-6 py-4 mb-6"
+            >
+              <h2 className="text-lg font-semibold mb-1">{item.family_name}</h2>
+              <p className="text-sm text-gray-700 mb-4">{item.family_description}</p>
+              <div className="flex justify-end gap-2">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded"
+                  onClick={() => handleApprovalReply(item.approval_id, true)}
+                >
+                  수락
+                </button>
+                <button
+                  className="bg-red text-white py-2 px-4 rounded"
+                  onClick={() => handleApprovalReply(item.approval_id, false)}
+                >
+                  거절
+                </button>
+              </div>
             </div>
-          </div>
+          ))
         ) : (
           <div className="text-center text-gray-600 my-6">초대 내역이 없습니다.</div>
         )}
